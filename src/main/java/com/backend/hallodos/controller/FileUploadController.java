@@ -1,4 +1,4 @@
-package Hallodos.controller;
+package com.backend.hallodos.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import Hallodos.model.entities.FileDb;
-import Hallodos.services.FileUploadService;
+import com.backend.hallodos.model.FileDb;
+import com.backend.hallodos.services.FileUploadService;
 
 @RestController
 @RequestMapping("file")

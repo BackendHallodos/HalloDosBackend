@@ -1,11 +1,11 @@
-package Hallodos.model.repository;
+package com.backend.hallodos.repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import Hallodos.model.entities.Mahasiswa;
+import com.backend.hallodos.model.Mahasiswa;
 
 
 public interface MahasiswaRepository extends JpaRepository<Mahasiswa, Long> {

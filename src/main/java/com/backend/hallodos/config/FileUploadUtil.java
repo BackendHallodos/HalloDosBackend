@@ -1,4 +1,4 @@
-package Hallodos.config;
+package com.backend.hallodos.config;
 
 import java.io.*;
 import java.nio.file.*;

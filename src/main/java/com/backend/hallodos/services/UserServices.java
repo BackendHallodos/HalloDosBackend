@@ -1,7 +1,7 @@
-package Hallodos.services;
+package com.backend.hallodos.services;
 
-import Hallodos.model.entities.User;
-import Hallodos.model.repository.UserRepository;
+import com.backend.hallodos.model.User;
+import com.backend.hallodos.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

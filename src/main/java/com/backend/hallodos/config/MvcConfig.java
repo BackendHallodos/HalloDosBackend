@@ -1,4 +1,4 @@
-package Hallodos.config;
+package com.backend.hallodos.config;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
