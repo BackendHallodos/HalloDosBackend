@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>"
+   
+        <title>Profil Mahasiswa</title>
+        
+        <link rel = "stylesheet" href="assets/css/index.css">
+    </head>
+    <body>
+
+    <div id ="id">
+    <h1 class="Color1"> Profil Mahasiswa </h1> 
+	<img alt="Image" th:src="@{image/client-image.jpg}" width="250" height="250"/>
+	
+	<form th:action="@{/mahasiswa/save}"
+    th:object="${fotoUser}" method="post"
+    enctype="multipart/form-data">
+    <div>
+    <label>Photos: </label>
+    <input type="file" value="upload Files" name="image" accept="image/png, image/jpeg" />
+    </div>
+	<button type="upload" class="btn btn-primary">Upload</button>
+	</form>
+	
+    <table class="table">
+    <tr class="thead">  
+        <td scope ="col">Name</td> 
+        <td scope ="col">email</td>         
+ 			<td scope ="col">Photos</td>  
+    </tr>
+        <tr th:each= profil:${data}>
+		<td th:text = ${profil.nama_mahasiswa}></td>
+        <td th:text = ${profil.email_mahasiswa}></td>
+  
+    </tr>   
+    </body>
+    </table>
+</body>
+
+</html >
