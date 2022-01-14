@@ -1,4 +1,4 @@
-package Hallodos.model.entities;
+package com.backend.hallodos.model.entities;
 
 
 import lombok.AllArgsConstructor;
@@ -23,7 +23,4 @@ public class Role {
     @JoinColumn(name = "dosen_id")
     private Dosen dosen;
 
-    @OneToOne
-    @JoinColumn(name = "mahasiswa_id")
-    private Mahasiswa mahasiswa;
 }

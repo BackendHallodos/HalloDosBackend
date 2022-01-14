@@ -1,4 +1,4 @@
-package Hallodos.model.entities;
+package com.backend.hallodos.model.entities;
 
 import java.sql.Date;
 
@@ -25,9 +25,9 @@ public class Schedule {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	 @ManyToOne(cascade = CascadeType.MERGE)
-	 @JoinColumn(name = "id_mahasiswa", referencedColumnName = "id")
-	private Mahasiswa id_mahasiswa;
+	//  @ManyToOne(cascade = CascadeType.MERGE)
+	//  @JoinColumn(name = "id_mahasiswa", referencedColumnName = "id")
+	// private Mahasiswa id_mahasiswa;
 	 
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "id_dosen", referencedColumnName = "id")

@@ -1,4 +1,4 @@
-package Hallodos.model.entities;
+package com.backend.hallodos.model.entities;
 
 import javax.persistence.*;
 
@@ -22,8 +22,6 @@ public class Dosen {
 	private String nameDosen;
 	private String password;
 	private String bidangStudi;
-
-
 	private String dosen;
 
 }

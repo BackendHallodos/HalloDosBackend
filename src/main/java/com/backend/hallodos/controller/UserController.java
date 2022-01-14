@@ -1,21 +1,18 @@
-package Hallodos.controller;
+package com.backend.hallodos.controller;
 
-import java.io.IOException;
-import java.util.List;
+import java.security.Principal;
+
+// import java.io.IOException;
+// import java.util.List;
+
+import com.backend.hallodos.model.repository.MahasiswaRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.RedirectView;
+;
 
-
-import Hallodos.config.FileUploadUtil;
-import Hallodos.model.repository.MahasiswaRepository;
 
 
 @Controller
@@ -23,11 +20,33 @@ public class UserController {
 	
 	@Autowired
 	MahasiswaRepository mahasiswaRepo;
+
 	// untuk dasboard
+	//dan autentication
 	@GetMapping("/dasboard")
-	public String getdasboard() {
+	public String getdasboard(Model model,Principal principal) {
 	return "index";
 	}
+	@GetMapping("/mahasiswa")
+	public String getMahasiswa(Model model) {
+		
+		return "mahasiswa";
+	}
+	@GetMapping("/dosen")
+	public String getDosen(Model model) {
+	
+		return "dosen";
+	}
+
+
+
+	
+	@GetMapping("/loginUser")
+	public String getIndex(Model model) {
+		// model.addAttribute("object", new Mahasiswa());
+		return "login";
+	}
+
 	
 	
 //	//get untuk memunculkan profil mahasiswa

@@ -1,4 +1,4 @@
-package Hallodos.model.entities;
+package com.backend.hallodos.model.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

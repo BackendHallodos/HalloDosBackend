@@ -1,4 +1,4 @@
-package Hallodos.model.entities;
+package com.backend.hallodos.model.entities;
 
 import javax.persistence.*;
 
@@ -12,31 +12,23 @@ import lombok.NoArgsConstructor;
 @Table(name="mahasiswa")
 @Entity
 public class Mahasiswa {
-
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
-	
-	private String nama_mahasiswa;
-	
-	private String datebrith;
-	
-	private String gender;
+	private String username;
 
-	private String type_user;
-	
-	private String email_mahasiswa;
-	
 	private String password;
-	
+	private String nama_mahasiswa;
+	private String role;
+	private String datebrith;
+	private String gender;
+	private String email_mahasiswa;
 	private String alamat;
-	
 	private String asal_sekolah;
-	
 	private String program_study;
-	
 	private String status;
 	private String photos;
-
-	
+	@Transient
+    public String getPhotosImagePath() {
+        if (photos == null || username == null) return null;  
+        return "/user-photos/" + username + "/" + photos;
+    }
 }

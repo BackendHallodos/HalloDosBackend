@@ -1,8 +1,12 @@
-package Hallodos.controller;
+package com.backend.hallodos.controller;
 
 import java.io.IOException;
+// import java.nio.file.Path;
 import java.util.List;
 
+import com.backend.hallodos.config.FileUploadUtil;
+import com.backend.hallodos.model.entities.Mahasiswa;
+import com.backend.hallodos.model.repository.MahasiswaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
-import Hallodos.config.FileUploadUtil;
-import Hallodos.model.entities.Mahasiswa;
-import Hallodos.model.repository.MahasiswaRepository;
+
 
 @Controller
 public class MahasiswaController {
@@ -28,22 +30,22 @@ public class MahasiswaController {
 	//get untuk memunculkan profil mahasiswa
 	@GetMapping("/profilemahasiswa")
 	public String Mahasiswa(Model model) {
-		        model.addAttribute("fotoUser",new Hallodos.model.entities.Mahasiswa().getPhotos());
-	List<Hallodos.model.entities.Mahasiswa> profil = mahasiswaRepo.findByStatus("ON");
+		        // model.addAttribute("fotoUser",new Mahasiswa());
+	List<Mahasiswa> profil = mahasiswaRepo.findByStatus("ON");
 	model.addAttribute("data",profil);
-	model.addAttribute("fotoUser",profil);
 	return("profilmahasiswa");
 	}
 	 @PostMapping("/mahasiswa/save")
-	    public RedirectView saveUser(Hallodos.model.entities.Mahasiswa mahasiswa,
-	        @RequestParam(value="fotoUser") MultipartFile multipartFile) throws IOException {
-	        
-	        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());    
+	    public RedirectView saveUser(Mahasiswa mahasiswa,
+	        @RequestParam(value="image") MultipartFile multipartFile) throws IOException {
+	
+	        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+				
 	        mahasiswa.setPhotos(fileName);
 	        
-	        Hallodos.model.entities.Mahasiswa saveMaha = mahasiswaRepo.save(mahasiswa);
+	        Mahasiswa saveMaha = mahasiswaRepo.save(mahasiswa);
 	        
-	        String uploadDir = "user-photos/" + saveMaha.getId();
+	        String uploadDir = "user-photos/" + saveMaha.getUsername();
 	        
 	        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 	        

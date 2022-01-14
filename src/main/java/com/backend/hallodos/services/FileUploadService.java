@@ -1,4 +1,4 @@
-package Hallodos.services;
+package com.backend.hallodos.services;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.backend.hallodos.model.entities.FileDb;
+import com.backend.hallodos.model.repository.FileDbRepository;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import Hallodos.model.entities.FileDb;
-import Hallodos.model.entities.Mahasiswa;
-import Hallodos.model.repository.FileDbRepository;
-import Hallodos.model.repository.MahasiswaRepository;
+
 
 @Service
 public class FileUploadService {

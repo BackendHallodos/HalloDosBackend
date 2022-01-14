@@ -10,11 +10,13 @@
     <body>
 
     <div id ="id">
+       
     <h1 class="Color1"> Profil Mahasiswa </h1> 
-	<img alt="Image" th:src="@{image/client-image.jpg}" width="250" height="250"/>
-	
+    <tr th:each= profil:${data}>
+	<img alt="Image" th:src="@{profil.photos}" width="250" height="250"/>
+    </tr>
 	<form th:action="@{/mahasiswa/save}"
-    th:object="${fotoUser}" method="post"
+    th:object="${data}" method="post"
     enctype="multipart/form-data">
     <div>
     <label>Photos: </label>
@@ -32,6 +34,7 @@
         <tr th:each= profil:${data}>
 		<td th:text = ${profil.nama_mahasiswa}></td>
         <td th:text = ${profil.email_mahasiswa}></td>
+        <td th:text = ${profil.photos}></td>
   
     </tr>   
     </body>
