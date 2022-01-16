@@ -1,4 +1,4 @@
-package com.backend.hallodos.model.entities;
+package com.backend.hallodos.model;
 
 public interface Photos {
     String setPhotos();

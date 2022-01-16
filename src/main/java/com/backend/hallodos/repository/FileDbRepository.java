@@ -1,6 +1,8 @@
-package com.backend.hallodos.model.repository;
+package com.backend.hallodos.repository;
 
-import com.backend.hallodos.model.entities.FileDb;
+
+
+import com.backend.hallodos.model.FileDb;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

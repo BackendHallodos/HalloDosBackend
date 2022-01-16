@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.backend.hallodos.model.entities.FileDb;
-import com.backend.hallodos.model.repository.FileDbRepository;
+import com.backend.hallodos.model.FileDb;
+import com.backend.hallodos.repository.FileDbRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

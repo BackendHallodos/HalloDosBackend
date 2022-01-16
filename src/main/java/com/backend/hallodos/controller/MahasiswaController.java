@@ -5,8 +5,9 @@ import java.io.IOException;
 import java.util.List;
 
 import com.backend.hallodos.config.FileUploadUtil;
-import com.backend.hallodos.model.entities.Mahasiswa;
-import com.backend.hallodos.model.repository.MahasiswaRepository;
+import com.backend.hallodos.model.Mahasiswa;
+import com.backend.hallodos.repository.MahasiswaRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,7 +54,7 @@ public class MahasiswaController {
 	    }
 
 	 
-	@GetMapping("/loginMa")
+	@GetMapping("/login")
 	public String getIndex(Model model) {
 		model.addAttribute("object", new Mahasiswa());
 		return "login";

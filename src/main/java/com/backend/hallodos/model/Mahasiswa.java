@@ -1,4 +1,4 @@
-package com.backend.hallodos.model.entities;
+package com.backend.hallodos.model;
 
 import javax.persistence.*;
 
@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 public class Mahasiswa {
 	@Id
 	private String username;
-
 	private String password;
 	private String nama_mahasiswa;
 	private String role;

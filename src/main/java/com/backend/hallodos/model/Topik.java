@@ -1,4 +1,4 @@
-package com.backend.hallodos.model.entities;
+package com.backend.hallodos.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,7 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Data;
 @Data
-
 @Table (name ="topik")
 @Entity
 

@@ -3,7 +3,7 @@ package com.backend.hallodos.controller;
 import java.io.IOException;
 import java.util.List;
 
-import com.backend.hallodos.model.entities.FileDb;
+import com.backend.hallodos.model.FileDb;
 import com.backend.hallodos.services.FileUploadService;
 
 import org.springframework.beans.factory.annotation.Autowired;

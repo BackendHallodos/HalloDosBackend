@@ -1,4 +1,4 @@
-package com.backend.hallodos.model.entities;
+package com.backend.hallodos.model;
 
 
 import java.util.Arrays;
@@ -25,7 +25,7 @@ public class UserDetailsHallo implements UserDetails {
 		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(mahasiswa.getRole());
 		return Arrays.asList(authority);
 	}
-
+	
 	@Override
 	public String getPassword() {
 

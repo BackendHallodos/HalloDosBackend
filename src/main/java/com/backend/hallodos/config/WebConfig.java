@@ -12,9 +12,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 public class WebConfig extends WebSecurityConfigurerAdapter {
+
+    //UntukRegister
+    @Bean
+    public PasswordEncoder bCryptPasswoardEncoder() {
+    return new BCryptPasswordEncoder();
+    }
+
+
+    //bagian untuk login user anotasi @bean@Override
     @Bean
     public UserDetailsService userDetailsService(){
         return new UserServiceHallo();
@@ -31,7 +41,6 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         authProvider.setUserDetailsService(userDetailsService());
         return authProvider;
     }
-
     
     @Override
     protected void configure(AuthenticationManagerBuilder auth)throws Exception{
@@ -41,7 +50,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-        .antMatchers().permitAll()
+        .antMatchers("/register","/login","/dasboard").permitAll()
+        .antMatchers("/css/**","/font/**","/imgage/**","/js/**").permitAll()
         .antMatchers("/mahasiswa").hasAnyAuthority("MAHASISWA")
         .antMatchers("/dosen").hasAnyAuthority("DOSEN")
         .anyRequest().authenticated().and()

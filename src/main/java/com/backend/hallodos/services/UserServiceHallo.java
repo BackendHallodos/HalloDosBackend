@@ -1,8 +1,11 @@
 package com.backend.hallodos.services;
 
-import com.backend.hallodos.model.entities.Mahasiswa;
-import com.backend.hallodos.model.entities.UserDetailsHallo;
-import com.backend.hallodos.model.repository.MahasiswaRepository;
+
+
+
+import com.backend.hallodos.model.Mahasiswa;
+import com.backend.hallodos.model.UserDetailsHallo;
+import com.backend.hallodos.repository.MahasiswaRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +16,6 @@ public class UserServiceHallo implements UserDetailsService {
 
     @Autowired
     private MahasiswaRepository repoMaha;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Mahasiswa mahasiswa =repoMaha.findById(username).get();
@@ -22,4 +24,7 @@ public class UserServiceHallo implements UserDetailsService {
         }
         return new UserDetailsHallo(mahasiswa);
     }
+
+    
+
 }
