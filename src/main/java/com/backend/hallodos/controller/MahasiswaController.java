@@ -26,10 +26,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
-import org.springframework.web.bind.annotation.RequestBody;
-
-
-
 
 @Controller
 public class MahasiswaController {
@@ -142,7 +138,6 @@ public class MahasiswaController {
 	}
 	@PostMapping("/newPassword")
 		public String newPassword(@ModelAttribute("data")Mahasiswa mahasiswa, Model model){ 
-		
 		Mahasiswa user = mahasiswaRepo.findByPassword(mahasiswa.getPassword());
 		// String mhsemail = mahasiswa.getEmail_mahasiswa();
 		mahasiswaRepo.save(user);
