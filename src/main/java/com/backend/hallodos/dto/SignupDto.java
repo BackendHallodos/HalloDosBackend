@@ -5,17 +5,18 @@ public class SignupDto {
     private String username;
     private String email;
     private String password;
-    private String role;
+    private String sequrity_answer;
 
     
-    public String getRole() {
-        return role;
-    }
-    public void setRole(String role) {
-        this.role = role;
-    }
+
     public String getUsername() {
         return username;
+    }
+    public String getSequrity_answer() {
+        return sequrity_answer;
+    }
+    public void setSequrity_answer(String sequrity_answer) {
+        this.sequrity_answer = sequrity_answer;
     }
     public void setUsername(String username) {
         this.username = username;

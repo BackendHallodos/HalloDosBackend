@@ -3,6 +3,7 @@ package com.backend.hallodos.services;
 
 import com.backend.hallodos.model.AuthToken;
 import com.backend.hallodos.model.Mahasiswa;
+import com.backend.hallodos.repository.TokenRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     @Autowired
-    com.backend.hallodos.repository.TokenRepository tokenRepository;
+    TokenRepository tokenRepository;
 
     public void saveConfirmationToken(AuthToken authToken) {
         tokenRepository.save(authToken);

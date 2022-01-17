@@ -14,10 +14,19 @@ public interface MahasiswaRepository extends JpaRepository<Mahasiswa, String> {
 	@Query(value="Select*from mahasiswa where status=?1", nativeQuery=true)
 	public List<Mahasiswa> findByStatus(String status);
 
-	@Query(value="SELECT * FROM mahasiswa WHERE email_mahasiswa = ?1",nativeQuery=true)
+	@Query(value="SELECT*FROM mahasiswa where email_mahasiswa=?1",nativeQuery=true)
     public Mahasiswa findByEmail_mahasiswa(String email_mahasiswa);
 
- 
+	@Query(value="SELECT * FROM mahasiswa where email_mahasiswa=?1",nativeQuery=true)
+    public Mahasiswa findBySecQuest(String email_mahasiswa);
+
+	@Query(value="SELECT * FROM mahasiswa where sequrity_answer=?1",nativeQuery=true)
+    public Mahasiswa findAnswerbyInputan(String sequrity_answer);
+
+	@Query(value="SELECT * FROM mahasiswa where password=?1",nativeQuery=true)
+    public Mahasiswa findByPassword(String password);
+
+
 
 
    

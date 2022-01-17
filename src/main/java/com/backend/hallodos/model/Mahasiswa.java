@@ -17,8 +17,9 @@ public class Mahasiswa {
 	@Id
 	private String username;
 	private String password;
-	private String nama_mahasiswa;
-	private String role;
+	private String full_name;
+	private String sequrity_question;
+	private String sequrity_answer;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")	
 	private String datebrith;

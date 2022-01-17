@@ -1,7 +1,7 @@
 package com.backend.hallodos.controller;
 
 import java.security.NoSuchAlgorithmException;
-import java.security.Principal;
+
 import java.util.Objects;
 
 
@@ -39,10 +39,7 @@ public class UserController {
 
 	// untuk dasboard
 	//dan autentication
-	@GetMapping("/dasboard")
-	public String getdasboard(Model model,Principal principal) {
-	return "index";
-	}
+	
 	@GetMapping("/mahasiswa")
 	public String getMahasiswa(Model model) {
 		
@@ -50,7 +47,6 @@ public class UserController {
 	}
 	@GetMapping("/dosen")
 	public String getDosen(Model model) {
-	
 		return "dosen";
 	}
 
@@ -63,7 +59,7 @@ public String register(Model model) {
 	return "register";
 }
 @PostMapping("/daftar")
-public String daftar(@ModelAttribute("data")SignupDto signupDto, Model model) {
+public String daftar(@ModelAttribute("data")SignupDto signupDto,Mahasiswa maha, Model model) {
 	// check if user is already
 	if (Objects.nonNull(mahasiswaRepo.findByEmail_mahasiswa(signupDto.getEmail()))) {
 		throw new CustomExceptoon("User Already Present");
@@ -80,8 +76,9 @@ public String daftar(@ModelAttribute("data")SignupDto signupDto, Model model) {
 	Mahasiswa user = new Mahasiswa (
         signupDto.getUsername(),
         encryptedpassword,null,
-        signupDto.getRole(),null,null,
-        signupDto.getEmail(), 
+        maha.getSequrity_question(),
+		maha.getSequrity_answer(),null,null,
+        maha.getEmail_mahasiswa(), 
         null,null,null,null,null);
 
 	mahasiswaRepo.save(user);
@@ -90,7 +87,8 @@ public String daftar(@ModelAttribute("data")SignupDto signupDto, Model model) {
 	final AuthToken authToken = new AuthToken(user);
 	authService.saveConfirmationToken(authToken);
 
-	return "index";
+	model.addAttribute("logindata", new Mahasiswa());
+	return "login";
 }
 
 }

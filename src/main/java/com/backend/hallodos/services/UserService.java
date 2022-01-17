@@ -40,7 +40,7 @@ public class UserService {
 
     //RegisterService
     @Transactional
-    public ResponseDto signUp(SignupDto signupDto) {
+    public ResponseDto signUp(SignupDto signupDto,Mahasiswa maha) {
         
         // check if user is already
         if (Objects.nonNull(repoMaha.findByEmail_mahasiswa(signupDto.getEmail()))) {
@@ -56,12 +56,12 @@ public class UserService {
             e.printStackTrace();
         }
 
-       Mahasiswa user = new Mahasiswa (
-        signupDto.getUsername(),
-        encryptedpassword,
-        null,null,null,null,
-        signupDto.getEmail(), 
-        null,null,null,null,null);
+        Mahasiswa user = new Mahasiswa (
+            signupDto.getUsername(),
+            encryptedpassword,null,
+            maha.getSequrity_question(),maha.getSequrity_answer(),null,null,
+            signupDto.getEmail(), 
+            null,null,null,null,null);
 
         repoMaha.save(user);
 
