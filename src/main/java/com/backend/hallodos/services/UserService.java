@@ -18,7 +18,7 @@ import com.backend.hallodos.model.Mahasiswa;
 import com.backend.hallodos.repository.MahasiswaRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,21 +29,21 @@ public class UserService {
     @Autowired
     AuthService authService;
 
-    @Autowired private BCryptPasswordEncoder encoder;
-    @Autowired private MahasiswaRepository mahaRepo;
+    // @Autowired private BCryptPasswordEncoder encoder;
+    // @Autowired private MahasiswaRepository mahaRepo;
 
-    public void save(Mahasiswa maha){
+    // public void save(Mahasiswa maha){
 
-        maha.setPassword(encoder.encode(maha.getPassword()));
-        mahaRepo.save(maha);
-    }
+    //     maha.setPassword(encoder.encode(maha.getPassword()));
+    //     mahaRepo.save(maha);
+    // }
 
     //RegisterService
     @Transactional
     public ResponseDto signUp(SignupDto signupDto) {
         
         // check if user is already
-        if (Objects.nonNull(repoMaha.findByEmail_Mahasiswa(signupDto.getEmail()))) {
+        if (Objects.nonNull(repoMaha.findByEmail_mahasiswa(signupDto.getEmail()))) {
             throw new CustomExceptoon("User Already Present");
         }
 
@@ -80,10 +80,9 @@ public class UserService {
         String hash = DatatypeConverter.printHexBinary(digest).toUpperCase();
         return hash;
     }
-
     public SignInResponseDto signIn(SignInDto signInDto) {
         //find user by email
-       Mahasiswa user = repoMaha.findByEmail_Mahasiswa(signInDto.getEmail());
+       Mahasiswa user = repoMaha.findByEmail_mahasiswa(signInDto.getEmail());
 
         if (Objects.isNull(user)) {
             throw new AuthFailException("User Is Not Valid!");
@@ -105,8 +104,6 @@ public class UserService {
         if (Objects.isNull(token)) {
             throw new CustomExceptoon("token is not present!");
         }
-        
         return new SignInResponseDto("success", token.getToken());
     }
- 
 }

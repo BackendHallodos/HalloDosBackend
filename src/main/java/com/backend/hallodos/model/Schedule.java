@@ -25,10 +25,7 @@ public class Schedule {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	//  @ManyToOne(cascade = CascadeType.MERGE)
-	//  @JoinColumn(name = "id_mahasiswa", referencedColumnName = "id")
-	// private Mahasiswa id_mahasiswa;
-	 
+
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "id_dosen", referencedColumnName = "id")
 	private Dosen id_dosen;

@@ -2,6 +2,8 @@ package com.backend.hallodos.model;
 
 import javax.persistence.*;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,8 @@ public class Mahasiswa {
 	private String password;
 	private String nama_mahasiswa;
 	private String role;
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")	
 	private String datebrith;
 	private String gender;
 	private String email_mahasiswa;

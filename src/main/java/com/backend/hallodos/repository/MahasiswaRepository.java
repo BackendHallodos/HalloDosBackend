@@ -15,7 +15,11 @@ public interface MahasiswaRepository extends JpaRepository<Mahasiswa, String> {
 	public List<Mahasiswa> findByStatus(String status);
 
 	@Query(value="SELECT * FROM mahasiswa WHERE email_mahasiswa = ?1",nativeQuery=true)
-    public Mahasiswa findByEmail_Mahasiswa(String email_mahasiswa);
+    public Mahasiswa findByEmail_mahasiswa(String email_mahasiswa);
+
+ 
+
+
    
 
 
