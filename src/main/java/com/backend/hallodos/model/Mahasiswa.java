@@ -21,7 +21,6 @@ public class Mahasiswa {
 	private String full_name;
 	private String security_question;
 	private String security_answer;
-	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")	
 	private String datebrith;
 	private String gender;

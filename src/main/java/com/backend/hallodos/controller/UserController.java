@@ -53,19 +53,14 @@ public class UserController {
 		return "dosen";
 	}
 
-	// Register Start
-	@GetMapping("/register")
-	public String register(Model model) {
-		model.addAttribute("data", new Mahasiswa());
-		return "register";
-	}
 
-	@GetMapping("/registerdosen")
-	public String registerDosen(Model model) {
-		model.addAttribute("data_dosen", new Dosen());
-		return "registerdosen";
-	}
-
+	
+//Register Start
+@GetMapping("/register")
+public String register(Model model) {
+	model.addAttribute("data", new Mahasiswa());
+	return "register";
+}
 	@PostMapping("/daftar")
 	public String daftar(@ModelAttribute("data") SignupDto signupDto, Mahasiswa maha, Model model) {
 		// check if user is already

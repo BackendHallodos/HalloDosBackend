@@ -16,10 +16,13 @@
         <div class="card-body">
             <form th:object="${datamhs}" th:action ="@{/securityResult}" method="post">
                 <div class="form-group">
-                    <label th:each= dataQ:${dataQues}>
-                        <td th:text = ${dataQ.sequrity_question}></td>
-                    <input type="text" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required th:field="*{sequrity_answer}">
+                    <label th:each= dataQ:${datamhs}>
+                        <td th:text = ${dataQ.security_question}></td>
+                    <input type="text" name="security_answer" id="security_answer" class="form-control" required th:field="*{security_answer}">
+
+                    <input type="hidden" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required th:field="*{email_mahasiswa}">
                 </div>
+            
                 <div class="mt-2">
                     <button type="submit" class="btn btn-primary">Login</button>
                 </div>
