@@ -66,7 +66,6 @@ public String daftar(@ModelAttribute("data")SignupDto signupDto,Mahasiswa maha, 
 	}
 	// hash the password
 	String encryptedpassword = signupDto.getPassword();
-
 	try {
 		encryptedpassword = UserService.hashPassword(signupDto.getPassword());
 	} catch (NoSuchAlgorithmException e) {
@@ -76,8 +75,8 @@ public String daftar(@ModelAttribute("data")SignupDto signupDto,Mahasiswa maha, 
 	Mahasiswa user = new Mahasiswa (
         signupDto.getUsername(),
         encryptedpassword,null,
-        maha.getSequrity_question(),
-		maha.getSequrity_answer(),null,null,
+        maha.getSecurity_question(),
+		maha.getSecurity_answer(),null,null,
         maha.getEmail_mahasiswa(), 
         null,null,null,null,null);
 
