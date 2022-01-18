@@ -3,6 +3,7 @@ package com.backend.hallodos.repository;
 import com.backend.hallodos.model.Dosen;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 public interface DosenRepository extends JpaRepository<Dosen, String> {
 

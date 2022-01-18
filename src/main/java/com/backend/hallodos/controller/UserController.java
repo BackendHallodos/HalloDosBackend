@@ -84,8 +84,8 @@ public class UserController {
 		Mahasiswa user = new Mahasiswa(
 				signupDto.getUsername(),
 				encryptedpassword, null,
-				maha.getSequrity_question(),
-				maha.getSequrity_answer(), null, null,
+				maha.getSecurity_question(),
+				maha.getSecurity_answer(), null, null,
 				maha.getEmail_mahasiswa(),
 				null, null, null, null, null);
 
@@ -102,7 +102,7 @@ public class UserController {
 	@PostMapping("/daftardosen")
 	public String daftarDosen(@ModelAttribute("data_dosen") SignupDosenDto signupDosenDto, Dosen dosen, Model model) {
 		// check if user is already
-		if (Objects.nonNull(dosenRepo.findByEmail_dosen(signupDosenDto.getEmail()))) {
+		if (Objects.nonNull(dosenRepo.findByEmail_dosen(dosen.getEmail_dosen()))) {
 			throw new CustomExceptoon("User Already Present");
 		}
 		// hash the password
@@ -114,15 +114,19 @@ public class UserController {
 			e.printStackTrace();
 		}
 
-		Dosen user = new Dosen(
-				signupDosenDto.getUsername(),
-				encryptedpassword, null,
-				dosen.getSequrity_question(),
-				dosen.getSequrity_answer(), null, null,
-				dosen.getEmailDosen(),
-				null, null, null, null, null);
+		Dosen dosenuser = new Dosen (
+				dosen.getUsername(),
+				dosen.getEmail_dosen(),
+				null,
+				dosen.getSecurity_question(),
+				dosen.getSecurity_answer(),
+				encryptedpassword,
+				dosen.getGraduateFrom(),
+				dosen.getMajor(),
+				dosen.getAffiliate(),
+				null, null, null, null, null, null, null, null, null, null, null, null);
 
-		dosenRepo.save(user);
+		dosenRepo.save(dosenuser);
 
 		// create token
 		// final AuthToken authToken = new AuthToken(user);

@@ -5,18 +5,18 @@ public class SignupDosenDto {
     private String username;
     private String email;
     private String password;
-    private String sequrity_answer;
+    private String security_answer;
 
     public String getUsername() {
         return username;
     }
 
     public String getSequrity_answer() {
-        return sequrity_answer;
+        return security_answer;
     }
 
     public void setSequrity_answer(String sequrity_answer) {
-        this.sequrity_answer = sequrity_answer;
+        this.security_answer = sequrity_answer;
     }
 
     public void setUsername(String username) {

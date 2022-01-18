@@ -14,13 +14,14 @@ import lombok.NoArgsConstructor;
 @Table(name="mahasiswa")
 @Entity
 public class Mahasiswa {
+	
 	@Id
 	private String username;
 	private String password;
 	private String full_name;
-	private String sequrity_question;
-	private String sequrity_answer;
-
+	private String security_question;
+	private String security_answer;
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")	
 	private String datebrith;
 	private String gender;

@@ -126,7 +126,7 @@ public class MahasiswaController {
 		// String mhsemail = mahasiswa.getEmail_mahasiswa();
 		// Mahasiswa user = mahasiswaRepo.findBySecQuest(mhsemail);
 		// String questionUser = mahasiswa.getSequrity_question();
-		String answerUser = mahasiswa.getSequrity_answer();
+		String answerUser = mahasiswa.getSecurity_answer();
 		Mahasiswa result = mahasiswaRepo.findAnswerbyInputan(answerUser);
 		if(result == null){
 			return "kenihilan";
