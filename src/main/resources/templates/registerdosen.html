@@ -17,33 +17,33 @@
       <div class="card mx-auto mt-4" style="width: 30vw">
         <div class="card-header bg-primary bg-gradient text-light">Registrasi</div>
         <div class="card-body">
-          <form th:object="${data}" th:action="@{/daftar}" method="post">
+          <form th:object="${data_dosen}" th:action="@{/daftar}" method="post">
             <div class="form-group">
               <label for="username" class="form-label">Username</label>
-              <input type="text" name="username" id="username" class="form-control" required th:field="*{username}" />
+              <input type="text" name="username" id="username" class="form-control" required />
             </div>
 
             <div class="form-group">
               <label for="email" class="form-label">Email</label>
-              <input type="email" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required th:field="*{email_mahasiswa}" />
+              <input type="email" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required />
             </div>
 
-                    <div class= "icon_profile">
-                        <label for="security_question" class="form-label">Security Question</label>
-                        <select class="form-select "th:field="*{security_question}"> 
-                        <option th:value="'what was your favorite food as a child ?'">what was your favorite food as a child ? </option>
-                        <option th:value="'what is your favorite cartoon?'">what is your favorite cartoon?"</option>
-                        </select>
-                    </div>
+            <div class="icon_profile">
+              <label for="sequrity_question" class="form-label">Security Question</label>
+              <select class="form-select">
+                <option th:value="'what was your favorite food as a child ?'">what was your favorite food as a child ?</option>
+                <option th:value="'what is your favorite cartoon?'">what is your favorite cartoon?"</option>
+              </select>
+            </div>
 
-                    <div class="form-group">
-                        <label for="security_answer" class="form-label">Security Answer</label>
-                        <input type="text" name="security_answer" id="security_answer" class="form-control" required th:field="*{security_answer}">
-                    </div>
+            <div class="form-group">
+              <label for="sequrity_answer" class="form-label">Security Answer</label>
+              <input type="text" name="sequrity_answer" id="sequrity_answer" class="form-control" required />
+            </div>
 
             <div class="form-group">
               <label for="password" class="form-label">Password</label>
-              <input type="password" name="password" id="password" class="form-control" required th:field="*{password}" />
+              <input type="password" name="password" id="password" class="form-control" required />
             </div>
 
             <div class="mt-2">

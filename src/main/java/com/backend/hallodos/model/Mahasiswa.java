@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Table(name="mahasiswa")
 @Entity
 public class Mahasiswa {
+	
 	@Id
 	private String username;
 	private String password;
