@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="dosen")
+@Table(name = "dosen")
 @Entity
 public class Dosen {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	private String emailDosen;
@@ -23,5 +23,8 @@ public class Dosen {
 	private String password;
 	private String bidangStudi;
 	private String dosen;
+	private String userName;
+	private String sequrity_question;
+	private String sequrity_answer;
 
 }
