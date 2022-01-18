@@ -60,44 +60,27 @@ public class UserController {
 		return "register";
 	}
 
-	@GetMapping("/registerdosen")
-	public String registerDosen(Model model) {
-		model.addAttribute("data_dosen", new Dosen());
-		return "registerdosen";
+	// hash the password
+	String encryptedpassword = signupDto.getPassword();
+	try {
+		encryptedpassword = UserService.hashPassword(signupDto.getPassword());
+	} catch (NoSuchAlgorithmException e) {
+		e.printStackTrace();
 	}
 
-	@PostMapping("/daftar")
-	public String daftar(@ModelAttribute("data") SignupDto signupDto, Mahasiswa maha, Model model) {
-		// check if user is already
-		if (Objects.nonNull(mahasiswaRepo.findByEmail_mahasiswa(signupDto.getEmail()))) {
-			throw new CustomExceptoon("User Already Present");
-		}
-		// hash the password
-		String encryptedpassword = signupDto.getPassword();
+	Mahasiswa user = new Mahasiswa (
+        signupDto.getUsername(),
+        encryptedpassword,null,
+        maha.getSecurity_question(),
+		maha.getSecurity_answer(),null,null,
+        maha.getEmail_mahasiswa(), 
+        null,null,null,null,null);
 
-		try {
-			encryptedpassword = UserService.hashPassword(signupDto.getPassword());
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
+	mahasiswaRepo.save(user);
 
-		Mahasiswa user = new Mahasiswa(
-				signupDto.getUsername(),
-				encryptedpassword, null,
-				maha.getSecurity_question(),
-				maha.getSecurity_answer(), null, null,
-				maha.getEmail_mahasiswa(),
-				null, null, null, null, null);
-
-		mahasiswaRepo.save(user);
-
-		// create token
-		final AuthToken authToken = new AuthToken(user);
-		authService.saveConfirmationToken(authToken);
-
-		model.addAttribute("logindata", new Mahasiswa());
-		return "login";
-	}
+	// create token
+	final AuthToken authToken = new AuthToken(user);
+	authService.saveConfirmationToken(authToken);
 
 	@PostMapping("/daftardosen")
 	public String daftarDosen(@ModelAttribute("data_dosen") SignupDosenDto signupDosenDto, Dosen dosen, Model model) {

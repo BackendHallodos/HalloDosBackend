@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.backend.hallodos.config.FileUploadUtil;
+import com.backend.hallodos.dto.SignInDto;
 import com.backend.hallodos.exceptions.AuthFailException;
 import com.backend.hallodos.exceptions.CustomExceptoon;
 import com.backend.hallodos.model.AuthToken;
@@ -103,69 +104,58 @@ public class MahasiswaController {
 		model.addAttribute("forgotData", new Mahasiswa());
 		return "forgot";
 	}
-	
+	//ini untuk cari email dan menerima data email, untuk mencari data security question dan memunculkannya
 	@PostMapping("/cariEmail")
-	public String cariEmail (@ModelAttribute("data")Mahasiswa mahasiswa, Model model) {
+	public String cariEmail (@ModelAttribute("forgotData")Mahasiswa mahasiswa, Model model) {
 		String mhsemail = mahasiswa.getEmail_mahasiswa();
 		Mahasiswa user = mahasiswaRepo.findBySecQuest(mhsemail);
-	
 		if (user== null){
 			//error 404
 			return "kenihilan";
 		}else{
-			model.addAttribute("datamhs",new Mahasiswa());
-			model.addAttribute("dataEmail",mhsemail);
-			model.addAttribute("dataQues",user);
+			user.setSecurity_answer("");
+			model.addAttribute("datamhs",user);
 			return "questionsec";
 		}
 
+//ini menerima jawaban dari security question dari mahasiswa
 	}
-
 	@PostMapping("/securityResult")
 	public String secResult (@ModelAttribute("datamhs")Mahasiswa mahasiswa, Model model) {
-		// String mhsemail = mahasiswa.getEmail_mahasiswa();
+		String mhsemail = mahasiswa.getEmail_mahasiswa();
 		// Mahasiswa user = mahasiswaRepo.findBySecQuest(mhsemail);
 		// String questionUser = mahasiswa.getSequrity_question();
 		String answerUser = mahasiswa.getSecurity_answer();
-		Mahasiswa result = mahasiswaRepo.findAnswerbyInputan(answerUser);
+		Mahasiswa result = mahasiswaRepo.findAnswerbyInputan(answerUser,mhsemail);
 		if(result == null){
 			return "kenihilan";
 		}else{
-			model.addAttribute("newDataPassword", new Mahasiswa());
+			model.addAttribute("newDataPassword",result);
 			model.addAttribute("dataForgot",result );
 			return "newpassword";
 		}
 	}
+	//setelah menerima jawaban dari mahasiswa, form ini untuk memasukan form untuk membuat password baru
 	@PostMapping("/newPassword")
-		public String newPassword(@ModelAttribute("data")Mahasiswa mahasiswa, Model model){ 
-		Mahasiswa user = mahasiswaRepo.findByPassword(mahasiswa.getPassword());
+		public String newPassword(@ModelAttribute("newDataPassword")Mahasiswa mahasiswa, SignInDto signupDto, Model model){ 
+		Mahasiswa user = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
 		// String mhsemail = mahasiswa.getEmail_mahasiswa();
+
+		String encryptedpassword = mahasiswa.getPassword();
+		try {
+			encryptedpassword = UserService.hashPassword(mahasiswa.getPassword());
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		user.setPassword(encryptedpassword);
+
 		mahasiswaRepo.save(user);
-		model.addAttribute("PasswordBaru", mahasiswa);
-		return "/login";
+		// model.addAttribute("PasswordBaru", mahasiswa);
+		return "redirect:/login";
 	}
-	
 
 
 
-
-
-
-	// //from login mahasiswa
-	// @PostMapping("/loginM")
-	// public String postLoginM(@ModelAttribute Mahasiswa mahasiswa,Model model) {
-	// 	Mahasiswa data = mahasiswaRepo.getMahasiswa(mahasiswa.getEmail_mahasiswa(),mahasiswa.getPassword());
-	// 	if(data !=null) {
-	// 		data.setStatus("ON");
-	// 		mahasiswaRepo.save(data);
-	// 		model.addAttribute("user", data);
-	// 		model.addAttribute("object", new Mahasiswa());
-	// 		return "redirect:/data";
-	// 	}
-	// 	else {
-	// 		return"redirect:/loginM";
-	// 	}
-	// }
 @GetMapping("/data")
 public String getData() {
 	return "index";
