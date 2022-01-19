@@ -9,10 +9,13 @@ import java.util.Objects;
 
 import com.backend.hallodos.config.FileUploadUtil;
 import com.backend.hallodos.dto.SignInDto;
+import com.backend.hallodos.dto.SignupDto;
 import com.backend.hallodos.exceptions.AuthFailException;
 import com.backend.hallodos.exceptions.CustomExceptoon;
 import com.backend.hallodos.model.AuthToken;
+import com.backend.hallodos.model.Dosen;
 import com.backend.hallodos.model.Mahasiswa;
+import com.backend.hallodos.repository.DosenRepository;
 import com.backend.hallodos.repository.MahasiswaRepository;
 import com.backend.hallodos.services.AuthService;
 import com.backend.hallodos.services.UserService;
@@ -30,6 +33,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class MahasiswaController {
+	@Autowired
+	DosenRepository dosenRepo;
 	
 	@Autowired
     AuthService authService;
@@ -37,7 +42,6 @@ public class MahasiswaController {
 	@Autowired
 	MahasiswaRepository mahasiswaRepo;
 	
-
 	//get untuk memunculkan profil mahasiswa
 	@GetMapping("/profilemahasiswa")
 	public String Mahasiswa(Model model) {
@@ -62,25 +66,29 @@ public class MahasiswaController {
 	        
 	        return new RedirectView("/profilemahasiswa", true);
 	    }
+
+//Tampilan awal dasboard awal mahasiswa
 	@GetMapping("/dasboard")
 	public String getdasboard(Model model,Principal principal) {
 	return "index";
 	}
-	 
-	@GetMapping("/login")
+	
+//untuk login mahasiswa
+	@GetMapping("/loginMahasiswa")
 	public String getIndex(Model model) {
-		model.addAttribute("logindata", new Mahasiswa());
-		return "login";
+		model.addAttribute("loginData", new Mahasiswa());
+		return "loginMahasiswa";
 	}
-	@PostMapping("/masukk")
-	public String masukk(@ModelAttribute("data")Mahasiswa signInDto, Model model) {
-		Mahasiswa user = mahasiswaRepo.findByEmail_mahasiswa(signInDto.getEmail_mahasiswa());
-		if (Objects.isNull(user)) {
-			return "profilemahasiswa";
+//setelah masuk login, ini untuk menerima data dari login
+	@PostMapping("/afterLogin")
+	public String masukk(@ModelAttribute("loginData")Mahasiswa mahasiswa, Model model) {
+		Mahasiswa maha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+		if (Objects.isNull(maha)) {
+			return "kenihilan";
 		}
 		//hash the pass
 		try {
-			if (!user.getPassword().equals(UserService.hashPassword(signInDto.getPassword()))) {
+			if (!maha.getPassword().equals(UserService.hashPassword(mahasiswa.getPassword()))) {
 				throw new AuthFailException("wrong password!");
 			}
 		} catch (NoSuchAlgorithmException e) {
@@ -89,20 +97,20 @@ public class MahasiswaController {
 		//compare pass in DB
 	
 		//if pass match
-		AuthToken token = authService.getToken(user);
+		AuthToken token = authService.getToken(maha);
 	
 		//retrive token
 		if (Objects.isNull(token)) {
 			throw new CustomExceptoon("token is not present!");
 		}
-		return "dasboarduser";
+		return "index";
 	}
 
 	//untuk forgot
-	@GetMapping("/forgot")
+	@GetMapping("/forgotMahasiswa")
 	public String getforgot(Model model) {
 		model.addAttribute("forgotData", new Mahasiswa());
-		return "forgot";
+		return "forgotMahasiswa";
 	}
 	//ini untuk cari email dan menerima data email, untuk mencari data security question dan memunculkannya
 	@PostMapping("/cariEmail")
@@ -115,7 +123,7 @@ public class MahasiswaController {
 		}else{
 			user.setSecurity_answer("");
 			model.addAttribute("datamhs",user);
-			return "questionsec";
+			return "qSecMahas";
 		}
 
 //ini menerima jawaban dari security question dari mahasiswa
@@ -132,7 +140,7 @@ public class MahasiswaController {
 		}else{
 			model.addAttribute("newDataPassword",result);
 			model.addAttribute("dataForgot",result );
-			return "newpassword";
+			return "nPasswordMaha";
 		}
 	}
 	//setelah menerima jawaban dari mahasiswa, form ini untuk memasukan form untuk membuat password baru
@@ -151,10 +159,49 @@ public class MahasiswaController {
 
 		mahasiswaRepo.save(user);
 		// model.addAttribute("PasswordBaru", mahasiswa);
-		return "redirect:/login";
+		return "redirect:/loginMahasiswa";
 	}
 
+//Register Start mahasiswa
 
+@GetMapping("/registerMahasiswa")
+public String register(Model model) {
+	model.addAttribute("data", new Mahasiswa());
+	return "registerMahasiswa";
+}
+
+	@PostMapping("/afterRegisterMaha")
+	public String daftar(@ModelAttribute("data") SignupDto signupDto, Mahasiswa maha, Model model) {
+		Dosen dosen = dosenRepo.findByEmail_dosen2(maha.getEmail_mahasiswa());
+		// check if user is already
+		if (Objects.nonNull(mahasiswaRepo.findByEmail_mahasiswa(maha.getEmail_mahasiswa()))|| dosen != null) {
+			throw new CustomExceptoon("User Already Present");}
+		// hash the password
+		String encryptedpassword = signupDto.getPassword();
+
+		try {
+			encryptedpassword = UserService.hashPassword(signupDto.getPassword());
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+
+		Mahasiswa user = new Mahasiswa(
+				signupDto.getUsername(),
+				encryptedpassword, null,
+				maha.getSecurity_question(),
+				maha.getSecurity_answer(), null, null,
+				maha.getEmail_mahasiswa(),
+				null, null, null, null, null);
+
+		mahasiswaRepo.save(user);
+
+		// create token
+		final AuthToken authToken = new AuthToken(user);
+		authService.saveConfirmationToken(authToken);
+
+		model.addAttribute("loginData", new Mahasiswa());
+		return "loginMahasiswa";
+	}
 
 @GetMapping("/data")
 public String getData() {

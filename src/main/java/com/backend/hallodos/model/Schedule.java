@@ -27,8 +27,8 @@ public class Schedule {
 	private long id;
 
 	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "id_dosen", referencedColumnName = "id")
-	private Dosen id_dosen;
+	@JoinColumn(name = "username", referencedColumnName = "username")
+	private Dosen username;
 	
 	private Date date;
 	

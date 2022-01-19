@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <title>Login</title>
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
+
+    <link rel="stylesheet" href="assets/css/templatemo-hexashop.css">
+
+    <link rel="stylesheet" href="assets/css/owl-carousel.css">
+
+    <link rel="stylesheet" href="assets/css/lightbox.css">
+    <!--
+</head>
+<body>
+
+  <!-- from login start  ! -->
+  <div class="container">
+    <div class="card mx-auto mt-5" style="width: 30vw;">
+        <div class="card-header bg-primary bg-gradient text-light">
+            <h3 class="text-center">Login</h3>
+        </div>
+        <div class="card-body">
+            <form th:object="${loginData}" th:action ="@{/afterLoginDosen}" method="post">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="text" name="email_dosen" id="email_dosen" class="form-control" required th:field="*{email_dosen}">
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" name="password" id="password" class="form-control" required th:field="*{password}">
+                </div>
+                <div class="mt-2">
+                    <small>
+                      don't have an account? <a href="/registerDosen">create now dosen!</a>
+                    </small>
+                </div>
+
+                <div class="mt-2">
+                    <small>
+                      don't have an account? <a href="/forgotDosen">forgot password !</a>
+                    </small>
+                </div>
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+  <!-- from login end  ! -->
+  
+       <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    
+</body>
+</html>

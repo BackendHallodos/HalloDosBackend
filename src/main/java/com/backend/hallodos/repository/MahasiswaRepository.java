@@ -17,9 +17,6 @@ public interface MahasiswaRepository extends JpaRepository<Mahasiswa, String> {
 	@Query(value="SELECT*FROM mahasiswa where email_mahasiswa=?1",nativeQuery=true)
     public Mahasiswa findByEmail_mahasiswa(String email_mahasiswa);
 
-	@Query(value="SELECT * FROM mahasiswa where email_mahasiswa=?1",nativeQuery=true)
-    public Mahasiswa findBySecQuest(String email_mahasiswa);
-
 	@Query(value="SELECT * FROM mahasiswa where security_answer=?1",nativeQuery=true)
     public Mahasiswa findAnswerbyInputan(String security_answer);
 
@@ -28,6 +25,13 @@ public interface MahasiswaRepository extends JpaRepository<Mahasiswa, String> {
 
 	@Query(value="SELECT * FROM mahasiswa where security_answer=?1 AND email_mahasiswa=?2",nativeQuery=true)
     public Mahasiswa findAnswerbyInputan(String answerUser, String mhsemail);
+
+
+	@Query(value="SELECT * FROM mahasiswa where email_mahasiswa=?1 ",nativeQuery=true)
+    public Mahasiswa findBySecQuest(String mhsemail);
+
+	@Query(value = "SELECT*FROM mahasiswa where email_mahasiswa=?1", nativeQuery = true)
+	public Mahasiswa findByEmail_mahasiswa2(String email_mahasiswa);
 
 
 

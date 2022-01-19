@@ -14,11 +14,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
-
-
 @Entity
-@Table(name = "tokens")
-public class AuthToken {
+@Table(name = "tokensDos")
+public class AuthTokenDos {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,9 +25,9 @@ public class AuthToken {
 
     private String token;
     
-    @OneToOne(targetEntity = Mahasiswa.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = Dosen.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "user_id")
-    private Mahasiswa user;
+    private Dosen dosen;
     
     @Column(name = "created_at")
     private Date created_at;
@@ -58,21 +56,21 @@ public class AuthToken {
         this.created_at = created_at;
     }
 
-    public Mahasiswa getUser() {
-        return user;
+    public Dosen getUser() {
+        return dosen;
     }
 
-    public void setUser(Mahasiswa user) {
-        this.user = user;
+    public void setUser(Dosen dosen) {
+        this.dosen = dosen;
     }
 
-    public AuthToken(Mahasiswa user) {
-        this.user = user;
+    public AuthTokenDos(Dosen dosen) {
+        this.dosen = dosen;
         this.created_at = new Date();
         this.token = UUID.randomUUID().toString();
     }
 
-    public AuthToken() {
+    public AuthTokenDos() {
     }
 
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot</title>
+</head>
+<body>
+    <h1>ini forgot password hehehe</h1>
+     <!-- from login start  ! -->
+  <div class="container">
+    <div class="card mx-auto mt-5" style="width: 30vw;">
+        <div class="card-header bg-primary bg-gradient text-light">
+            <h3 class="text-center">Forgot Password</h3>
+        </div>
+        <div class="card-body">
+            <form th:object="${forgotData}" th:action ="@{/cariEmail}" method="post">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="text" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required th:field="*{email_mahasiswa}">
+                </div>
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-primary">Cai</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+  <!-- from login end  ! -->
+    
+</body>
+</html>

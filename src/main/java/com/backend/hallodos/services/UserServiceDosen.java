@@ -1,5 +1,4 @@
 package com.backend.hallodos.services;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -15,6 +14,7 @@ import com.backend.hallodos.dto.SignupDto;
 import com.backend.hallodos.exceptions.AuthFailException;
 import com.backend.hallodos.exceptions.CustomExceptoon;
 import com.backend.hallodos.model.AuthToken;
+import com.backend.hallodos.model.AuthTokenDos;
 import com.backend.hallodos.model.Dosen;
 import com.backend.hallodos.model.Mahasiswa;
 import com.backend.hallodos.repository.DosenRepository;
@@ -23,34 +23,26 @@ import com.backend.hallodos.repository.MahasiswaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 @Service
-public class UserService {
+
+public class UserServiceDosen {
+    
     @Autowired
-    private MahasiswaRepository repoMaha;
+    private MahasiswaRepository mahaRepo;
+    @Autowired
+    private DosenRepository dosenRepo;
 
     @Autowired
     AuthService authService;
 
-    @Autowired
-	DosenRepository dosenRepo;
 
-    // @Autowired private BCryptPasswordEncoder encoder;
-    // @Autowired private MahasiswaRepository mahaRepo;
-
-    // public void save(Mahasiswa maha){
-
-    //     maha.setPassword(encoder.encode(maha.getPassword()));
-    //     mahaRepo.save(maha);
-    // }
-
-    //RegisterServiceMahasiswa
+    //RegisterServiceMDosen
     @Transactional
-    public ResponseDto signUp(SignupDto signupDto,Mahasiswa maha) {
+    public ResponseDto signUp(SignupDto signupDto,Dosen dosen) {
         
         // check if user is already
-        Dosen dosen = dosenRepo.findByEmail_dosen2(maha.getEmail_mahasiswa());
-        if (Objects.nonNull(repoMaha.findByEmail_mahasiswa(signupDto.getEmail())) || dosen != null) {
+       Mahasiswa maha = mahaRepo.findByEmail_mahasiswa(dosen.getEmail_dosen());
+        if (Objects.nonNull(dosenRepo.findByEmail_dosen(signupDto.getEmail())) || dosen != null) {
             throw new CustomExceptoon("User Already Present");
         }
 
@@ -63,18 +55,22 @@ public class UserService {
             e.printStackTrace();
         }
 
-        Mahasiswa user = new Mahasiswa (
-            signupDto.getUsername(),
-            encryptedpassword,null,
-            maha.getSecurity_question(),maha.getSecurity_answer(),null,null,
-            signupDto.getEmail(), 
-            null,null,null,null,null);
-
-        repoMaha.save(user);
+        Dosen dosenuser = new Dosen (
+            dosen.getUsername(),
+            dosen.getEmail_dosen(),
+            null,
+            dosen.getSecurity_question(),
+            dosen.getSecurity_answer(),
+            encryptedpassword,
+            dosen.getGraduateFrom(),
+            dosen.getMajor(),
+            dosen.getAffiliate(),
+            null, null, null, null,0,0,0, null,0,null,null,dosen.getTopicId());
+        dosenRepo.save(dosenuser);
 
         // create token
-        final AuthToken authToken = new AuthToken(user);
-        authService.saveConfirmationToken(authToken);
+        final AuthTokenDos authToken = new AuthTokenDos(dosenuser);
+        authService.saveConfirmationTokenDos(authToken);
 
         ResponseDto responseDto = new ResponseDto("success", "CREATED SUCCESS!");
         return responseDto;
@@ -89,7 +85,7 @@ public class UserService {
     }
     public SignInResponseDto signIn(SignInDto signInDto) {
         //find user by email
-       Mahasiswa user = repoMaha.findByEmail_mahasiswa(signInDto.getEmail());
+       Dosen user = dosenRepo.findByEmail_dosen(signInDto.getEmail());
 
         if (Objects.isNull(user)) {
             throw new AuthFailException("User Is Not Valid!");
@@ -105,7 +101,7 @@ public class UserService {
         //compare pass in DB
 
         //if pass match
-        AuthToken token = authService.getToken(user);
+        AuthTokenDos token = authService.getTokenDos(user);
 
         //retrive token
         if (Objects.isNull(token)) {

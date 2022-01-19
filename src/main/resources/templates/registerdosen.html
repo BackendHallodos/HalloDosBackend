@@ -10,44 +10,42 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
 
-    <title>Registrasi Akun</title>
+    <title>Registrasi Akun Dosen</title>
   </head>
   <body>
     <div class="container">
       <div class="card mx-auto mt-4" style="width: 30vw">
-        <div class="card-header bg-primary bg-gradient text-light">Registrasi</div>
+        <div class="card-header bg-primary bg-gradient text-light">Registrasi Dosen</div>
         <div class="card-body">
-          <form th:object="${data_dosen}" th:action="@{/daftar}" method="post">
+          <form th:object="${dataDosen}" th:action="@{/afterRegisterDosen}" method="post">
             <div class="form-group">
               <label for="username" class="form-label">Username</label>
-              <input type="text" name="username" id="username" class="form-control" required />
+              <input type="text" name="username" id="username" class="form-control" required th:field="*{username}" />
             </div>
-
             <div class="form-group">
               <label for="email" class="form-label">Email</label>
-              <input type="email" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required />
+              <input type="email" name="email_dosen" id="email_dosen" class="form-control" required th:field="*{email_dosen}" />
             </div>
+                    <div class= "icon_profile">
+                        <label for="security_question" class="form-label">Security Question</label>
+                        <select class="form-select "th:field="*{security_question}"> 
+                        <option th:value="'what was your favorite food as a child ?'">what was your favorite food as a child ? </option>
+                        <option th:value="'what is your favorite cartoon?'">what is your favorite cartoon?"</option>
+                        </select>
+                    </div>
 
-            <div class="icon_profile">
-              <label for="sequrity_question" class="form-label">Security Question</label>
-              <select class="form-select">
-                <option th:value="'what was your favorite food as a child ?'">what was your favorite food as a child ?</option>
-                <option th:value="'what is your favorite cartoon?'">what is your favorite cartoon?"</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="sequrity_answer" class="form-label">Security Answer</label>
-              <input type="text" name="sequrity_answer" id="sequrity_answer" class="form-control" required />
-            </div>
+                    <div class="form-group">
+                        <label for="security_answer" class="form-label">Security Answer</label>
+                        <input type="text" name="security_answer" id="security_answer" class="form-control" required th:field="*{security_answer}">
+                    </div>
 
             <div class="form-group">
               <label for="password" class="form-label">Password</label>
-              <input type="password" name="password" id="password" class="form-control" required />
+              <input type="password" name="password" id="password" class="form-control" required th:field="*{password}" />
             </div>
 
             <div class="mt-2">
-              <small> have an account? <a href="/login">Login now!</a> </small>
+              <small> have an account? <a href="/loginDosen">Login now!</a> </small>
             </div>
             <div class="mt-2">
               <button type="submit" class="btn btn-primary">Register</button>
