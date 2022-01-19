@@ -48,7 +48,7 @@ public class MahasiswaController {
 		        // model.addAttribute("fotoUser",new Mahasiswa());
 	List<Mahasiswa> profil = mahasiswaRepo.findByStatus("ON");
 	model.addAttribute("data",profil);
-	return("profilmahasiswa");
+	return("profilMaha");
 	}
 	 @PostMapping("/mahasiswa/save")
 	    public RedirectView saveUser(Mahasiswa mahasiswa,
