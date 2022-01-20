@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Dashboard Userrrrrrrrrrr!!!!!!11</h1>
+    <form th:object="${loginData}" th:action="@{/afterDashboardMahasiswa}" method="post">
+        <div class="form-group">
+            <input type="hidden" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
+                th:field="*{email_mahasiswa}">
+        </div>
+
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Ke profil user</button>
+        </div>
+    </form>
+
+    <!-- <tr th:each="dataUser:${loginData}">
+        <td th:text="${dataUser.username}"></td>
+        <td th:text="${dataUser.full_name}"></td>
+        <td th:text="${dataUser.email_mahasiswa}"></td>
+        <td th:text="${dataUser.alamat}"></td>
+        <td th:text="${dataUser.datebrith}"></td>
+    </tr>
+    <tr>
+
+    </tr>
+    <tr>
+
+    </tr>
+    <tr>
+
+    </tr>
+    <tr>
+
+    </tr> -->
+    <div th:each= "dataTop : ${dataTopDos}">
+        <div class="card" style="background-color: orange;">
+            <img th:src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 th:text="${dataTop.full_name}" style="font-weight: bold;">
+                <h6 th:text="${dataTop.major}">
+                <h6 th:text="${dataTop.price}">
+                <h6 th:text="${dataTop.totalConsultation}">
+                <h6 th:text="${dataTop.rating}">
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

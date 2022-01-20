@@ -4,7 +4,6 @@ import java.security.NoSuchAlgorithmException;
 
 import java.util.Objects;
 
-import com.backend.hallodos.dto.SignInDto;
 import com.backend.hallodos.dto.SignupDosenDto;
 import com.backend.hallodos.exceptions.AuthFailException;
 import com.backend.hallodos.exceptions.CustomExceptoon;
@@ -17,17 +16,12 @@ import com.backend.hallodos.services.AuthService;
 import com.backend.hallodos.services.UserService;
 import com.backend.hallodos.services.UserServiceDosen;
 
-// import java.io.IOException;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class DosenController {
@@ -134,51 +128,61 @@ public class DosenController {
 
 		// Dosen dosenBaru = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
 		model.addAttribute("loginData", dosenAll);
-		return "dosenbaru";
+		return "dashboarddosen";
 	}
-
-
 
 	@GetMapping("/dashboarddosen")
 	public String getDashboardDosen(@ModelAttribute("loginData") Dosen dosen, Model model) {
 		// System.out.println(cekEmail);
 		Dosen profilDosen = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
 		// System.out.println(profilDosen.toString());
-		
+
 		if (profilDosen == null) {
 			return "kenihilan";
 		} else {
 			model.addAttribute("loginData", profilDosen);
-			return "dosenbaru";
+			return "dashboarddosen";
 		}
 	}
 
+	@PostMapping("/afterDashboardDosen")
+	public String afterDoashboardDosen(@ModelAttribute("loginData") Dosen dosen, Model model) {
+		Dosen dosenAll = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		if (Objects.isNull(dosenAll)) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("loginData", dosenAll);
+			return "profilDosen";
+		}
+
+	}
 	// @PostMapping("/operData")
-	// public String operData (@ModelAttribute("loginData") Dosen dosen, Model model){
-	// 	// String dsnEmail = dosen.getEmail_dosen();
-	// 	// Dosen result = dosenRepo.findByEmail_dosen(dsnEmail);
-	// 	Dosen profilDosen = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
-	
-	// 	if(profilDosen == null){
-	// 		return "kenihilan";
-	// 	}else{
-	// 		model.addAttribute("dataDosen", profilDosen);
-	// 		return "redirect:/profilDosen";
-	// 	}
+	// public String operData (@ModelAttribute("loginData") Dosen dosen, Model
+	// model){
+	// // String dsnEmail = dosen.getEmail_dosen();
+	// // Dosen result = dosenRepo.findByEmail_dosen(dsnEmail);
+	// Dosen profilDosen = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+
+	// if(profilDosen == null){
+	// return "kenihilan";
+	// }else{
+	// model.addAttribute("dataDosen", profilDosen);
+	// return "redirect:/profilDosen";
+	// }
 	// }
 
 	// @GetMapping("/dashboard")
 	// public ModelAndView index() {
-	// 	ModelAndView modelAndView = new ModelAndView();
-	// 	modelAndView.setViewName("index");
-	// 	return modelAndView;
+	// ModelAndView modelAndView = new ModelAndView();
+	// modelAndView.setViewName("index");
+	// return modelAndView;
 	// }
 
 	@GetMapping("/profilDosen")
 	public String getProfilDosen(@ModelAttribute("loginData") Dosen dosen, Model model) {
 		Dosen profilDosen = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
 		model.addAttribute("dataDosen", profilDosen);
-		return "dosenbaru";
+		return "profilDosen";
 	}
 
 	// untuk forgot Dosen

@@ -1,44 +1,41 @@
-<html>
-    <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>"
-   
-        <title>Profil Mahasiswa</title>
-        
-        <link rel = "stylesheet" href="assets/css/index.css">
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="en">
 
-    <div id ="id">
-       
-    <h1 class="Color1"> Profil Mahasiswa </h1> 
-    <tr th:each= profil:${data}>
-	<img alt="Image" th:src="@{profil.photos}" width="250" height="250"/>
-    </tr>
-	<form th:action="@{/mahasiswa/save}"
-    th:object="${data}" method="post"
-    enctype="multipart/form-data">
-    <div>
-    <label>Photos: </label>
-    <input type="file" value="upload Files" name="image" accept="image/png, image/jpeg" />
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Dosen</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+</head>
+<body>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Foto</th>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Tanggal Lahir</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="dataUser:${loginData}">
+                    <td th:text="${dataUser.username}"></td>
+                    <td th:text="${dataUser.photos}"></td>
+                    <td th:text="${dataUser.full_name}"></td>
+                    <td th:text="${dataUser.email_mahasiswa}"></td>
+                    <td th:text="${dataUser.alamat}"></td>
+                    <td th:text="${dataUser.datebrith}"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-	<button type="upload" class="btn btn-primary">Upload</button>
-	</form>
-	
-    <table class="table">
-    <tr class="thead">  
-        <td scope ="col">Name</td> 
-        <td scope ="col">email</td>         
- 			<td scope ="col">Photos</td>  
-    </tr>
-        <tr th:each= profil:${data}>
-		<td th:text = ${profil.nama_mahasiswa}></td>
-        <td th:text = ${profil.email_mahasiswa}></td>
-        <td th:text = ${profil.photos}></td>
-  
-    </tr>   
-    </body>
-    </table>
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>
 
-</html >
+</html>

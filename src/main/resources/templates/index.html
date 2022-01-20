@@ -65,7 +65,18 @@ https://templatemo.com/tm-570-chain-app-dev
               <li class="scroll-to-section"><a href="#about">About</a></li>
               <li class="scroll-to-section"><a href="/profilemahasiswa">Profil</a></li>
               <li class="scroll-to-section"><a href="#newsletter">Newsletter</a></li>
-              <li><div class="gradient-button"><a id="modal_trigger" href="/login"><i class="fa fa-sign-in-alt"></i> Login</a></div></li> 
+              <li><div class="gradient-button">
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Login
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="/loginDosen">As Dosen</a></li>
+                    <li><a class="dropdown-item" href="/loginMahasiswa">As Mahasiswa</a></li>
+                  </ul>
+                </div>
+              </div></li> 
               <li src:authentication="username">Username</a></li>
 
             </ul>        

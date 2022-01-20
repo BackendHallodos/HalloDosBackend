@@ -1,7 +1,6 @@
 package com.backend.hallodos.services;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import java.util.Objects;
 
 import javax.transaction.Transactional;
@@ -13,7 +12,6 @@ import com.backend.hallodos.dto.SignInResponseDto;
 import com.backend.hallodos.dto.SignupDto;
 import com.backend.hallodos.exceptions.AuthFailException;
 import com.backend.hallodos.exceptions.CustomExceptoon;
-import com.backend.hallodos.model.AuthToken;
 import com.backend.hallodos.model.AuthTokenDos;
 import com.backend.hallodos.model.Dosen;
 import com.backend.hallodos.model.Mahasiswa;
