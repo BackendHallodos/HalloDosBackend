@@ -1,21 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
     <title>Document</title>
 </head>
+
 <body>
     <h1>Dashboard Doseeeeeeennnnn!!!!!!11</h1>
-    <form th:object="${loginData}" th:action ="@{/afterDashboardDosen}" method="post">
+    <form th:object="${loginData}" th:action="@{/afterDashboardDosen}" method="post">
         <div class="form-group">
-            <input type="text" name="email_dosen" id="email_dosen" class="form-control" required th:field="*{email_dosen}">
+            <input type="hidden" name="email_dosen" id="email_dosen" class="form-control" required
+                th:field="*{email_dosen}">
         </div>
-    
+
         <div class="mt-2">
             <button type="submit" class="btn btn-primary">Ke profil dosen</button>
         </div>
     </form>
+
+    <!-- <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+            aria-valuemax="100"></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+            aria-valuemax="100"></div>
+    </div> -->
+
+    <br>
+    <h1>My Dashboard</h1>
+    <br>
+
+    <div th:each="dataDosen:${loginData}">
+        <img th:src="@{${dataDosen.photos}}"/>
+        <h1 th:text="${dataDosen.full_name}"></h1><br>
+        <h3 th:text="${dataDosen.major}"></h3><br>
+    </div>
+
+    <div th:each="dataDosen:${loginData}">
+        <h3>Rating</h3>
+        <div class="progress" style="margin-left: 250px; margin-right: 250px;" >
+            <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0"
+                aria-valuemax="100">75</div>
+        </div>
+        <br>
+        <h3>Total Consultation</h3>
+        <h6 th:text="${dataDosen.totalConsultation}"></h6>
+        <br>
+        <h3>Total Income</h3>
+        <h6 th:text="${dataDosen.balance}"></h6>
+    </div>
+    
+
+    <!-- <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+      </div> -->
+
+
+    <!-- <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
+            aria-valuemax="100">25%</div>
+    </div> -->
+
+
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>
+
 </html>

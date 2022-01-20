@@ -15,8 +15,10 @@ import com.backend.hallodos.exceptions.CustomExceptoon;
 import com.backend.hallodos.model.AuthToken;
 import com.backend.hallodos.model.Dosen;
 import com.backend.hallodos.model.Mahasiswa;
+import com.backend.hallodos.model.Topik;
 import com.backend.hallodos.repository.DosenRepository;
 import com.backend.hallodos.repository.MahasiswaRepository;
+import com.backend.hallodos.repository.TopikRepository;
 import com.backend.hallodos.services.AuthService;
 import com.backend.hallodos.services.UserService;
 
@@ -42,14 +44,8 @@ public class MahasiswaController {
 	@Autowired
 	MahasiswaRepository mahasiswaRepo;
 
-	// get untuk memunculkan profil mahasiswa
-	@GetMapping("/profilemahasiswa")
-	public String Mahasiswa(Model model) {
-		// model.addAttribute("fotoUser",new Mahasiswa());
-		List<Mahasiswa> profil = mahasiswaRepo.findByStatus("ON");
-		model.addAttribute("data", profil);
-		return ("profilMaha");
-	}
+	@Autowired
+	TopikRepository topikRepo;
 
 	@PostMapping("/mahasiswa/save")
 	public RedirectView saveUser(Mahasiswa mahasiswa,
@@ -83,7 +79,7 @@ public class MahasiswaController {
 
 	// setelah masuk login, ini untuk menerima data dari login
 	@PostMapping("/afterLogin")
-	public String masukk(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model) {
+	public String masukk(@ModelAttribute("loginData") Mahasiswa mahasiswa, Dosen dosen, Topik topik, Model model) {
 		Mahasiswa maha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
 		if (Objects.isNull(maha)) {
 			return "kenihilan";
@@ -105,19 +101,22 @@ public class MahasiswaController {
 		if (Objects.isNull(token)) {
 			throw new CustomExceptoon("token is not present!");
 		}
+		List<Dosen> topDos = dosenRepo.findByRating();
+		List<Topik> topikDashboard = topikRepo.findAll();
 		model.addAttribute("loginData", maha);
+		model.addAttribute("dataTopDos", topDos);
+		model.addAttribute("dataTopik", topikDashboard);
 		return "dashboarduser";
 	}
 
 	@GetMapping("/dashboarduser")
-	public String getDashboardDosen(@ModelAttribute("loginData") Mahasiswa mahasiswa, Dosen dosen, Model model) {
+	public String getDashboardDosen(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model) {
 		Mahasiswa maha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
-		Dosen topDos = dosenRepo.findByRating();
 		if (maha == null) {
 			return "kenihilan";
 		} else {
 			model.addAttribute("loginData", maha);
-			model.addAttribute("dataTopDos", topDos);
+
 			return "dashboarduser";
 		}
 	}
@@ -132,6 +131,43 @@ public class MahasiswaController {
 			return "profilmahasiswa";
 		}
 
+	}@GetMapping("/profilmahasiswa")
+	public String getprofilmahasiswa(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model) {
+		Mahasiswa maha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+		if (maha == null) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("loginData", maha);
+			return "editProfileMahasiswa";
+		}
+	}
+
+	@PostMapping("/editProfileMhsResult")
+	public String editProfileMhsResult(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model) {
+		Mahasiswa dataMhsBaru = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+		System.out.println("isinya adalah"+mahasiswa.getEmail_mahasiswa());
+		if (dataMhsBaru == null) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("loginData", dataMhsBaru);
+			// mahasiswaRepo.saveAndFlush(data)
+			mahasiswaRepo.save(dataMhsBaru);
+			return "editProfileMahasiswa";
+		}
+	}
+
+	@PostMapping("/saveProfileMhs")
+	public String saveProfileMhs(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model) {
+		Mahasiswa dataMhsBaru = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+		System.out.println("isinya adalah"+mahasiswa.getEmail_mahasiswa());
+		if (dataMhsBaru == null) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("loginData", dataMhsBaru);
+			// mahasiswaRepo.saveAndFlush(data)
+			mahasiswaRepo.save(dataMhsBaru);
+			return "profilemahasiswa";
+		}
 	}
 
 	// untuk forgot
@@ -248,4 +284,13 @@ public class MahasiswaController {
 		return "user";
 
 	}
+
+	// get untuk memunculkan profil mahasiswa
+	// @GetMapping("/profilemahasiswa")
+	// public String Mahasiswa(Model model) {
+	// // model.addAttribute("fotoUser",new Mahasiswa());
+	// List<Mahasiswa> profil = mahasiswaRepo.findByStatus("ON");
+	// model.addAttribute("data", profil);
+	// return ("profilMaha");
+	// }
 }

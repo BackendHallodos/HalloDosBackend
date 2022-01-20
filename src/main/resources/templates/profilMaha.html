@@ -4,55 +4,88 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <div class="container emp-profile">
-    <form method="post">
+    <form method="post" th:object="${dataMaha}" th:action ="@{/changeProfilMaha}">
         <div class="row">
-            <div class="col-md-4">
-                <!-- <div class="profile-img">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
-                            <div class="file btn btn-lg btn-primary">
-                                Change Photo
-                                <input type="file" name="file"/>
-                            </div>
-                        </div> -->
-            </div>
+            <!-- <div class="col-md-4">
+                <div class="profile-img">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+                        alt="" />
+                    <div class="file btn btn-lg btn-primary">
+                        Change Photo
+                        <input type="file" name="file" />
+                    </div>
+                </div>
+            </div> -->
             <div class="col-md-6">
                 <div class="profile-head">
-                    <td>
-                        <tr th:each=profil:${data}>
-                            <td th:text=${profil.username}>Nama </td>
-                    </td>
-                    <br>
-                    <td>
-                        <tr th:each=profil:${data}>
-                            <td th:text=${profil.full_name}>Nama </td>
-                    </td>
-                    <br>
-                    <td>
-                        <tr th:each=profil:${data}>
-                            <td th:text=${profil.email_mahasiswa}>Nama </td>
-                    </td>
-                    <br>
-                    <td>
-                        <tr th:each=profil:${data}>
-                            <td th:text=${profil.gender}>Nama </td>
-                    </td>
-                    <br>
-                    <td>
-                        <tr th:each=profil:${data}>
-                            <td th:text=${profil.alamat}>Nama </td>
-                    </td>
-                    <br>
-                    <td>
-                        <tr th:each=profil:${data}>
-                            <td th:text=${profil.asal_sekolah}>Nama </td>
-                    </td>
-                    <br>
-                    <td>
-                        <tr th:each=profil:${data}>
-                            <td th:text=${profil.program_study}>Nama </td>
-                    </td>
-                    </h6>
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Username</label>
+                        </div>
+                        <div class="col-md-6" th:each=profil:${dataMaha} >
+                            <label th:text=${profil.username}></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Full name</label>
+                        </div>
+                        <div class="col-md-6" th:each=profil:${dataMaha} >
+                            <label th:text=${profil.full_name}></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Email</label>
+                        </div>
+                        <div class="col-md-6" th:each=profil:${dataMaha} >
+                            <label th:text=${profil.email_mahasiswa}></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Gender</label>
+                        </div>
+                        <div class="col-md-6" th:each=profil:${dataMaha} >
+                            <label th:text=${profil.gender}></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Address</label>
+                        </div>
+                        <div class="col-md-6" th:each=profil:${dataMaha} >
+                            <label th:text=${profil.alamat}></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>School</label>
+                        </div>
+                        <div class="col-md-6" th:each=profil:${dataMaha} >
+                            <label th:text=${profil.asal_sekolah}></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Program Study</label>
+                        </div>
+                        <div class="col-md-6" th:each=profil:${dataMaha} >
+                            <label th:text=${profil.program_study}></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Datebrith</label>
+                        </div>
+                        <div class="col-md-6" th:each=profil:${dataMaha} >
+                            <label th:text=${profil.datebrith}></label>
+                        </div>
+                    </div>
+
+                    
+            
+                    <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
                                 aria-controls="home" aria-selected="true">About</a>
@@ -61,11 +94,11 @@
                             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
                                 aria-controls="profile" aria-selected="false">Timeline</a>
                         </li>
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
             <div class="col-md-2">
-                <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />
+                <input type="submit"   href="/changeMahaProfil" class="profile-edit-btn"  value="Edit Profile" />
             </div>
         </div>
         <!-- <div class="row">
@@ -86,16 +119,12 @@
         <div class="col-md-8">
             <div class="tab-content profile-tab" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-md-6">
                             <label>Username</label>
                         </div>
-                        <div class="col-md-6">
-                            <!-- <td>
-                                                <td>
-                                                <tr th:each= profil:${data}>
-                                             <td th:text = ${profil.username}</td>
-                                            </td> -->
+                        <div class="col-md-6" th:each=profil:${dataMaha} >
+                            <label th:text=${profil.asal_sekolah}></label>
                         </div>
                     </div>
                     <div class="row">
@@ -178,9 +207,9 @@
                             <p>Your detail description</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
-</div>
+    </div>
 </form>
 </div>

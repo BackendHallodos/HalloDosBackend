@@ -13,8 +13,8 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Username</th>
                     <th>Foto</th>
+                    <th>Username</th>
                     <th>Nama Dosen</th>
                     <th>Jurusan Dosen</th>
                     <th>Email</th>
@@ -28,8 +28,8 @@
             </thead>
             <tbody>
                 <tr th:each="dataDosen:${loginData}">
+                    <img th:src="@{${dataDosen.photos}}"/>
                     <td th:text="${dataDosen.username}"></td>
-                    <td th:text="${dataDosen.photos}"></td>
                     <td th:text="${dataDosen.full_name}"></td>
                     <td th:text="${dataDosen.major}"></td>
                     <td th:text="${dataDosen.email_dosen}"></td>

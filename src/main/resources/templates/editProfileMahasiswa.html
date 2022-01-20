@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h1>hello editProfileMhsResult</h1>
+<form th:object="${loginData}" th:action="@{/saveProfile}" method="post">
+    <div class="form-group">
+        <input type="text" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
+            th:field="*{email_mahasiswa}">
+    </div>
+
+    <div class="mt-2">
+        <button type="submit" class="btn btn-primary">save!</button>
+    </div>
+</form>
+</body>
+</html>
