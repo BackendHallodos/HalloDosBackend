@@ -27,5 +27,6 @@ public interface DosenRepository extends JpaRepository<Dosen, String> {
     @Query(value = "SELECT * FROM dosen where password=?1", nativeQuery = true)
     public Dosen findByPassword(String password);
 
+
     // public Dosen findAnswerbyInputan(String answerUser, String dosenEmail);
 }

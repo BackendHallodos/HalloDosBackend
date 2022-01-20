@@ -17,41 +17,15 @@
             </div>
             <div class="col-md-6">
                 <div class="profile-head">
-                    <td>
-                        <tr th:each=profil:${data}>
-                            <td th:text=${profil.username}>Nama </td>
-                    </td>
-                    <br>
-                    <td>
-                        <tr th:each=profil:${data}>
-                            <td th:text=${profil.full_name}>Nama </td>
-                    </td>
-                    <br>
-                    <td>
-                        <tr th:each=profil:${data}>
-                            <td th:text=${profil.email_mahasiswa}>Nama </td>
-                    </td>
-                    <br>
-                    <td>
-                        <tr th:each=profil:${data}>
-                            <td th:text=${profil.gender}>Nama </td>
-                    </td>
-                    <br>
-                    <td>
-                        <tr th:each=profil:${data}>
-                            <td th:text=${profil.alamat}>Nama </td>
-                    </td>
-                    <br>
-                    <td>
-                        <tr th:each=profil:${data}>
-                            <td th:text=${profil.asal_sekolah}>Nama </td>
-                    </td>
-                    <br>
-                    <td>
-                        <tr th:each=profil:${data}>
-                            <td th:text=${profil.program_study}>Nama </td>
-                    </td>
-                    </h6>
+                    <tr th:each=profil:${data}>
+                        <td th:text=${profil.username}></td>
+                        <td th:text=${profil.full_name}></td>
+                        <td th:text=${profil.email_mahasiswa}></td>
+                        <td th:text=${profil.gender}></td>
+                        <td th:text=${profil.alamat}></td>
+                        <td th:text=${profil.asal_sekolah}></td>
+                        <td th:text=${profil.program_study}></td>
+                    </tr>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
