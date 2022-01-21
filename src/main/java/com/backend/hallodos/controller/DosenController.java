@@ -225,62 +225,117 @@ public class DosenController {
 	// untuk forgot Dosen
 	@GetMapping("/forgotDosen")
 	public String getforgot(Model model) {
-	model.addAttribute("forgotData", new Dosen());
-	return "forgotDosen";
+		model.addAttribute("forgotData", new Dosen());
+		return "forgotDosen";
 	}
+
 	// //ini untuk cari email dan menerima data email, untuk mencari data security
 	// question dan memunculkannya
 	@PostMapping("/cariEmailDosen")
-	public String cariEmail (@ModelAttribute("forgotData")Dosen dosen, Model
-	model) {
-	String dsnEmail = dosen.getEmail_dosen();
-	Dosen user = dosenRepo.findBySecQuest(dsnEmail);
-	if (user== null){
-	//error 404
-	return "kenihilan";
-	}else{
-	user.setSecurity_answer("");
-	model.addAttribute("dataDosen",user);
-	return "qSecDosen";
+	public String cariEmail(@ModelAttribute("forgotData") Dosen dosen, Model model) {
+		String dsnEmail = dosen.getEmail_dosen();
+		Dosen user = dosenRepo.findBySecQuest(dsnEmail);
+		if (user == null) {
+			// error 404
+			return "kenihilan";
+		} else {
+			user.setSecurity_answer("");
+			model.addAttribute("dataDosen", user);
+			return "qSecDosen";
+		}
 	}
-}
 
 	// //ini menerima jawaban dari security question dari mahasiswa
 	// }
 	@PostMapping("/securityResultDosen")
-	public String secResult (@ModelAttribute("dataDosen")Dosen dosen, Model
-	model) {
-	String dosenEmail = dosen.getEmail_dosen();
-	String answerUser = dosen.getSecurity_answer();
-	Dosen result = dosenRepo.findAnswerbyInputan2(answerUser,dosenEmail);
-	if(result == null){
-	return "kenihilan";
-	}else{
-	model.addAttribute("newDataPassword",result);
-	model.addAttribute("dataForgot",result );
-	return "nPasswordDosen";
+	public String secResult(@ModelAttribute("dataDosen") Dosen dosen, Model model) {
+		String dosenEmail = dosen.getEmail_dosen();
+		String answerUser = dosen.getSecurity_answer();
+		Dosen result = dosenRepo.findAnswerbyInputan2(answerUser, dosenEmail);
+		if (result == null) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("newDataPassword", result);
+			model.addAttribute("dataForgot", result);
+			return "nPasswordDosen";
+		}
 	}
-	}
-	//setelah menerima jawaban dari mahasiswa, form ini untuk memasukan form
+
+	// setelah menerima jawaban dari mahasiswa, form ini untuk memasukan form
 	// untuk membuat password baru
 	@PostMapping("/newPasswordDosen")
-	public String newPassword(@ModelAttribute("newDataPassword")Dosen dosen,
-	SignInDto signupDto, Model model){
-	Dosen user = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
-	// String mhsemail = mahasiswa.getEmail_mahasiswa();
+	public String newPassword(@ModelAttribute("newDataPassword") Dosen dosen,
+			SignInDto signupDto, Model model) {
+		Dosen user = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		// String mhsemail = mahasiswa.getEmail_mahasiswa();
 
-	String encryptedpassword = dosen.getPassword();
-	try {
-	encryptedpassword = UserService.hashPassword(dosen.getPassword());
-	} catch (NoSuchAlgorithmException e) {
-	e.printStackTrace();
+		String encryptedpassword = dosen.getPassword();
+		try {
+			encryptedpassword = UserService.hashPassword(dosen.getPassword());
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		user.setPassword(encryptedpassword);
+
+		dosenRepo.save(user);
+		// model.addAttribute("PasswordBaru", mahasiswa);
+		return "redirect:/loginDosen";
 	}
-	user.setPassword(encryptedpassword);
 
-	dosenRepo.save(user);
-	// model.addAttribute("PasswordBaru", mahasiswa);
-	return "redirect:/loginDosen";
+	@PostMapping("/saldoDosen")
+	public String getSaldoDosen(@ModelAttribute("loginData") Dosen dosen, Model model) {
+		Dosen saldo = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		if (Objects.isNull(saldo)) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("loginData", saldo);
+			return "saldoDosen";
+		}
 	}
 
+	// @GetMapping("/halamanSaldoDosen")
+	// public String getHalamanSaldoDosen(@ModelAttribute("loginData") Dosen dosen,
+	// Model model) {
+	// Dosen saldo = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+	// if (saldo == null) {
+	// return "kenihilan";
+	// } else {
+	// model.addAttribute("loginData", saldo);
+	// return "saldoDosen";
+	// }
+	// }
+
+	// @GetMapping("/saldoDosen")
+	// public String showPage (Model model){
+	// model.addAttribute("saldo", new Dosen());
+	// return "saldoDosen";
+	// }
+
+	@PostMapping("/editsaldoDosen")
+	public String saldoTerbaru(@ModelAttribute("loginData") Dosen dosen, Model model) {
+		Dosen saldoDosen = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+
+		// ambil data balance
+		int balanceDosen = saldoDosen.getBalance();
+
+		int balanceInput = 0;
+
+		// ambil data dari input
+		balanceInput = dosen.getBalance();
+
+		int newBalance = balanceDosen - balanceInput;
+
+		System.out.println(balanceDosen);
+		System.out.println(balanceInput);
+		System.out.println(newBalance);
+
+		model.addAttribute("loginData", saldoDosen);
+
+		saldoDosen.setBalance(newBalance);
+		dosenRepo.save(saldoDosen);
+
+		return "saldoDosen";
+
+	}
 
 }

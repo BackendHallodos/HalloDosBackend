@@ -32,10 +32,14 @@ public interface DosenRepository extends JpaRepository<Dosen, String> {
     // public Dosen findAnswerbyInputan(String answerUser, String dosenEmail);
 
     // public Dosen findAnswerbyInputan(String answerUser, String dosenEmail);
-    @Query(value="SELECT * FROM dosen where email_dosen=?1 ",nativeQuery=true)
+    @Query(value = "SELECT * FROM dosen where email_dosen=?1 ", nativeQuery = true)
     public Dosen findBySecQuest(String dsnEmail);
 
-    //untuk jawaban dari user forget pasword
+    // untuk jawaban dari user forget pasword
     @Query(value = "SELECT * FROM dosen where security_answer=?1 AND email_dosen=?2", nativeQuery = true)
-    public Dosen findAnswerbyInputan2(String security_answer,String email_dosen);
+    public Dosen findAnswerbyInputan2(String security_answer, String email_dosen);
+
+    @Query(value = "SELECT * FROM dosen WHERE balance=?1 AND email_dosen=?2", nativeQuery = true)
+    Dosen findBySaldoBaru(int saldoBaru);
+
 }
