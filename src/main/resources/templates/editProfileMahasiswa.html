@@ -1,22 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-<h1>hello editProfileMhsResult</h1>
-<form th:object="${loginData}" th:action="@{/saveProfile}" method="post">
-    <div class="form-group">
-        <input type="text" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
-            th:field="*{email_mahasiswa}">
-    </div>
 
-    <div class="mt-2">
-        <button type="submit" class="btn btn-primary">save!</button>
-    </div>
-</form>
+<body>
+    <h1>hello editProfileMhsResult</h1>
+    <form th:object="${loginData}" th:action="@{/saveProfile}" method="post">
+        <div class="form-group">
+            <input type="text" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
+                th:field="*{email_mahasiswa}">
+            <form th:object="${loginData}" th:action="@{/editProfileMhsResult}" method="post">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label><br>
+                    <input type="text" class="form-control" required th:field="*{username}">
+                </div>
+                <div class="mb-3">
+                    <label for="fullname" class="form-label">Full Name</label><br>
+                    <input type="text" class="form-control" required th:field="*{full_name}">
+                </div>
+                <div class="mb-3">
+                    <label for="birthdate" class="form-label">Birth date</label><br>
+                    <input type="text" class="form-control" required th:field="*{datebrith}">
+                </div>
+                <div class="mb-3">
+                    <label for="gender" class="form-label">Gender</label><br>
+                    <input type="text" class="form-control" required th:field="*{gender}">
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label><br>
+                    <input type="text" class="form-control" required th:field="*{alamat}">
+                </div>
+                <div class="mb-3">
+                    <label for="school/univ" class="form-label">School/University</label><br>
+                    <input type="text" class="form-control" required th:field="*{asal_sekolah}">
+                </div>
+                <div class="mb-3">
+                    <label for="major" class="form-label">Major</label><br>
+                    <input type="text" class="form-control" required th:field="*{program_study}">
+                </div>
+                <div class="mb-3">
+                    <label for="photo" class="form-label">Photo</label><br>
+                    <input type="text" class="form-control" required th:field="*{photos}">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+
+            <div class="mt-2">
+                <button type="submit" class="btn btn-primary">save!</button>
+            </div>
+    </form>
 </body>
+
 </html>

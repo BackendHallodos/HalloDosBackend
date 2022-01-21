@@ -145,21 +145,26 @@ public class MahasiswaController {
 	@PostMapping("/editProfileMhsResult")
 	public String editProfileMhsResult(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model) {
 		Mahasiswa dataMhsBaru = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
-		System.out.println("isinya adalah"+mahasiswa.getEmail_mahasiswa());
 		if (dataMhsBaru == null) {
 			return "kenihilan";
 		} else {
 			model.addAttribute("loginData", dataMhsBaru);
-			// mahasiswaRepo.saveAndFlush(data)
+			dataMhsBaru.setUsername(mahasiswa.getUsername());
+			dataMhsBaru.setEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+			dataMhsBaru.setFull_name(mahasiswa.getFull_name());
+			dataMhsBaru.setDatebrith(mahasiswa.getDatebrith());
+			dataMhsBaru.setGender(mahasiswa.getGender());
+			dataMhsBaru.setAlamat(mahasiswa.getAlamat());
+			dataMhsBaru.setAsal_sekolah(mahasiswa.getAsal_sekolah());
+			dataMhsBaru.setProgram_study(mahasiswa.getProgram_study());
 			mahasiswaRepo.save(dataMhsBaru);
-			return "editProfileMahasiswa";
+			return "profilmahasiswa";
 		}
 	}
 
 	@PostMapping("/saveProfileMhs")
 	public String saveProfileMhs(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model) {
 		Mahasiswa dataMhsBaru = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
-		System.out.println("isinya adalah"+mahasiswa.getEmail_mahasiswa());
 		if (dataMhsBaru == null) {
 			return "kenihilan";
 		} else {
