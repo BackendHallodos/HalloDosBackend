@@ -63,6 +63,7 @@ public class UserService {
         }
 
         Mahasiswa user = new Mahasiswa (
+            maha.getId(),
             signupDto.getUsername(),
             encryptedpassword,null,
             maha.getSecurity_question(),maha.getSecurity_answer(),null,null,

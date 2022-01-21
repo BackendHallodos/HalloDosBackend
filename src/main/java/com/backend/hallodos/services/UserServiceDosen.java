@@ -54,6 +54,7 @@ public class UserServiceDosen {
         }
 
         Dosen dosenuser = new Dosen (
+            dosen.getId(),
             dosen.getUsername(),
             dosen.getEmail_dosen(),
             null,

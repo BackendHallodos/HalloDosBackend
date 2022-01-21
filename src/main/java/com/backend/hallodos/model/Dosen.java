@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Dosen {
     @Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 	private String username;
 	private String email_dosen;
 	private String full_name;

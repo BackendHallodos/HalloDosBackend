@@ -76,6 +76,7 @@ public class DosenController {
 		}
 
 		Dosen dosenuser = new Dosen(
+				dosen.getId(),
 				dosen.getUsername(),
 				dosen.getEmail_dosen(),
 				null,
@@ -154,7 +155,41 @@ public class DosenController {
 			model.addAttribute("loginData", dosenAll);
 			return "profilDosen";
 		}
+	}
 
+	@GetMapping("/profildosen")
+	public String getProfilDosen(@ModelAttribute("loginData") Dosen dosen, Model model) {
+		Dosen dosenProfile = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		if (dosenProfile == null) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("loginData", dosenProfile);
+			return "editProfileDosen";
+		}
+	}
+
+	@PostMapping("/editProfileDsnResult")
+	public String editProfileDsnResult(@ModelAttribute("loginData") Dosen dosen, Model model) {
+		Dosen dataDsnBaru = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		if (dataDsnBaru == null) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("loginData", dataDsnBaru);
+			dataDsnBaru.setUsername(dosen.getUsername());
+			dataDsnBaru.setEmail_dosen(dosen.getEmail_dosen());
+			dataDsnBaru.setFull_name(dosen.getFull_name());
+			dataDsnBaru.setGraduateFrom(dosen.getGraduateFrom());
+			dataDsnBaru.setMajor(dosen.getMajor());
+			dataDsnBaru.setAffiliate(dosen.getAffiliate());
+			dataDsnBaru.setBirthdate(dosen.getBirthdate());
+			dataDsnBaru.setPhoneNumber(dosen.getPhoneNumber());
+			dataDsnBaru.setGender(dosen.getGender());
+			dataDsnBaru.setAddress(dosen.getAddress());
+			dataDsnBaru.setBank(dosen.getBank());
+			dataDsnBaru.setAccountNumber(dosen.getAccountNumber());
+			dosenRepo.save(dataDsnBaru);
+			return "profilDosen";
+		}
 	}
 	// @PostMapping("/operData")
 	// public String operData (@ModelAttribute("loginData") Dosen dosen, Model
@@ -178,12 +213,13 @@ public class DosenController {
 	// return modelAndView;
 	// }
 
-	@GetMapping("/profilDosen")
-	public String getProfilDosen(@ModelAttribute("loginData") Dosen dosen, Model model) {
-		Dosen profilDosen = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
-		model.addAttribute("dataDosen", profilDosen);
-		return "profilDosen";
-	}
+	// @GetMapping("/profilDosen")
+	// public String getProfilDosen(@ModelAttribute("loginData") Dosen dosen, Model
+	// model) {
+	// Dosen profilDosen = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+	// model.addAttribute("dataDosen", profilDosen);
+	// return "profilDosen";
+	// }
 
 	// untuk forgot Dosen
 	// @GetMapping("/forgotDosen")

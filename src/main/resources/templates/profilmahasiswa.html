@@ -54,9 +54,8 @@
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" required th:field="*{username}">
                         </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">E-mail</label>
-                            <input type="text" class="form-control" required th:field="*{email_mahasiswa}">
+                        <div>
+                            <input type="hidden" class="form-control" required th:field="*{email_mahasiswa}">
                         </div>
                         <div class="mb-3">
                             <label for="fullname" class="form-label">Full Name</label>

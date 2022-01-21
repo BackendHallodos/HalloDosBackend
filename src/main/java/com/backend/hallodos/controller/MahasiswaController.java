@@ -131,7 +131,9 @@ public class MahasiswaController {
 			return "profilmahasiswa";
 		}
 
-	}@GetMapping("/profilmahasiswa")
+	}
+
+	@GetMapping("/profilmahasiswa")
 	public String getprofilmahasiswa(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model) {
 		Mahasiswa maha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
 		if (maha == null) {
@@ -262,6 +264,7 @@ public class MahasiswaController {
 		}
 
 		Mahasiswa user = new Mahasiswa(
+				maha.getId(),
 				signupDto.getUsername(),
 				encryptedpassword, null,
 				maha.getSecurity_question(),

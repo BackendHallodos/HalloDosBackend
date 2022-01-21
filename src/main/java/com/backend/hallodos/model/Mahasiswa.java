@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
 public class Mahasiswa {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 	private String username;
 	private String password;
 	private String full_name;
