@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 
 import java.util.Objects;
 
+import com.backend.hallodos.dto.SignInDto;
 import com.backend.hallodos.dto.SignupDosenDto;
 import com.backend.hallodos.exceptions.AuthFailException;
 import com.backend.hallodos.exceptions.CustomExceptoon;
@@ -222,64 +223,64 @@ public class DosenController {
 	// }
 
 	// untuk forgot Dosen
-	// @GetMapping("/forgotDosen")
-	// public String getforgot(Model model) {
-	// model.addAttribute("forgotData", new Dosen());
-	// return "forgotDosen";
-	// }
+	@GetMapping("/forgotDosen")
+	public String getforgot(Model model) {
+	model.addAttribute("forgotData", new Dosen());
+	return "forgotDosen";
+	}
 	// //ini untuk cari email dan menerima data email, untuk mencari data security
 	// question dan memunculkannya
-	// @PostMapping("/cariEmail")
-	// public String cariEmail (@ModelAttribute("forgotData")Dosen dosen, Model
-	// model) {
-	// String dsnEmail = dosen.getEmail_dosen();
-	// Mahasiswa user = mahasiswaRepo.findBySecQuest(dsnEmail);
-	// if (user== null){
-	// //error 404
-	// return "kenihilan";
-	// }else{
-	// user.setSecurity_answer("");
-	// model.addAttribute("dataDosen",user);
-	// return "qSecDosen";
-	// }
+	@PostMapping("/cariEmailDosen")
+	public String cariEmail (@ModelAttribute("forgotData")Dosen dosen, Model
+	model) {
+	String dsnEmail = dosen.getEmail_dosen();
+	Dosen user = dosenRepo.findBySecQuest(dsnEmail);
+	if (user== null){
+	//error 404
+	return "kenihilan";
+	}else{
+	user.setSecurity_answer("");
+	model.addAttribute("dataDosen",user);
+	return "qSecDosen";
+	}
+}
 
 	// //ini menerima jawaban dari security question dari mahasiswa
 	// }
-	// @PostMapping("/securityResultDos")
-	// public String secResult (@ModelAttribute("dataDosen")Dosen dosen, Model
-	// model) {
-	// String dosenEmail = dosen.getEmail_dosen();
-	// // Mahasiswa user = mahasiswaRepo.findBySecQuest(mhsemail);
-	// // String questionUser = mahasiswa.getSequrity_question();
-	// String answerUser = dosen.getSecurity_answer();
-	// Dosen result = dosenRepo.findAnswerbyInputan(answerUser,dosenEmail);
-	// if(result == null){
-	// return "kenihilan";
-	// }else{
-	// model.addAttribute("newDataPassword",result);
-	// model.addAttribute("dataForgot",result );
-	// return "nPasswordDosen";
-	// }
-	// }
-	// //setelah menerima jawaban dari mahasiswa, form ini untuk memasukan form
+	@PostMapping("/securityResultDosen")
+	public String secResult (@ModelAttribute("dataDosen")Dosen dosen, Model
+	model) {
+	String dosenEmail = dosen.getEmail_dosen();
+	String answerUser = dosen.getSecurity_answer();
+	Dosen result = dosenRepo.findAnswerbyInputan2(answerUser,dosenEmail);
+	if(result == null){
+	return "kenihilan";
+	}else{
+	model.addAttribute("newDataPassword",result);
+	model.addAttribute("dataForgot",result );
+	return "nPasswordDosen";
+	}
+	}
+	//setelah menerima jawaban dari mahasiswa, form ini untuk memasukan form
 	// untuk membuat password baru
-	// @PostMapping("/newPassword")
-	// public String newPassword(@ModelAttribute("newDataPassword")Dosen dosen,
-	// SignInDto signupDto, Model model){
-	// Dosen user = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
-	// // String mhsemail = mahasiswa.getEmail_mahasiswa();
+	@PostMapping("/newPasswordDosen")
+	public String newPassword(@ModelAttribute("newDataPassword")Dosen dosen,
+	SignInDto signupDto, Model model){
+	Dosen user = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+	// String mhsemail = mahasiswa.getEmail_mahasiswa();
 
-	// String encryptedpassword = dosen.getPassword();
-	// try {
-	// encryptedpassword = UserService.hashPassword(dosen.getPassword());
-	// } catch (NoSuchAlgorithmException e) {
-	// e.printStackTrace();
-	// }
-	// user.setPassword(encryptedpassword);
+	String encryptedpassword = dosen.getPassword();
+	try {
+	encryptedpassword = UserService.hashPassword(dosen.getPassword());
+	} catch (NoSuchAlgorithmException e) {
+	e.printStackTrace();
+	}
+	user.setPassword(encryptedpassword);
 
-	// dosenRepo.save(user);
-	// // model.addAttribute("PasswordBaru", mahasiswa);
-	// return "redirect:/loginDosen";
-	// }
+	dosenRepo.save(user);
+	// model.addAttribute("PasswordBaru", mahasiswa);
+	return "redirect:/loginDosen";
+	}
+
 
 }
