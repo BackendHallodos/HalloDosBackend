@@ -1,7 +1,6 @@
 package com.backend.hallodos.controller;
 
 import java.security.NoSuchAlgorithmException;
-
 import java.util.Objects;
 
 import com.backend.hallodos.dto.SignInDto;
@@ -14,6 +13,7 @@ import com.backend.hallodos.model.Mahasiswa;
 import com.backend.hallodos.repository.DosenRepository;
 import com.backend.hallodos.repository.MahasiswaRepository;
 import com.backend.hallodos.services.AuthService;
+import com.backend.hallodos.services.SearchService;
 import com.backend.hallodos.services.UserService;
 import com.backend.hallodos.services.UserServiceDosen;
 
@@ -35,6 +35,8 @@ public class DosenController {
 
 	@Autowired
 	AuthService authService;
+
+	@Autowired SearchService searchService;
 
 	// untuk dasboard
 	// dan autentication
@@ -281,6 +283,5 @@ public class DosenController {
 	// model.addAttribute("PasswordBaru", mahasiswa);
 	return "redirect:/loginDosen";
 	}
-
 
 }
