@@ -23,6 +23,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class DosenController {
@@ -282,6 +285,18 @@ public class DosenController {
 		return "redirect:/loginDosen";
 	}
 
+	@PostMapping("/saldoDosenTarik")
+	public String getSaldoDosenTarik(@ModelAttribute("loginData") Dosen dosen, Model model) {
+		Dosen saldo = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		if (Objects.isNull(saldo)) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("loginData", saldo);
+			// saldo.setBalance(0);
+			return "saldoDosenTarik";
+		}
+	}
+
 	@PostMapping("/saldoDosen")
 	public String getSaldoDosen(@ModelAttribute("loginData") Dosen dosen, Model model) {
 		Dosen saldo = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
@@ -289,6 +304,7 @@ public class DosenController {
 			return "kenihilan";
 		} else {
 			model.addAttribute("loginData", saldo);
+			saldo.setBalance(0);
 			return "saldoDosen";
 		}
 	}
@@ -312,15 +328,15 @@ public class DosenController {
 	// }
 
 	@PostMapping("/editsaldoDosen")
+	// @Reqye
 	public String saldoTerbaru(@ModelAttribute("loginData") Dosen dosen, Model model) {
 		Dosen saldoDosen = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
 
 		// ambil data balance
 		int balanceDosen = saldoDosen.getBalance();
 
-		int balanceInput = 0;
-
 		// ambil data dari input
+		int balanceInput = 0;
 		balanceInput = dosen.getBalance();
 
 		int newBalance = balanceDosen - balanceInput;
@@ -336,6 +352,12 @@ public class DosenController {
 
 		return "saldoDosen";
 
+	}
+
+	@RequestMapping(value = "/editSaldoDosen", method = RequestMethod.POST)
+	public String penarikanSaldoDosen(Model model, String tarikSaldo) {
+		System.out.println(tarikSaldo);
+		return "saldoDosen";
 	}
 
 }

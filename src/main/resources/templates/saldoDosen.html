@@ -24,18 +24,28 @@
       </table>
     </div>
 
+    <form th:object="${loginData}" th:action="@{/saldoDosenTarik}" method="post">
+      <div class="form-group">
+        <input type="hidden" name="email_dosen" id="email_dosen" class="form-control" required th:field="*{email_dosen}" />
+      </div>
+
+      <div class="mt-2">
+        <button type="submit" class="btn btn-primary">tarik</button>
+      </div>
+    </form>
+
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Tarik Saldo</button>
+    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Tarik Saldo</button> -->
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Tarik Saldo</h5>
           </div>
           <div class="modal-body">
-            <form th:object="${loginData}" th:action="@{/editsaldoDosen}" method="post">
+            <form th:object="${loginData}" th:action="@{/editsaldoDosen}" th:method="POST">
               <div class="mb-3">
                 <label for="username" class="form-label">Penarikan</label>
                 <input type="text" id="tariksaldo" name="tariksaldo" class="form-control" required th:field="*{balance}" />
@@ -51,7 +61,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- <script src="../static/js/bootstrap.bundle.min.js"></script> -->
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
