@@ -21,16 +21,23 @@
         </div>
     </form>
 
-    <br>
-    <a href="/searchpage"> nyari </a>
-    <br>
+    <form th:object="${loginData}" th:action="@{/searchpage}" method="post">
+        <div class="form-group">
+            <input type="hidden" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
+                th:field="*{email_mahasiswa}">
+        </div>
+
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Nyari</button>
+        </div>
+    </form>
 
     <br>
     <h1>My Dashboard</h1>
     <br>
 
     <div th:each="loginData:${loginData}">
-        <img th:src="@{${loginData.photos}}"/>
+        <img th:src="@{${loginData.photos}}" style="width:250px;height:250px;"/>
         <h1 th:text="${loginData.full_name}"></h1><br>
         <h3 th:text="${loginData.program_study}"></h3><br>
     </div>
@@ -44,21 +51,12 @@
         <div class="card" style="background-color: orange;">
             <!-- <img src="..." class="card-img-top" alt="..."> -->
             <div class="card-body">
-                <div>
-                    <h5 th:text="${dataTop.full_name}" style="font-weight: bold;"></h5>
-                </div>
-                <div>
-                    <h6 th:text="${dataTop.major}"></h6>
-                </div>
-                <div>
-                    <h6 th:text="${dataTop.price}"></h6>
-                </div>
-                <div>
-                    <h6 th:text="${dataTop.totalConsultation}"></h6>
-                </div>
-                <div>
-                    <h6 th:text="${dataTop.rating}"></h6>
-                </div>
+                <img th:src="@{${dataTop.photos}}" style="width:100px;height:100px;"/>
+                <h3 th:text="${dataTop.full_name}" style="font-weight: bold;"></h3>
+                <h4 th:text="${dataTop.major}"></h4>
+                <h4 th:text="${dataTop.price}"></h4>
+                <h4 th:text="${dataTop.totalConsultation}"></h4>
+                <h4 th:text="${dataTop.rating}"></h4>
                 <br>
             </div>
         </div>

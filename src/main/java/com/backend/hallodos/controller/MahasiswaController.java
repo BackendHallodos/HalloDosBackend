@@ -20,15 +20,18 @@ import com.backend.hallodos.repository.DosenRepository;
 import com.backend.hallodos.repository.MahasiswaRepository;
 import com.backend.hallodos.repository.TopikRepository;
 import com.backend.hallodos.services.AuthService;
+import com.backend.hallodos.services.SearchService;
 import com.backend.hallodos.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
@@ -46,6 +49,9 @@ public class MahasiswaController {
 
 	@Autowired
 	TopikRepository topikRepo;
+
+	@Autowired
+	SearchService searchService;
 
 	@PostMapping("/mahasiswa/save")
 	public RedirectView saveUser(Mahasiswa mahasiswa,
@@ -120,6 +126,52 @@ public class MahasiswaController {
 			return "dashboarduser";
 		}
 	}
+
+	// @PostMapping("/searchPage")
+	// public String searchPage(@ModelAttribute("loginData") Mahasiswa mahasiswa,
+	// Model model) {
+	// Mahasiswa maha =
+	// mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+	// Keyword keywordBaru = new Keyword();
+	// keywordBaru.setKeyWord(keywordBaru.getKeyWord());
+	// if (Objects.isNull(maha)) {
+	// return "kenihilan";
+	// } else {
+	// model.addAttribute("loginData", maha);
+	// model.addAttribute("dataSearch", keywordBaru);
+	// return "searchpage";
+	// }
+	// }
+
+	// @PostMapping("/searchfor")
+	// public String searchfor(@ModelAttribute("loginData") Mahasiswa mahasiswa,
+	// Model model) {
+	// Mahasiswa maha =
+	// mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+	// List<Dosen> searchResult = dosenRepo.findAllDosenByWord(dataInputSearch);
+	// String dataInputSearch = "";
+	// if (Objects.isNull(maha)) {
+	// return "kenihilan";
+	// } else {
+	// model.addAttribute("loginData", maha);
+	// model.addAttribute("dataSearchInput", dataInputSearch);
+	// return "searchpage";
+	// }
+	// }
+
+	// @PostMapping("/searchResult")
+	// public String searchResult(@ModelAttribute("loginData") Mahasiswa
+	// mahasiswa,@ModelAttribute("dataSearchInput") Dosen dosen, Model model) {
+	// Mahasiswa maha =
+	// mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+	// List<Dosen> dataResult = dosenRepo.findAllDosenByWord();
+	// if (Objects.isNull(maha)) {
+	// return "kenihilan";
+	// } else {
+	// model.addAttribute("loginData", maha);
+	// return "searchpage";
+	// }
+	// }
 
 	@PostMapping("/afterDashboardMahasiswa")
 	public String afterDashboardMahasiswa(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model) {
@@ -291,6 +343,41 @@ public class MahasiswaController {
 	public String getUser(Model model) {
 		return "user";
 
+	}
+
+	@RequestMapping("/searchpage")
+	public String searchPage(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model,
+			@Param("keyword") String keyword) {
+		Mahasiswa emailMahasiswa = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+		List<Dosen> listDosen = searchService.listDosenAll(keyword);
+		model.addAttribute("loginData", emailMahasiswa);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("listDosen", listDosen);
+		return "searchpage";
+	}
+
+	@PostMapping("/keDetailDsn")
+	public String keDetailDsn(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model, Dosen dosen) {
+		Mahasiswa maha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+		Dosen dsnOnClicked = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		if (Objects.isNull(maha) && Objects.isNull(dsnOnClicked)) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("loginData", maha);
+			model.addAttribute("DataDsn", dsnOnClicked);
+			return "detaildosen";
+		}
+
+	}
+
+	@GetMapping("/detaildosen")
+	public String detaildosen(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model, Dosen dosen) {
+		Mahasiswa emailMaha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+		Dosen dsnOnClicked = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		System.out.println("email maha " + emailMaha);
+		model.addAttribute("loginData", emailMaha);
+		model.addAttribute("DataDsn", dsnOnClicked);
+		return "detaildosen";
 	}
 
 	// get untuk memunculkan profil mahasiswa

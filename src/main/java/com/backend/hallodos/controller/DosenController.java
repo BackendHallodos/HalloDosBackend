@@ -1,7 +1,6 @@
 package com.backend.hallodos.controller;
 
 import java.security.NoSuchAlgorithmException;
-
 import java.util.Objects;
 
 import com.backend.hallodos.dto.SignInDto;
@@ -14,6 +13,7 @@ import com.backend.hallodos.model.Mahasiswa;
 import com.backend.hallodos.repository.DosenRepository;
 import com.backend.hallodos.repository.MahasiswaRepository;
 import com.backend.hallodos.services.AuthService;
+import com.backend.hallodos.services.SearchService;
 import com.backend.hallodos.services.UserService;
 import com.backend.hallodos.services.UserServiceDosen;
 
@@ -38,6 +38,8 @@ public class DosenController {
 
 	@Autowired
 	AuthService authService;
+
+	@Autowired SearchService searchService;
 
 	// untuk dasboard
 	// dan autentication
@@ -296,7 +298,6 @@ public class DosenController {
 			return "saldoDosenTarik";
 		}
 	}
-
 	@PostMapping("/saldoDosen")
 	public String getSaldoDosen(@ModelAttribute("loginData") Dosen dosen, Model model) {
 		Dosen saldo = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
