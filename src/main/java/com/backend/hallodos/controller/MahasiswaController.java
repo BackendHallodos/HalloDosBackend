@@ -15,9 +15,11 @@ import com.backend.hallodos.exceptions.CustomExceptoon;
 import com.backend.hallodos.model.AuthToken;
 import com.backend.hallodos.model.Dosen;
 import com.backend.hallodos.model.Mahasiswa;
+import com.backend.hallodos.model.Schedule;
 import com.backend.hallodos.model.Topik;
 import com.backend.hallodos.repository.DosenRepository;
 import com.backend.hallodos.repository.MahasiswaRepository;
+import com.backend.hallodos.repository.ScheduleRepository;
 import com.backend.hallodos.repository.TopikRepository;
 import com.backend.hallodos.services.AuthService;
 import com.backend.hallodos.services.SearchService;
@@ -52,6 +54,9 @@ public class MahasiswaController {
 
 	@Autowired
 	SearchService searchService;
+
+	@Autowired
+	ScheduleRepository scheduleRepo;
 
 	@PostMapping("/mahasiswa/save")
 	public RedirectView saveUser(Mahasiswa mahasiswa,
@@ -374,18 +379,61 @@ public class MahasiswaController {
 	public String detaildosen(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model, Dosen dosen) {
 		Mahasiswa emailMaha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
 		Dosen dsnOnClicked = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
-		System.out.println("email maha " + emailMaha);
 		model.addAttribute("loginData", emailMaha);
 		model.addAttribute("DataDsn", dsnOnClicked);
 		return "detaildosen";
 	}
 
-	// get untuk memunculkan profil mahasiswa
-	// @GetMapping("/profilemahasiswa")
-	// public String Mahasiswa(Model model) {
-	// // model.addAttribute("fotoUser",new Mahasiswa());
-	// List<Mahasiswa> profil = mahasiswaRepo.findByStatus("ON");
-	// model.addAttribute("data", profil);
-	// return ("profilMaha");
-	// }
+	@PostMapping("/keBookingDsn")
+	public String keBookingDsn(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model, Dosen dosen) {
+		Mahasiswa maha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+		Dosen dsnOnClicked = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		if (Objects.isNull(maha) && Objects.isNull(dsnOnClicked)) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("loginData", maha);
+			model.addAttribute("DataDsn", dsnOnClicked);
+			return "bookingpayment";
+		}
+	}
+	
+	@GetMapping("/bookingdosen")
+	public String bookingdosen(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model, Dosen dosen) {
+		Mahasiswa emailMaha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+		Dosen dsnOnClicked = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		model.addAttribute("loginData", emailMaha);
+		model.addAttribute("DataDsn", dsnOnClicked);
+		model.addAttribute("dataSchedule", new Schedule());
+		return "bookingpayment";
+	}
+
+	@PostMapping("/schedulebooking")
+	public String schedulebooking(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model, Dosen dosen, Schedule schedule) {
+		Mahasiswa maha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+		Dosen dsnOnClicked = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		long idDsn = dsnOnClicked.getId();
+		long idMhs = maha.getId();
+		Schedule dataSch = scheduleRepo.insertDataIncludeForeign(idDsn,idMhs);
+		
+		Schedule dataSchedule = new Schedule(
+				schedule.getId(),
+				dataSch.getDosenId(),
+				dataSch.getMhsId(),
+				schedule.getDay(),
+				schedule.getTimeSessionStart(),
+				null
+				);
+
+		scheduleRepo.save(dataSchedule);
+	
+		if (Objects.isNull(dataSchedule) && Objects.isNull(maha) && Objects.isNull(dsnOnClicked)) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("loginData", maha);
+			model.addAttribute("DataDsn", dsnOnClicked);
+			model.addAttribute("scheduleData", dataSchedule);
+			return "paymentResult"; //ke Result payment.html
+		}
+	}
+	
 }

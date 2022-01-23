@@ -64,9 +64,9 @@
             </div>
             <!-- th:each=dataTop:${listDosen} -->
             <form th:action="@{/keDetailDsn}" method="post">
-                <input type="text" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
+                <input type="hidden" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
                     th:value="${loginData.email_mahasiswa}">
-                <input type="text" name="email_dosen" id="email_dosen" class="form-control" required
+                <input type="hidden" name="email_dosen" id="email_dosen" class="form-control" required
                     th:value="${dataTop.email_dosen}">
                 <button type="submit" class="btn btn-warning">See details</button>
             </form>

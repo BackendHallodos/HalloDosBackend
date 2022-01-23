@@ -18,23 +18,34 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="schedule")
+@Table(name = "schedule")
 @Entity
 public class Schedule {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "username", referencedColumnName = "username")
-	private Dosen username;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "dosenId", referencedColumnName = "id")
+	private Dosen dosenId;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "mhsId", referencedColumnName = "id")
+	private Mahasiswa mhsId;
+
+	private String day;
+
+	private String timeSessionStart;
+
+	private String timeSessionEnd;
 	
-	private Date date;
-	
-	@ManyToOne(cascade = CascadeType.MERGE)
-	 @JoinColumn(name = "id_topik", referencedColumnName = "id")
-	private Topik id_topik;
-	
+	// 19:00 - 20:00 //timeStart = 19:00
+	// schedule.setTimeEnd (timeStart +1)
+
+	// ||idSession || // days // hours //
+	// || =========||==================//===============//================//
+	// ||1 || // Mon // 19:00 - 20:00 //
+	// ||2 || // Tue // 19:00 - 20:00 //
 
 }
