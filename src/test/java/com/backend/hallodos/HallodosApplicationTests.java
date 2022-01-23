@@ -9,5 +9,4 @@ class HallodosApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

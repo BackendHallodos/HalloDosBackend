@@ -76,11 +76,12 @@ public class MahasiswaController {
 		return "index";
 	}
 
+	//proses penggabungan dengan frontend
 	// untuk login mahasiswa
 	@GetMapping("/loginMahasiswa")
 	public String getIndex(Model model) {
 		model.addAttribute("loginData", new Mahasiswa());
-		return "loginMahasiswa";
+		return "LoginMahasiswa";
 	}
 
 	// setelah masuk login, ini untuk menerima data dari login

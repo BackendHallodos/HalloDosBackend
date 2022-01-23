@@ -56,7 +56,7 @@ public class DosenController {
 	@GetMapping("/registerDosen")
 	public String registerdosen(Model model) {
 		model.addAttribute("dataDosen", new Dosen());
-		return "registerDosen";
+		return "RegisterAdvisors";
 	}
 
 	// Setelah register Dosen
@@ -102,7 +102,7 @@ public class DosenController {
 	@GetMapping("/loginDosen")
 	public String getIndex(Model model) {
 		model.addAttribute("loginData", new Dosen());
-		return "loginDosen";
+		return "LoginDosen";
 	}
 
 	// setelah masuk login, ini untuk menerima data dari login dosen
@@ -194,35 +194,6 @@ public class DosenController {
 			return "profilDosen";
 		}
 	}
-	// @PostMapping("/operData")
-	// public String operData (@ModelAttribute("loginData") Dosen dosen, Model
-	// model){
-	// // String dsnEmail = dosen.getEmail_dosen();
-	// // Dosen result = dosenRepo.findByEmail_dosen(dsnEmail);
-	// Dosen profilDosen = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
-
-	// if(profilDosen == null){
-	// return "kenihilan";
-	// }else{
-	// model.addAttribute("dataDosen", profilDosen);
-	// return "redirect:/profilDosen";
-	// }
-	// }
-
-	// @GetMapping("/dashboard")
-	// public ModelAndView index() {
-	// ModelAndView modelAndView = new ModelAndView();
-	// modelAndView.setViewName("index");
-	// return modelAndView;
-	// }
-
-	// @GetMapping("/profilDosen")
-	// public String getProfilDosen(@ModelAttribute("loginData") Dosen dosen, Model
-	// model) {
-	// Dosen profilDosen = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
-	// model.addAttribute("dataDosen", profilDosen);
-	// return "profilDosen";
-	// }
 
 	// untuk forgot Dosen
 	@GetMapping("/forgotDosen")

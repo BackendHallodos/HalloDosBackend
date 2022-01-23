@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+.rating i {
+  font-size: 18px;
+  color: rgb(255, 121, 11);
+  margin-bottom: 5px;
+}
+.btns {
+  margin-top: 20px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.btns button {
+  background: rgb(255, 121, 11);
+  width: 100%;
+  padding: 9px 0px;
+  outline: none;
+  border: 2px solid rgb(255, 121, 11);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 400;
+  color: #000000;
+  transition: all 0.3s linear;
+}
+.btns button:first-child {
+  background: none;
+  margin-right: 5px;
+}
+.btns button:last-child {
+  color: #fff;
+  margin-left: 5px;
+}
+.btns button:first-child:hover {
+  background: rgb(255, 121, 11);
+  color: #fff;
+}
+.btns button:hover {
+  color: #fff;
+}
+.row {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(-1 * var(--bs-gutter-y));
+  margin-right: calc(-0.5 * var(--bs-gutter-x));
+  margin-left: calc(-0.5 * var(--bs-gutter-x));
+}
+
+.box {
+  border: 1px solid #cfd8dc;
+  color: #9e9e9e;
+  cursor: pointer;
+}
+
+.fa-star {
+  color: #e0e0e0;
+  cursor: pointer;
+}
+
+.fa-star.active {
+  color: #ffb300;
+}
+
+.icon-star {
+  color: #000;
+}
+
+.col .card {
+  padding: 12px;
+  margin: 0px 5px 12px 5px;
+}
+@media (max-width: 1045px) {
+  .container .box {
+    width: calc(50% - 10px);
+    margin-bottom: 20px;
+  }
+}
+@media (max-width: 710px) {
+  .container .box {
+    width: 100%;
+  }
+}

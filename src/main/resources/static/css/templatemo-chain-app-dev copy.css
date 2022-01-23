@@ -392,7 +392,7 @@ header
   position: absolute;
   width: 100%;
   height: 1px;
-  background-color: #4b8ef1;
+  background-color: #ffa500;
   content: "";
   left: 50%;
   bottom: -20px;
@@ -404,7 +404,7 @@ header
 }
 
 .header-area {
-  background-color: transparent;
+  background-color: white;
   border-bottom: 1px solid rgba(42, 42, 42, 0.2);
   position: absolute;
   left: 0px;
@@ -503,7 +503,7 @@ header
 
 .header-area .main-nav .nav li:hover a,
 .header-area .main-nav .nav li a.active {
-  color: #4b8ef1 !important;
+  color: #ffa500 !important;
 }
 
 .header-area .main-nav .nav li:last-child a.active {
@@ -512,7 +512,7 @@ header
 
 .background-header .main-nav .nav li:hover a,
 .background-header .main-nav .nav li a.active {
-  color: #4b8ef1 !important;
+  color: #ffa500 !important;
   opacity: 1;
 }
 
@@ -715,7 +715,7 @@ header
 }
 
 .header-area.header-sticky .nav li a.active {
-  color: #4b8ef1;
+  color: #ffa500;
 }
 
 @media (max-width: 1200px) {
@@ -976,7 +976,7 @@ Banner Style
 
 .main-banner:after {
   content: "";
-  background-image: url(../images/slider-left-dec.png);
+  /* background-image: url(../images/slider-left-dec.png); */
   background-repeat: no-repeat;
   background-size: contain;
   position: absolute;
@@ -1888,13 +1888,13 @@ PopUp
 
 .btn {
   padding: 10px 20px;
-  background: #4b8ef1;
+  background: rgb(255, 121, 11);
   color: #fff;
   transition: all 0.3s;
 }
 
 .btn_red {
-  background: #4b8ef1;
+  background: rgb(255, 121, 11);
   color: #fff;
 }
 
