@@ -22,10 +22,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class DosenController {
@@ -39,7 +37,8 @@ public class DosenController {
 	@Autowired
 	AuthService authService;
 
-	@Autowired SearchService searchService;
+	@Autowired
+	SearchService searchService;
 
 	// untuk dasboard
 	// dan autentication
@@ -258,6 +257,17 @@ public class DosenController {
 		return "redirect:/loginDosen";
 	}
 
+	@PostMapping("/saldoDosen")
+	public String getSaldoDosen(@ModelAttribute("loginData") Dosen dosen, Model model) {
+		Dosen dosenAll = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		if (Objects.isNull(dosenAll)) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("loginData", dosenAll);
+			return "saldoDosen";
+		}
+	}
+
 	@PostMapping("/saldoDosenTarik")
 	public String getSaldoDosenTarik(@ModelAttribute("loginData") Dosen dosen, Model model) {
 		Dosen saldo = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
@@ -265,33 +275,43 @@ public class DosenController {
 			return "kenihilan";
 		} else {
 			model.addAttribute("loginData", saldo);
-			// saldo.setBalance(0);
 			return "saldoDosenTarik";
 		}
 	}
-	@PostMapping("/saldoDosen")
-	public String getSaldoDosen(@ModelAttribute("loginData") Dosen dosen, Model model) {
-		Dosen saldo = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
-		if (Objects.isNull(saldo)) {
+
+	@PostMapping("/editsaldoDosen")
+	public String saldoTerbaru(@ModelAttribute("loginData") Dosen dosen, Model model) {
+		Dosen dataDosen = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+
+		// ambil data balance
+		int balanceDosen = dataDosen.getBalance();
+
+		// ambil data dari input
+		int balanceInput = dosen.getBalance();
+
+		int newBalance = 0;
+		if (balanceInput > balanceDosen) {
+			return "withdrawalerror";
+		} else {
+			newBalance = balanceDosen - balanceInput;
+			dataDosen.setBalance(newBalance);
+			dosenRepo.save(dataDosen);
+		}
+
+		return "redirect:/saldoDosen/" + dataDosen.getId();
+
+	}
+
+	@GetMapping("/saldoDosen/{id}")
+	public String saldoDosenPage(@PathVariable("id") long dosen, Model model) {
+		Dosen dosenProfile = dosenRepo.findById(dosen).get();
+		if (dosenProfile == null) {
 			return "kenihilan";
 		} else {
-			model.addAttribute("loginData", saldo);
-			saldo.setBalance(0);
+			model.addAttribute("loginData", dosenProfile);
 			return "saldoDosen";
 		}
 	}
-
-	// @GetMapping("/halamanSaldoDosen")
-	// public String getHalamanSaldoDosen(@ModelAttribute("loginData") Dosen dosen,
-	// Model model) {
-	// Dosen saldo = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
-	// if (saldo == null) {
-	// return "kenihilan";
-	// } else {
-	// model.addAttribute("loginData", saldo);
-	// return "saldoDosen";
-	// }
-	// }
 
 	// @GetMapping("/saldoDosen")
 	// public String showPage (Model model){
@@ -299,37 +319,22 @@ public class DosenController {
 	// return "saldoDosen";
 	// }
 
-	@PostMapping("/editsaldoDosen")
-	// @Reqye
-	public String saldoTerbaru(@ModelAttribute("loginData") Dosen dosen, Model model) {
-		Dosen saldoDosen = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+	// @GetMapping("/halamanSaldoDosen")
+	// public String getHalamanSaldoDosen(@ModelAttribute("loginData") Dosen dosen,
+	// Model model) {
+	// Dosen dataDosen = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+	// if (dataDosen == null) {
+	// return "kenihilan";
+	// } else {
+	// model.addAttribute("loginData", dataDosen);
+	// return "saldoDosen";
+	// }
+	// }
 
-		// ambil data balance
-		int balanceDosen = saldoDosen.getBalance();
-
-		// ambil data dari input
-		int balanceInput = 0;
-		balanceInput = dosen.getBalance();
-
-		int newBalance = balanceDosen - balanceInput;
-
-		System.out.println(balanceDosen);
-		System.out.println(balanceInput);
-		System.out.println(newBalance);
-
-		model.addAttribute("loginData", saldoDosen);
-
-		saldoDosen.setBalance(newBalance);
-		dosenRepo.save(saldoDosen);
-
-		return "saldoDosen";
-
-	}
-
-	@RequestMapping(value = "/editSaldoDosen", method = RequestMethod.POST)
-	public String penarikanSaldoDosen(Model model, String tarikSaldo) {
-		System.out.println(tarikSaldo);
-		return "saldoDosen";
-	}
+	// @RequestMapping(value = "/editSaldoDosen", method = RequestMethod.POST)
+	// public String penarikanSaldoDosen(Model model, String tarikSaldo) {
+	// System.out.println(tarikSaldo);
+	// return "saldoDosen";
+	// }
 
 }

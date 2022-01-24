@@ -133,6 +133,46 @@ public class MahasiswaController {
 		}
 	}
 
+	// @PostMapping("/searchPage")
+	// public String searchPage(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model) {
+	// 	Mahasiswa maha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+	// 	Keyword keywordBaru = new Keyword();
+	// 	keywordBaru.setKeyWord(keywordBaru.getKeyWord());
+	// 	if (Objects.isNull(maha)) {
+	// 		return "kenihilan";
+	// 	} else {
+	// 		model.addAttribute("loginData", maha);
+	// 		model.addAttribute("dataSearch", keywordBaru);
+	// 		return "searchpage";
+	// 	}
+	// }
+
+	// @PostMapping("/searchfor")
+	// public String searchfor(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model) {
+	// 	Mahasiswa maha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+	// 	List<Dosen> searchResult = dosenRepo.findAllDosenByWord(dataInputSearch);
+	// 	String dataInputSearch = "";
+	// 	if (Objects.isNull(maha)) {
+	// 		return "kenihilan";
+	// 	} else {
+	// 		model.addAttribute("loginData", maha);
+	// 		model.addAttribute("dataSearchInput", dataInputSearch);
+	// 		return "searchpage";
+	// 	}
+	// }
+
+	// @PostMapping("/searchResult")
+	// public String searchResult(@ModelAttribute("loginData") Mahasiswa mahasiswa,@ModelAttribute("dataSearchInput") Dosen dosen, Model model) {
+	// 	Mahasiswa maha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+	// 	List<Dosen> dataResult = dosenRepo.findAllDosenByWord();
+	// 	if (Objects.isNull(maha)) {
+	// 		return "kenihilan";
+	// 	} else {
+	// 		model.addAttribute("loginData", maha);
+	// 		return "searchpage";
+	// 	}
+	// }
+	
 	@PostMapping("/afterDashboardMahasiswa")
 	public String afterDashboardMahasiswa(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model) {
 		Mahasiswa maha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
