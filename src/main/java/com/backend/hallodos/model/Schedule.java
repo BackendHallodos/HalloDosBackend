@@ -26,11 +26,11 @@ public class Schedule {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "dosenId", referencedColumnName = "id")
 	private Dosen dosenId;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "mhsId", referencedColumnName = "id")
 	private Mahasiswa mhsId;
 
@@ -39,7 +39,15 @@ public class Schedule {
 	private String timeSessionStart;
 
 	private String timeSessionEnd;
-	
+
+	public Schedule(Dosen dosenId, Mahasiswa mhsId, String day, String timeSessionStart, String timeSessionEnd) {
+		this.dosenId = dosenId;
+		this.mhsId = mhsId;
+		this.day = day;
+		this.timeSessionStart = timeSessionStart;
+		this.timeSessionEnd = timeSessionEnd;
+	}
+
 	// 19:00 - 20:00 //timeStart = 19:00
 	// schedule.setTimeEnd (timeStart +1)
 
