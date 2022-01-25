@@ -1,7 +1,14 @@
 package com.backend.hallodos.controller;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.backend.hallodos.dto.SignInDto;
 import com.backend.hallodos.dto.SignupDosenDto;
@@ -10,20 +17,28 @@ import com.backend.hallodos.exceptions.CustomExceptoon;
 import com.backend.hallodos.model.AuthTokenDos;
 import com.backend.hallodos.model.Dosen;
 import com.backend.hallodos.model.Mahasiswa;
+import com.backend.hallodos.model.Schedule;
 import com.backend.hallodos.repository.DosenRepository;
 import com.backend.hallodos.repository.MahasiswaRepository;
+import com.backend.hallodos.repository.ScheduleRepository;
 import com.backend.hallodos.services.AuthService;
 import com.backend.hallodos.services.SearchService;
 import com.backend.hallodos.services.UserService;
 import com.backend.hallodos.services.UserServiceDosen;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class DosenController {
@@ -39,6 +54,9 @@ public class DosenController {
 
 	@Autowired
 	SearchService searchService;
+
+	@Autowired
+	ScheduleRepository scheduleRepo;
 
 	// untuk dasboard
 	// dan autentication
@@ -161,6 +179,103 @@ public class DosenController {
 			return "profilDosen";
 		}
 	}
+
+	@PostMapping("/consultpage")
+	public String consultPage(@ModelAttribute("loginData") Dosen dosen, Model model) {
+		Dosen dosenAll = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		List<Schedule> jadwalKu = scheduleRepo.findByDosenId(dosenAll.getId());
+		if (Objects.isNull(dosenAll)) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("loginData", dosenAll);
+			model.addAttribute("listConsult", jadwalKu);
+			return "consultpagedsn";
+		}
+	}
+
+	@PostMapping("/otwchat")
+	public String otwchat(@ModelAttribute("loginData") Dosen dosen, Mahasiswa mahasiswa, Schedule schedule,
+			Model model) {
+		Dosen dosenAll = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		Mahasiswa dataMaha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+
+		long idDosenTsb = dosenAll.getId();
+		long idMhsTsb = dataMaha.getId();
+		Schedule skejul = scheduleRepo.findByForeignId(idDosenTsb, idMhsTsb);
+		if (Objects.isNull(dosenAll)) {
+			return "kenihilan";
+		} else {
+			skejul.setStatus("Accepted");
+			scheduleRepo.save(skejul);
+			model.addAttribute("loginData", dosenAll);
+			model.addAttribute("listConsult", skejul);
+
+			return "redirect:/kechat";
+		}
+	}
+
+	@GetMapping ("/kechat")
+	ResponseEntity<Void> redirect() {
+		return ResponseEntity.status(HttpStatus.FOUND)
+				.location(URI.create("http://864c-149-110-56-201.ngrok.io"))
+				.build();
+	}
+
+	// @RequestMapping(value = "/redirect", method = RequestMethod.GET)
+	// public void method(HttpServletResponse httpServletResponse) {
+	// httpServletResponse.setHeader("Location", projectUrl);
+	// httpServletResponse.setStatus(302);
+	// }
+
+	// @RequestMapping(value="/kechat", method = RequestMethod.GET)
+	// public String processForm(HttpServletRequest request,
+	// BindingResult result, ModelMap model) {
+	// String redirectUrl = request.getScheme() + "://a373-149-110-56-201.ngrok.io";
+	// return "redirect:" + redirectUrl;
+	// }
+
+	// @GetMapping("/kechat/")
+	// public String processForm(HttpServletRequest request,
+	// BindingResult result, ModelMap model) {
+	// String redirectUrl = request.getScheme() + "://a373-149-110-56-201.ngrok.io";
+	// return "redirect:" + redirectUrl;
+	// }
+
+	@PostMapping("/declineConsult")
+	public String declineResult(@ModelAttribute("loginData") Dosen dosen, Mahasiswa mahasiswa, Schedule schedule,
+			Model model) {
+		Dosen dosenAll = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		Mahasiswa dataMaha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+		List<Schedule> jadwalKu = scheduleRepo.findByDosenId(dosenAll.getId());
+		long idDosenTsb = dosenAll.getId();
+		long idMhsTsb = dataMaha.getId();
+		Schedule skejul = scheduleRepo.findByForeignId(idDosenTsb, idMhsTsb);
+		if (Objects.isNull(dosenAll)) {
+			return "kenihilan";
+		} else {
+			skejul.setStatus("Declined");
+			scheduleRepo.delete(skejul);
+			model.addAttribute("loginData", dosenAll);
+			model.addAttribute("listConsult", jadwalKu);
+			return "redirect:/halamanconsult/" + dosenAll.getEmail_dosen();
+		}
+	}
+
+	@GetMapping("/halamanconsult/{Email_dosen}")
+	public String halamanconsult(@PathVariable("Email_dosen") String dosen, Model model) {
+		Dosen dosenProfile = dosenRepo.findByEmail_dosen(dosen);
+		List<Schedule> jadwalKu = scheduleRepo.findByDosenId(dosenProfile.getId());
+		model.addAttribute("loginData", dosenProfile);
+		model.addAttribute("listConsult", jadwalKu);
+		return "consultpagedsn";
+	}
+
+	// return "redirect:/saldoDosen/" + dataDosen.getId();
+
+	// }
+
+	// @GetMapping("/saldoDosen/{id}")
+	// public String saldoDosenPage(@PathVariable("id") long dosen, Model model) {
 
 	@GetMapping("/profildosen")
 	public String getProfilDosen(@ModelAttribute("loginData") Dosen dosen, Model model) {

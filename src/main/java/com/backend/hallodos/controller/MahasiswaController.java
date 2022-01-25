@@ -410,17 +410,31 @@ public class MahasiswaController {
 
 		Mahasiswa maha = mahasiswaRepo.findById(Long.parseLong(mahasiswa)).get();
 		Dosen dsnOnClicked = dosenRepo.findById(Long.parseLong(dosen)).get();
-		// Dosen dsnID = scheduleRepo.insertDataIncludeForeign(dsnOnClicked.getId(),
-		// maha.getId());
-		// dosen.setId(dsnOnClicked.getId();
-		// schedule.setDosenId(dsnOnClicked);
-		// long operDsnId = schedule.getDosenId().getId();
-		// Dosen dsnById = dosenRepo.findDosenById(operDsnId);
-		// schedule.setDosenId(dsnById);
-		// scheduleRepo.save(schedule);
+		// id si ranger = id di database
+		// jika di db memiliki kombinasi idmhs dan dosenmhs yang sama dari input, maka
+		// sebutkan customexceptoon
+		// kalo (find by dosenid & mahasiswa id) not null, book alrady exittst
+		// schedule repo.findByidmhsAnddosenId maha.getID
 
-		// schedule.setMhsId(maha);
+		// Objects.nonNull(mahasiswaRepo.findByEmail_mahasiswa(maha.getEmail_mahasiswa()))
+		// || dosen != null
+		// Objects.nonNull(scheduleRepo.findByForeignId(maha.getId(),
+		// dsnOnClicked.getId()))
+		// mahasiswaRepo.findById(Long.parseLong(mahasiswa)).get() !=null &&
+		// dosenRepo.findById(Long.parseLong(dosen)).get() != null
 
+		// jika id mhs di db == id mhs di input & id dsn di db == id dsn di input, throw
+		// error
+		// if schedule.getdosenId() && schedule.getMhsId() == maha.getId() &&
+		// dosen.getId()
+		// schedule.getDosenId().getId() && schedule.getMhsId().getId() ==
+		// dsnOnClicked.getId() && maha.getId()
+		//
+		// if (maha.getId() == schedule.getMhsId().getId() && dsnOnClicked.getId() ==
+		// schedule.getDosenId().getId()) {
+		// throw new CustomExceptoon("Your book already exists");
+		// // return "kenihilan";
+		// }
 		Schedule dataHasilInput = new Schedule(
 				dsnOnClicked,
 				maha,
@@ -428,22 +442,28 @@ public class MahasiswaController {
 				schedule.getTimeSessionStart(),
 				schedule.getTimeSessionEnd());
 
-		// dataHasilInput.setId(dsnOnClicked.getId());
-		// dataHasilInput.setMhsId(maha.getClass());
-		// dataHasilInput.setId(schedule.getId());
-		// dataHasilInput.setDosenId(dsnOnClicked.getId());
-		// dataHasilInput.setMhsId(maha.getId());
-		// dataHasilInput.setDay(schedule.getDay());
-		// dataHasilInput.getTimeSessionStart(schedule.getTimeSessionStart());
+		List<Schedule> cekdata = scheduleRepo.findByDsnIdAndMhsId(dataHasilInput.getDosenId().getId(),dataHasilInput.getMhsId().getId());
 
-		scheduleRepo.save(dataHasilInput);
-		model.addAttribute("loginData", maha);
-		model.addAttribute("DataDsn", dsnOnClicked);
-		model.addAttribute("dataBook", dataHasilInput);
-		return "paymentResult";
+		if(cekdata.size() >0){
+			throw new CustomExceptoon("Your book already exists");
+		}
+
+		// if (Objects.nonNull(scheduleRepo.findByForeignId(dataHasilInput.getDosenId().getId(), dataHasilInput.getMhsId().getId())) ) {
+		// 	throw new CustomExceptoon("Your book already exists");
+		// 	// return "kenihilan";
+		// }
+
+			dataHasilInput.setStatus("waiting");
+			scheduleRepo.save(dataHasilInput);
+			model.addAttribute("loginData", maha);
+			model.addAttribute("DataDsn", dsnOnClicked);
+			model.addAttribute("dataBook", dataHasilInput);
+			return "paymentResult";
+
+		}
 	}
 
-}
+
 // @GetMapping("/detaildosen")
 // public String detaildosen(@ModelAttribute("loginData") Mahasiswa mahasiswa,
 // Model model, Dosen dosen) {

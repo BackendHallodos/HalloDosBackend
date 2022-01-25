@@ -1,7 +1,5 @@
 package com.backend.hallodos.model;
 
-import java.sql.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,6 +37,8 @@ public class Schedule {
 	private String timeSessionStart;
 
 	private String timeSessionEnd;
+
+	private String status;
 
 	public Schedule(Dosen dosenId, Mahasiswa mhsId, String day, String timeSessionStart, String timeSessionEnd) {
 		this.dosenId = dosenId;
