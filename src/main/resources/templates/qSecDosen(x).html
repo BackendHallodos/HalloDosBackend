@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ <!-- from login start  ! -->
+ <div class="container">
+    <div class="card mx-auto mt-5" style="width: 30vw;">
+        <div class="card-header bg-primary bg-gradient text-light">
+            <h3 class="text-center">Answer Security Question</h3>
+        </div>
+        <div class="card-body">
+            <form th:object="${dataDosen}" th:action ="@{/securityResultDosen}" method="post">
+                <div class="form-group">
+                    <label th:each= dataQ:${dataDosen}>
+                        <td th:text = ${dataQ.security_question}></td>
+                    <input type="text" name="security_answer" id="security_answer" class="form-control" required th:field="*{security_answer}">
+
+                    <input type="hidden" name="email_dosen" id="email_dosen" class="form-control" required th:field="*{email_dosen}">
+                </div>
+            
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+  <!-- from login end  ! --> 
+</body>
+</html>

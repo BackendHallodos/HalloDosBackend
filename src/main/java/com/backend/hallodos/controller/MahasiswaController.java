@@ -239,7 +239,7 @@ public class MahasiswaController {
 	@GetMapping("/forgotMahasiswa")
 	public String getforgot(Model model) {
 		model.addAttribute("forgotData", new Mahasiswa());
-		return "forgotMahasiswa";
+		return "ForgotMahasiswa";
 	}
 
 	// ini untuk cari email dan menerima data email, untuk mencari data security
@@ -254,7 +254,7 @@ public class MahasiswaController {
 		} else {
 			user.setSecurity_answer("");
 			model.addAttribute("datamhs", user);
-			return "qSecMahas";
+			return "qSecMahasiswa";
 		}
 
 		// ini menerima jawaban dari security question dari mahasiswa
@@ -272,7 +272,7 @@ public class MahasiswaController {
 		} else {
 			model.addAttribute("newDataPassword", result);
 			model.addAttribute("dataForgot", result);
-			return "nPasswordMaha";
+			return "nPasswordMahasiswa";
 		}
 	}
 

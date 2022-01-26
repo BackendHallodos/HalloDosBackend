@@ -334,7 +334,6 @@ public class DosenController {
 			return "qSecDosen";
 		}
 	}
-
 	// //ini menerima jawaban dari security question dari mahasiswa
 	// }
 	@PostMapping("/securityResultDosen")
