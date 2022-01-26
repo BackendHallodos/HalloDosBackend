@@ -1,14 +1,9 @@
 package com.backend.hallodos.controller;
 
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Objects;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import com.backend.hallodos.dto.SignInDto;
 import com.backend.hallodos.dto.SignupDosenDto;
@@ -31,14 +26,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class DosenController {
@@ -217,29 +208,9 @@ public class DosenController {
 	@GetMapping ("/kechat")
 	ResponseEntity<Void> redirect() {
 		return ResponseEntity.status(HttpStatus.FOUND)
-				.location(URI.create("http://864c-149-110-56-201.ngrok.io"))
+				.location(URI.create("https://8808-149-110-56-201.ngrok.io"))
 				.build();
 	}
-
-	// @RequestMapping(value = "/redirect", method = RequestMethod.GET)
-	// public void method(HttpServletResponse httpServletResponse) {
-	// httpServletResponse.setHeader("Location", projectUrl);
-	// httpServletResponse.setStatus(302);
-	// }
-
-	// @RequestMapping(value="/kechat", method = RequestMethod.GET)
-	// public String processForm(HttpServletRequest request,
-	// BindingResult result, ModelMap model) {
-	// String redirectUrl = request.getScheme() + "://a373-149-110-56-201.ngrok.io";
-	// return "redirect:" + redirectUrl;
-	// }
-
-	// @GetMapping("/kechat/")
-	// public String processForm(HttpServletRequest request,
-	// BindingResult result, ModelMap model) {
-	// String redirectUrl = request.getScheme() + "://a373-149-110-56-201.ngrok.io";
-	// return "redirect:" + redirectUrl;
-	// }
 
 	@PostMapping("/declineConsult")
 	public String declineResult(@ModelAttribute("loginData") Dosen dosen, Mahasiswa mahasiswa, Schedule schedule,

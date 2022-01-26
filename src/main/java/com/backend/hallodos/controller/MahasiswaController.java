@@ -1,6 +1,7 @@
 package com.backend.hallodos.controller;
 
 import java.io.IOException;
+import java.net.URI;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 // import java.nio.file.Path;
@@ -27,6 +28,8 @@ import com.backend.hallodos.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -339,6 +342,75 @@ public class MahasiswaController {
 		model.addAttribute("loginData", new Mahasiswa());
 		return "loginMahasiswa";
 	}
+
+	@PostMapping("/consultpagemhs")
+	public String consultPagemhs(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model) {
+		Mahasiswa dataMaha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+		List<Schedule> waitingList = scheduleRepo.findByMahaIdWaiting(dataMaha.getId());
+		List<Schedule> acceptedList = scheduleRepo.findByMahaIdAccepted(dataMaha.getId());
+		if (Objects.isNull(dataMaha)) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("loginData", dataMaha);
+			model.addAttribute("listConsult", waitingList);
+			model.addAttribute("listAccepted", acceptedList);
+			return "consultpagemhs";
+		}
+	}
+
+	@PostMapping("/otwchatmhs")
+	public String otwchatmhs(@ModelAttribute("loginData")Mahasiswa mahasiswa, Dosen dosen, Schedule schedule,
+			Model model) {
+		Dosen dosenAll = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		Mahasiswa dataMaha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+		long idDosenTsb = dosenAll.getId();
+		long idMhsTsb = dataMaha.getId();
+		Schedule skejul = scheduleRepo.findByForeignId(idDosenTsb, idMhsTsb);
+		if (Objects.isNull(dataMaha)) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("loginData", dataMaha);
+			model.addAttribute("listConsult", skejul);
+			return "redirect:/kechat";
+		}
+	}
+
+	@GetMapping ("/kechatmhs")
+	ResponseEntity<Void> redirect() {
+		return ResponseEntity.status(HttpStatus.FOUND)
+				.location(URI.create("https://8808-149-110-56-201.ngrok.io"))
+				.build();
+	}
+
+	// @PostMapping("/declineConsult")
+	// public String declineResult(@ModelAttribute("loginData") Dosen dosen, Mahasiswa mahasiswa, Schedule schedule,
+	// 		Model model) {
+	// 	Dosen dosenAll = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+	// 	Mahasiswa dataMaha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+	// 	List<Schedule> jadwalKu = scheduleRepo.findByDosenId(dosenAll.getId());
+	// 	long idDosenTsb = dosenAll.getId();
+	// 	long idMhsTsb = dataMaha.getId();
+	// 	Schedule skejul = scheduleRepo.findByForeignId(idDosenTsb, idMhsTsb);
+	// 	if (Objects.isNull(dosenAll)) {
+	// 		return "kenihilan";
+	// 	} else {
+	// 		skejul.setStatus("Declined");
+	// 		scheduleRepo.delete(skejul);
+	// 		model.addAttribute("loginData", dosenAll);
+	// 		model.addAttribute("listConsult", jadwalKu);
+	// 		return "redirect:/halamanconsult/" + dosenAll.getEmail_dosen();
+	// 	}
+	// }
+
+	// @GetMapping("/halamanconsult/{Email_dosen}")
+	// public String halamanconsult(@PathVariable("Email_dosen") String dosen, Model model) {
+	// 	Dosen dosenProfile = dosenRepo.findByEmail_dosen(dosen);
+	// 	List<Schedule> jadwalKu = scheduleRepo.findByDosenId(dosenProfile.getId());
+	// 	model.addAttribute("loginData", dosenProfile);
+	// 	model.addAttribute("listConsult", jadwalKu);
+	// 	return "consultpagedsn";
+	// }
+
 
 	@GetMapping("/data")
 	public String getData() {

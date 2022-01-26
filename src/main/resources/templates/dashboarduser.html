@@ -32,6 +32,16 @@
         </div>
     </form>
 
+    <form th:object="${loginData}" th:action="@{/consultpagemhs}" method="post">
+        <div class="form-group">
+          <input type="hidden" name="email_dosen" id="email_dosen" class="form-control" required th:field="*{email_mahasiswa}" />
+        </div>
+  
+        <div class="mt-2">
+          <button type="submit" class="btn btn-primary">Ke consultpage</button>
+        </div>
+      </form>
+
     <br>
     <h1>My Dashboard</h1>
     <br>

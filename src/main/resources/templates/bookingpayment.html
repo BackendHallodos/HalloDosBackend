@@ -29,14 +29,48 @@
 
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Day</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required
-                th:field="*{day}">
+            <!-- <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required
+                th:field="*{day}"> -->
+            <select class="form-select " th:field="*{day}">
+                <option th:value="'Monday, January 31, 2022'">Monday, January 31, 2022</option>
+                <option th:value="'Tuesday, February 1, 2022'">Tuesday, February 1, 2022</option>
+                <option th:value="'Wednesday, February 2, 2022'">Wednesday, February 2, 2022</option>
+                <option th:value="'Thursday, February 3, 2022'">Thursday, February 3, 2022</option>
+                <option th:value="'Friday, February 4, 2022'">Friday, February 4, 2022</option>
+                <option th:value="'Saturday, February 5, 2022'">Saturday, February 5, 2022</option>
+                <option th:value="'Sunday, February 6, 2022'">Sunday, February 6, 2022</option>
+            </select>
         </div>
 
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Time</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required
-                th:field="*{timeSessionStart}">
+            <select class="form-select " th:field="*{timeSessionStart}">
+                <option th:value="'1 AM - 2 AM'">1 AM - 2 AM</option>
+                <option th:value="'2 AM - 3 AM'">2 AM - 3 AM</option>
+                <option th:value="'3 AM - 4 AM'">3 AM - 4 AM</option>
+                <option th:value="'4 AM - 5 AM'">4 AM - 5 AM</option>
+                <option th:value="'5 AM - 6 AM'">5 AM - 6 AM</option>
+                <option th:value="'6 AM - 7 AM'">6 AM - 7 AM</option>
+                <option th:value="'7 AM - 8 AM'">7 AM - 8 AM</option>
+                <option th:value="'8 AM - 9 AM'">8 AM - 9 AM</option>
+                <option th:value="'9 AM - 10 AM'">9 AM - 10 AM</option>
+                <option th:value="'11 AM - 12 PM'">11 AM - 12 PM</option>
+                <option th:value="'12 PM - 1 PM'">12 PM - 1 PM</option>
+                <option th:value="'1 PM - 2 PM'">1 PM - 2 PM</option>
+                <option th:value="'2 PM - 3 PM'">2 PM - 3 PM</option>
+                <option th:value="'3 PM - 4 PM'">3 PM - 4 PM</option>
+                <option th:value="'4 PM - 5 PM'">4 PM - 5 PM</option>
+                <option th:value="'5 PM - 6 PM'">5 PM - 6 PM</option>
+                <option th:value="'6 PM - 7 PM'">6 PM - 7 PM</option>
+                <option th:value="'7 PM - 8 PM'">7 PM - 8 PM</option>
+                <option th:value="'8 PM - 9 PM'">8 PM - 9 PM</option>
+                <option th:value="'9 PM - 10 PM'">9 PM - 10 PM</option>
+                <option th:value="'10 PM - 11 PM'">10 PM - 11 PM</option>
+                <option th:value="'11 PM - 12 AM'">11 PM - 12 AM</option>
+                
+                
+
+            </select>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
