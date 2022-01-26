@@ -301,12 +301,12 @@ public class MahasiswaController {
 
 	@GetMapping("/registerMahasiswa")
 	public String register(Model model) {
-		model.addAttribute("data", new Mahasiswa());
-		return "registerMahasiswa";
+		model.addAttribute("dataMaha", new Mahasiswa());
+		return "RegisterMahasiswa";
 	}
 
 	@PostMapping("/afterRegisterMaha")
-	public String daftar(@ModelAttribute("data") SignupDto signupDto, Mahasiswa maha, Model model) {
+	public String daftar(@ModelAttribute("dataMaha") SignupDto signupDto, Mahasiswa maha, Model model) {
 		Dosen dosen = dosenRepo.findByEmail_dosen2(maha.getEmail_mahasiswa());
 		// check if user is already
 		if (Objects.nonNull(mahasiswaRepo.findByEmail_mahasiswa(maha.getEmail_mahasiswa())) || dosen != null) {

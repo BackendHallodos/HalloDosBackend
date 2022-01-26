@@ -11,6 +11,11 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="css/stylelogin.css" />
+    <style type="text/css">
+      .satu {
+      font-size: 20px;
+      }
+    </style>
   </head>
   <body>
     <div class="login-wrapper">
@@ -22,6 +27,7 @@
         <div class="logo"></div>
         <div class="box-form">
           <div class="inner">
+            <h1>Registrasi Dosen</h1>
             <form th:object="${dataDosen}" th:action="@{/afterRegisterDosen}" method="post">
               <div class="form-group">
                 <label for="username" class="form-label">Username</label>
