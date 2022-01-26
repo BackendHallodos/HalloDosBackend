@@ -27,7 +27,7 @@ public interface DosenRepository extends JpaRepository<Dosen, Long> {
     @Query(value = "SELECT * FROM dosen where password=?1", nativeQuery = true)
     public Dosen findByPassword(String password);
 
-    @Query(value = "SELECT * FROM dosen ORDER BY rating DESC LIMIT 3", nativeQuery = true)
+    @Query(value = "SELECT * FROM dosen ORDER BY rating DESC LIMIT 4", nativeQuery = true)
     public List<Dosen> findByRating();
 
     @Query(value = "SELECT * FROM dosen where email_dosen=?1 ", nativeQuery = true)

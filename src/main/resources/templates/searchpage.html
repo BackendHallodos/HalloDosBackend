@@ -7,13 +7,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>Document</title>
+    <title>Search page</title>
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Additional CSS Files -->
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" /> -->
+    <link rel="stylesheet" href="css/templatemo-chain-app-dev.css" />
+    <link rel="stylesheet" href="css/animated.css" />
+    <link rel="stylesheet" href="css/owl.css" />
+    <!-- card css -->
+    <link rel="stylesheet" href="css/cardsearch.css" />
 </head>
 
 <body>
-    <h1>INI SEARCH PAGE</h1>
+    <div th:insert="fragments/header :: header"></div> <br><br><br><br><br>
 
-    <form th:object="${keyword}" th:action="@{/searchpage}" method="post">
+    <!-- code mufqi searchBOX -->
+    <!-- <div class="main-banner"> -->
+    <div class="container">
+        <div class="carousel-inner">
+            <div class="input-group justify-content-center">
+                <form th:object="${keyword}" th:action="@{/searchpage}" method="post">
+                    <input type="hidden" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
+                        th:value="${loginData.email_mahasiswa}">
+                    <!-- <span class="input-group-text" id="addon-wrapping">@</span> &nbsp; -->
+                    <input type="text" class="form-control" placeholder="Search here" size="250" aria-label="Search"
+                        aria-describedby="addon-wrapping" name="keyword" id="keyword" th:value="${keyword}" /> <br>
+                    <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s" style="
+                    visibility: visible;
+                    animation-delay: 0.2s;
+                    animation-name: fadeInUp;">
+                        <h3>Here <span> Advisors related to "<span th:text="${keyword}"></span>"</span></h3>
+                        <p>showing the search results</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
+
+    <!-- ending code mufqi searchBOX -->
+
+    <!-- <form th:object="${keyword}" th:action="@{/searchpage}" method="post">
         <input type="hidden" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
             th:value="${loginData.email_mahasiswa}">
         Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" />
@@ -21,10 +58,58 @@
         <input type="submit" value="Search" />
         <br>
         <h3>Result for:</h3> &nbsp; <h3 th:text="${keyword}"></h3>
-    </form>
+    </form> -->
 
 
-    <div th:each=dataTop:${listDosen}>
+    <!-- code mufqi search card -->
+    <div class="container">
+        <div class="row mb-12">
+            <div class="container col-md col-8 themed-grid-col">
+                <div class="row row-cols-3 row-cols-md-2 g-4 pt-3">
+                    <div class="col resultcard" >
+                        <div class="card" th:each=dataTop:${listDosen}>
+                            <img th:src="@{${dataTop.photos}}" style="width:100%; height: 100%;" class="card-img-top"
+                                alt="..." />
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${dataTop.full_name} ">Card title</h5>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <p th:text="${dataTop.major}"></p>
+                                <p th:text="${dataTop.email_dosen}"></p>
+                                <p th:text="${dataTop.topicId.name_topik}"></p>
+                                <p th:text="${dataTop.price}"></p>
+                                <p th:text="${dataTop.totalConsultation}"></p>
+                                <p th:text="${dataTop.rating}"></p>
+
+                                <p class="card-text">
+                                    <small class="text-muted">Last updated 3 mins ago</small>
+                                    <div class="btns">
+                                        <form th:action="@{/keDetailDsn}" method="post">
+                                            <input type="hidden" name="email_mahasiswa" id="email_mahasiswa"
+                                                class="form-control" required th:value="${loginData.email_mahasiswa}">
+                                            <input type="hidden" name="email_dosen" id="email_dosen"
+                                                class="form-control" required th:value="${dataTop.email_dosen}">
+                                            <button type="submit" class="btn btn-warning">See details</button>
+                                        </form>
+                                        <!-- <button>Read More</button>
+                        <button>Book now</button> -->
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- code mufqi search card -->
+
+    <!-- <div th:each=dataTop:${listDosen}>
         <div class="card" style="background-color: orange;">
             <div class="card-body">
                 <div>
@@ -47,11 +132,20 @@
                 <button type="submit" class="btn btn-warning">See details</button>
             </form>
         </div>
-    </div>
+    </div> -->
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-    </script>
+    </script> -->
+    <!-- Scripts -->
+    <script src="vendor/jquery.min.js"></script>
+    <script src="vendor/bootstrap.bundle.min.js"></script>
+    <script src="js/owl-carousel.js"></script>
+    <script src="js/animation.js"></script>
+    <script src="js/imagesloaded.js"></script>
+    <script src="js/popup.js"></script>
+    <script src="js/custom.js"></script>
+
 </body>
 
 </html>

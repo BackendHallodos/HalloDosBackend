@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+  
+</head> -->
+
+<body>
+
+    <header th:fragment="header">
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+            rel="stylesheet" />
+
+        <title>Chain App Dev - App Landing Page HTML5 Template</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+        <!--
+        
+        TemplateMo 570 Chain App Dev
+        
+        https://templatemo.com/tm-570-chain-app-dev
+        
+        -->
+
+        <!-- Additional CSS Files -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+            integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+            crossorigin="anonymous" />
+        <link rel="stylesheet" href="../css/templatemo-chain-app-dev.css" />
+        <link rel="stylesheet" href="../css/animated.css" />
+        <link rel="stylesheet" href="../css/owl.css" />
+        <!-- <div id="js-preloader" class="js-preloader">
+            <div class="preloader-inner">
+                <span class="dot"></span>
+                <div class="dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div> -->
+        <!-- ***** Preloader End ***** -->
+
+        <!-- ***** Header Area Start ***** -->
+        <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.5s" data-wow-delay="0s">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="main-nav">
+                            <!-- ***** Logo Start ***** -->
+                            <a href="index.html" class="logo">
+                                <img src="../images/halodos_pth-removebg-preview.png" alt="Halo Dos" />
+                            </a>
+                            <!-- ***** Logo End ***** -->
+                            <!-- ***** Menu Start ***** -->
+                            <!-- <form th:object="${loginData}" th:action="@{/afterDashboardMahasiswa}" method="post">
+                                <div class="form-group">
+                                    <input type="hidden" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
+                                        th:field="*{email_mahasiswa}">
+                                </div>
+                        
+                                <div class="mt-2">
+                                    <button type="submit" class="btn btn-primary">Ke profil user</button>
+                                </div>
+                            </form>
+                        
+                            <form th:object="${loginData}" th:action="@{/searchpage}" method="post">
+                                <div class="form-group">
+                                    <input type="hidden" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
+                                        th:field="*{email_mahasiswa}">
+                                </div>
+                        
+                                <div class="mt-2">
+                                    <button type="submit" class="btn btn-primary">Nyari</button>
+                                </div>
+                            </form>
+                        
+                            <form th:object="${loginData}" th:action="@{/consultpagemhs}" method="post">
+                                <div class="form-group">
+                                  <input type="hidden" name="email_dosen" id="email_dosen" class="form-control" required th:field="*{email_mahasiswa}" />
+                                </div>
+                          
+                                <div class="mt-2">
+                                  <button type="submit" class="btn btn-primary">Ke consultpage</button>
+                                </div>
+                              </form> -->
+                            <ul class="nav">
+                                <li class="scroll-to-section">
+                                    <form th:object="${loginData}" th:action="@{/dashboardmhs}" method="post">
+                                        <div class="form-group">
+                                            <input type="hidden" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
+                                                th:field="*{email_mahasiswa}">
+                                        </div>
+                                
+                                        <div class="mt-2">
+                                            <button type="submit" class="btn btn-primary">Home</button>
+                                        </div>
+                                    </form>
+                                </li>
+                                <li class="scroll-to-section">
+                                    <form th:object="${loginData}" th:action="@{/afterDashboardMahasiswa}" method="post">
+                                        <div class="form-group">
+                                            <input type="hidden" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
+                                                th:field="*{email_mahasiswa}">
+                                        </div>
+                                
+                                        <div class="mt-2">
+                                            <button type="submit" class="btn btn-primary">Profile</button>
+                                        </div>
+                                    </form>
+                                </li>
+                                <li class="scroll-to-section">
+                                    <form th:object="${loginData}" th:action="@{/searchpage}" method="post">
+                                        <div class="form-group">
+                                            <input type="hidden" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
+                                                th:field="*{email_mahasiswa}">
+                                        </div>
+                                
+                                        <div class="mt-2">
+                                            <button type="submit" class="btn btn-primary">Search</button>
+                                        </div>
+                                    </form>
+                                </li>
+                                <li class="scroll-to-section">
+                                    <form th:object="${loginData}" th:action="@{/consultpagemhs}" method="post">
+                                        <div class="form-group">
+                                          <input type="hidden" name="email_dosen" id="email_dosen" class="form-control" required th:field="*{email_mahasiswa}" />
+                                        </div>
+                                  
+                                        <div class="mt-2">
+                                          <button type="submit" class="btn btn-primary">Consultations</button>
+                                        </div>
+                                      </form>
+                                </li>
+                                <li>
+                                    <div class="gradient-button">
+                                        <a id="modal_trigger" th:href="@{/}"><i class="fa fa-sign-in-alt"></i> Logout </a>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a class="menu-trigger">
+                                <span>Menu</span>
+                            </a>
+                            <!-- ***** Menu End ***** -->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </header>
+    <!-- ***** Preloader Start ***** -->
+
+    <!-- ***** Header Area End ***** -->
+
+    <!-- Scripts -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/owl-carousel.js"></script>
+    <script src="../js/animation.js"></script>
+    <script src="../js/imagesloaded.js"></script>
+    <script src="../js/popup.js"></script>
+    <script src="../js/custom.js"></script>
+</body>
+
+</html>

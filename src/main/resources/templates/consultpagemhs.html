@@ -9,6 +9,7 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 </head>
 <body style="margin: 50px;">
+    <div th:insert="fragments/header :: header"></div> <br><br><br><br><br>
     <h1>CONSULTATION LIST MAHASISWA</h1><BR>
     <h3>ACCEPTED CONSULTATION</h3>
     <div th:each="daftar: ${listAccepted}">

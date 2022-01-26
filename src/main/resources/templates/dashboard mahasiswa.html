@@ -64,6 +64,37 @@
               </a>
               <!-- ***** Logo End ***** -->
               <!-- ***** Menu Start ***** -->
+              <form th:object="${loginData}" th:action="@{/afterDashboardMahasiswa}" method="post">
+                <div class="form-group">
+                    <input type="hidden" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
+                        th:field="*{email_mahasiswa}">
+                </div>
+        
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-primary">Ke profil user</button>
+                </div>
+            </form>
+        
+            <form th:object="${loginData}" th:action="@{/searchpage}" method="post">
+                <div class="form-group">
+                    <input type="hidden" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
+                        th:field="*{email_mahasiswa}">
+                </div>
+        
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-primary">Nyari</button>
+                </div>
+            </form>
+        
+            <form th:object="${loginData}" th:action="@{/consultpagemhs}" method="post">
+                <div class="form-group">
+                  <input type="hidden" name="email_dosen" id="email_dosen" class="form-control" required th:field="*{email_mahasiswa}" />
+                </div>
+          
+                <div class="mt-2">
+                  <button type="submit" class="btn btn-primary">Ke consultpage</button>
+                </div>
+              </form>
               <ul class="nav">
                 <li class="scroll-to-section">
                   <a href="#top" class="active">Home</a>

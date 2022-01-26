@@ -124,6 +124,20 @@ public class MahasiswaController {
 		return "dashboarduser";
 	}
 
+	@PostMapping("/dashboardmhs")
+	public String dashboard(@ModelAttribute("loginData") Mahasiswa mahasiswa, Dosen dosen, Topik topik, Model model) {
+		Mahasiswa maha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+		if (Objects.isNull(maha)) {
+			return "kenihilan";
+		}
+		List<Dosen> topDos = dosenRepo.findByRating();
+		List<Topik> topikDashboard = topikRepo.findAll();
+		model.addAttribute("loginData", maha);
+		model.addAttribute("dataTopDos", topDos);
+		model.addAttribute("dataTopik", topikDashboard);
+		return "dashboarduser";
+	}
+
 	@GetMapping("/dashboarduser")
 	public String getDashboardDosen(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model) {
 		Mahasiswa maha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
