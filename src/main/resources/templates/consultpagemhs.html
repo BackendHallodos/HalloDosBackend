@@ -21,14 +21,7 @@
     <link rel="stylesheet" href="css/owl.css" />
     <!-- card css -->
     <link rel="stylesheet" href="css/cardsearch.css" />
-    <style>
-        table,
-        th,
-        td {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-    </style>
+
 </head>
 
 <body>
@@ -63,7 +56,7 @@
                                     <img th:src="@{${daftar.dosenId.photos}}" style="width:100%; height: 100%;"
                                         class="card-img-top" alt="..." />
                                     <div class="card-body">
-                                        <h5 class="card-title" th:text="${daftar.DosenId.major}">Name</h5>
+                                        <h5 class="card-title" th:text="${daftar.DosenId.full_name}">Name</h5>
                                         <div class="rating">
                                             <i class="fas fa-star"></i>
                                             <i class="fas fa-star"></i>
@@ -206,6 +199,8 @@
             </div>
         </div>
     </div>
+
+    <div th:insert="fragments/footer :: footer"></div>
 
     <!-- <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s" style="
     visibility: visible;

@@ -1,92 +1,1198 @@
+<!-- punya mufqi -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" />
-    <title>Document</title>
-  </head>
 
-  <body>
-    <h1>Dashboard Doseeeeeeennnnn!!!!!!11</h1>
-    <form th:object="${loginData}" th:action="@{/afterDashboardDosen}" method="post">
-      <div class="form-group">
-        <input type="hidden" name="email_dosen" id="email_dosen" class="form-control" required th:field="*{email_dosen}" />
+<head>
+  <meta charset="utf-8" />
+  <!--  This file has been downloaded from bootdey.com @bootdey on twitter -->
+  <!--  All snippets are MIT license http://bootdey.com/license -->
+  <title>user profile HaloDos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <!-- <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" /> -->
+  <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <link href="vendor/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/templatemo-chain-app-dev.css" />
+  <link rel="stylesheet" href="css/animated.css" />
+  <link rel="stylesheet" href="css/owl.css" />
+  <link rel="stylesheet" href="css/cardsearch.css" />
+</head>
+
+<body>
+  <div th:insert="fragments/headerDosen :: header"></div>
+  <br><br><br><br><br><br>
+  <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" /> -->
+  <!-- <div class="container">
+    <h1>About Me</h1>
+  </div> -->
+  <div class="section_heading wow fadeInUp" data-wow-delay="0.2s" style="
+  visibility: visible;
+  animation-delay: 0.2s;
+  animation-name: fadeInUp;">
+    <div class="container bootstrap snippets bootdey" th:each="dataDosen:${loginData}">
+      <div class="row">
+        <div class="profile-nav col-md-3">
+          <div class="panel counter" style="margin-top:-0px;">
+            <div class="user-heading round">
+              <a href="#">
+                <img th:src="@{${dataDosen.photos}}" alt="" />
+              </a>
+              <h1 th:text="${dataDosen.full_name}"></h1>
+              <p>Advisor</p>
+            </div>
+
+          </div>
+        </div>
+        <div class="profile-info col-md-9">
+          <div class="panel">
+            <div class="bio-graph-heading">
+              <h1>My Profile</h1>
+            </div>
+            <div style="background-color: white;" class="counter">
+              <h2 style="margin-left: 10px;">Personal Information</h2><br>
+              <div class="row" style="margin-left: 10px;">
+                <div class="bio-row">
+                  <p>Username 
+                    &nbsp;&nbsp;&nbsp;&nbsp;: 
+                    <span th:text="${dataDosen.username}"></span></p>
+                </div>
+                <div class="bio-row">
+                  <p>Name
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    : <span th:text="${dataDosen.full_name}"></span></p>
+                </div>
+                <div class="bio-row">
+                  <p>Email
+                    &nbsp;&nbsp;&nbsp;&nbsp;:
+                    <span th:text="${dataDosen.email_dosen}"></span></p>
+                </div>
+                <div class="bio-row">
+                  <p>Affiliate
+                    &nbsp;&nbsp;&nbsp;&nbsp;:
+                    <span th:text="${dataDosen.affiliate}"></span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div class="mt-2">
-        <button type="submit" class="btn btn-primary">Ke profil dosen</button>
-      </div>
-    </form>
-
-    <form th:object="${loginData}" th:action="@{/saldoDosen}" method="post">
-      <div class="form-group">
-        <input type="hidden" name="email_dosen" id="email_dosen" class="form-control" required th:field="*{email_dosen}" />
-      </div>
-
-      <div class="mt-2">
-        <button type="submit" class="btn btn-primary">Ke Saldo Dosen</button>
-      </div>
-    </form>
-
-    <form th:object="${loginData}" th:action="@{/consultpage}" method="post">
-      <div class="form-group">
-        <input type="hidden" name="email_dosen" id="email_dosen" class="form-control" required th:field="*{email_dosen}" />
-      </div>
-
-      <div class="mt-2">
-        <button type="submit" class="btn btn-primary">Ke consultpage</button>
-      </div>
-    </form>
-
-    <!-- <div class="progress">
-        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
-    <div class="progress">
-        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0"
-            aria-valuemax="100"></div>
-    </div>
-    <div class="progress">
-        <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-            aria-valuemax="100"></div>
-    </div> -->
+  </div>
 
-    <br />
-    <h1>My Dashboard</h1>
-    <br />
-
-    <div th:each="dataDosen:${loginData}">
-      <img th:src="@{${dataDosen.photos}}" />
-      <h1 th:text="${dataDosen.full_name}"></h1>
-      <br />
-      <h3 th:text="${dataDosen.major}"></h3>
-      <br />
-    </div>
-
-    <div th:each="dataDosen:${loginData}">
-      <h3>Rating</h3>
-      <div class="progress" style="margin-left: 250px; margin-right: 250px">
-        <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75</div>
+  <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s" style="
+                    visibility: visible;
+                    animation-delay: 0.2s;
+                    animation-name: fadeInUp;">
+    <div class="container bootstrap snippetd bootdey py-3" th:each="dataDosen:${loginData}">
+      <div class="counter">
+        <figure class="text-start">
+          <blockquote class="blockquote">
+            <h1>My Stats</h1>
+          </blockquote>
+        </figure>
+        <div class="row">
+          <div class="col-6 col-lg-4 rounded-3">
+            <div class="count-data text-center">
+              <h6 class="count h2" data-to="500" data-speed="500" th:text="${dataDosen.TotalConsultation}"></h6>
+              <p class="m-0px font-w-600">Total Consultation</p>
+            </div>
+          </div>
+          <div class="col-6 col-lg-4 rounded-3">
+            <div class="count-data text-center">
+              <h6 class="count h2" data-to="150" data-speed="150" th:text="${dataDosen.rating}"></h6>
+              <p class="m-0px font-w-600">Rating</p>
+            </div>
+          </div>
+          <div class="col-6 col-lg-4 rounded-3">
+            <div class="count-data text-center">
+              <h6 class="count h2" data-to="850" data-speed="850" th:text="Rp.+ ' ' + ${dataDosen.balance} + ',-'"></h6>
+              <p class="m-0px font-w-600">Balance</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <br />
-      <h3>Total Consultation</h3>
-      <h6 th:text="${dataDosen.totalConsultation}"></h6>
-      <br />
-      <h3>Total Income</h3>
-      <h6 th:text="${dataDosen.balance}"></h6>
+    </div>
+  </div>
+
+  <!-- article -->
+  <div class="section_heading wow fadeInUp" data-wow-delay="0.2s" style="
+                    visibility: visible;
+                    animation-delay: 0.2s;
+                    animation-name: fadeInUp;">
+    <div class="container bootstrap snippetd bootdey py-3">
+      <div class="counter">
+        <figure class="text-start">
+          <blockquote class="blockquote">
+            <h1>Articles</h1>
+          </blockquote>
+        </figure>
+        <div class="row">
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <img src="/images/coding.jpg" style="width: 100%; height: 250px;" alt="..." />
+              <div class="caption">
+                <h3>Alasan untuk Belajar Coding</h3>
+                <h6>Tidak dapat dipungkiri lagi bahwa teknologi sekarang sudah mulai mendominasi sejumlah industri yang
+                  ada di dunia. Saat kita masuk ke dunia kerja,...</h6><br>
+                <p>
+
+                  <a href="https://www.kompasiana.com/sammyaxel/60504afad541df363018b402/alasan-untuk-belajar-coding"
+                    class="btn btn-default" role="button">Read more...</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <img src="/images/phyton.jpg" style="width: 100%; height: 250px;" alt="..." />
+              <div class="caption">
+                <h3>Pengenalan Bahasa Pemrograman Python menggunakan Paradigma Dummy</h3>
+                <h6>Python merupakan salah satu bahasa pemrograman yang populer di dunia kerja Indonesia, bahkan bahasa
+                  pemrograman Python sendiri merupakan...</h6><br>
+                <p>
+                  <a href="https://www.kompasiana.com/devanfx/5d9eccfb0d823025366e5182/pengenalan-bahasa-pemrograman-python-menggunakan-paradigma-dummy"
+                    class="btn btn-default" role="button">Read more...</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <img src="/images/belajarcoding.jpg" style="width: 100%; height: 250px;" alt="..." />
+              <div class="caption">
+                <h3>Belajar Coding Itu Harusnya Berdasarkan "Masalah"</h3>
+                <h6>Sudah hampir 1 bulan lebih saya belajar bareng anak-anak muda di Universitas Ciputra Surabaya. Ya,
+                  masuk cohort dalam program Apple Developer Academy pertama di Surabaya, kedua di Indonesia dan
+                  kesekian di dunia...</h6><br>
+                <p>
+                  <a href="https://www.kompasiana.com/heniprasetyorini/5cb3e18b95760e4876092b13/belajar-coding-itu-harusnya-berdasarkan-masalah"
+                    class="btn btn-default" role="button">Read more...</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- article end -->
+
+  <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s" style="
+  visibility: visible;
+  animation-delay: 0.2s;
+  animation-name: fadeInUp;">
+    <div id="clients" class="the-clients">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 offset-lg-2">
+            <div class="section-heading">
+              <h4>Check What <em>The Clients Say</em> About Our App Dev</h4>
+              <img src="/images/heading-line-dec.png" alt="" />
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eismod tempor incididunt ut labore et dolore magna.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="naccs">
+              <div class="grid">
+                <div class="row">
+                  <div class="col-lg-7 align-self-center">
+                    <div class="menu">
+                      <div class="first-thumb active">
+                        <div class="thumb">
+                          <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-12">
+                              <h4>David Martino Co</h4>
+                              <span class="date">30 November 2021</span>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 d-none d-sm-block">
+                              <span class="category">Financial Apps</span>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-12">
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <span class="rating">4.8</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="thumb">
+                          <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-12">
+                              <h4>Jake Harris Nyo</h4>
+                              <span class="date">29 November 2021</span>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 d-none d-sm-block">
+                              <span class="category">Digital Business</span>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-12">
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <span class="rating">4.5</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="thumb">
+                          <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-12">
+                              <h4>May Catherina</h4>
+                              <span class="date">27 November 2021</span>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 d-none d-sm-block">
+                              <span class="category">Business &amp; Economics</span>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-12">
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <span class="rating">4.7</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="thumb">
+                          <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-12">
+                              <h4>Random User</h4>
+                              <span class="date">24 November 2021</span>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 d-none d-sm-block">
+                              <span class="category">New App Ecosystem</span>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-12">
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <span class="rating">3.9</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="last-thumb">
+                        <div class="thumb">
+                          <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-12">
+                              <h4>Mark Amber Do</h4>
+                              <span class="date">21 November 2021</span>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 d-none d-sm-block">
+                              <span class="category">Web Development</span>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-12">
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <span class="rating">4.3</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-5">
+                    <ul class="nacc">
+                      <li class="active">
+                        <div>
+                          <div class="thumb">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <div class="client-content">
+                                  <img src="/images/quote.png" alt="" />
+                                  <p>
+                                    “Lorem ipsum dolor sit amet, consectetur
+                                    adpiscing elit, sed do eismod tempor idunte
+                                    ut labore et dolore magna aliqua darwin
+                                    kengan lorem ipsum dolor sit amet,
+                                    consectetur picing elit massive big blasta.”
+                                  </p>
+                                </div>
+                                <div class="down-content">
+                                  <img src="/images/client-image.jpg" alt="" />
+                                  <div class="right-content">
+                                    <h4>David Martino</h4>
+                                    <span>CEO of David Company</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div>
+                          <div class="thumb">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <div class="client-content">
+                                  <img src="/images/quote.png" alt="" />
+                                  <p>
+                                    “CTO, Lorem ipsum dolor sit amet,
+                                    consectetur adpiscing elit, sed do eismod
+                                    tempor idunte ut labore et dolore magna
+                                    aliqua darwin kengan lorem ipsum dolor sit
+                                    amet, consectetur picing elit massive big
+                                    blasta.”
+                                  </p>
+                                </div>
+                                <div class="down-content">
+                                  <img src="/images/client-image.jpg" alt="" />
+                                  <div class="right-content">
+                                    <h4>Jake H. Nyo</h4>
+                                    <span>CTO of Digital Company</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div>
+                          <div class="thumb">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <div class="client-content">
+                                  <img src="/images/quote.png" alt="" />
+                                  <p>
+                                    “May, Lorem ipsum dolor sit amet,
+                                    consectetur adpiscing elit, sed do eismod
+                                    tempor idunte ut labore et dolore magna
+                                    aliqua darwin kengan lorem ipsum dolor sit
+                                    amet, consectetur picing elit massive big
+                                    blasta.”
+                                  </p>
+                                </div>
+                                <div class="down-content">
+                                  <img src="/images/client-image.jpg" alt="" />
+                                  <div class="right-content">
+                                    <h4>May C.</h4>
+                                    <span>Founder of Catherina Co.</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div>
+                          <div class="thumb">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <div class="client-content">
+                                  <img src="/images/quote.png" alt="" />
+                                  <p>
+                                    “Lorem ipsum dolor sit amet, consectetur
+                                    adpiscing elit, sed do eismod tempor idunte
+                                    ut labore et dolore magna aliqua darwin
+                                    kengan lorem ipsum dolor sit amet,
+                                    consectetur picing elit massive big blasta.”
+                                  </p>
+                                </div>
+                                <div class="down-content">
+                                  <img src="/images/client-image.jpg" alt="" />
+                                  <div class="right-content">
+                                    <h4>Random Staff</h4>
+                                    <span>Manager, Digital Company</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div>
+                          <div class="thumb">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <div class="client-content">
+                                  <img src="/images/quote.png" alt="" />
+                                  <p>
+                                    “Mark, Lorem ipsum dolor sit amet,
+                                    consectetur adpiscing elit, sed do eismod
+                                    tempor idunte ut labore et dolore magna
+                                    aliqua darwin kengan lorem ipsum dolor sit
+                                    amet, consectetur picing elit massive big
+                                    blasta.”
+                                  </p>
+                                </div>
+                                <div class="down-content">
+                                  <img src="/images/client-image.jpg" alt="" />
+                                  <div class="right-content">
+                                    <h4>Mark Am</h4>
+                                    <span>CTO, Amber Do Company</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- testi end -->
+
+    <div id="services" class="services section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 offset-lg-2">
+            <div class="section-heading wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.5s">
+              <h4>Our <em>Super &amp; Achievement</em> for you</h4>
+              <img src="/images/heading-line-dec.png" alt="" />
+              <p>
+                If you need the greatest collection of HTML templates for your
+                business, please visit
+                <a rel="nofollow" href="https://www.toocss.com/" target="_blank">TooCSS</a>
+                Blog. If you need to have a contact form PHP script, go to
+                <a href="https://templatemo.com/contact" target="_parent">our contact page</a>
+                for more information.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container"></div>
     </div>
 
-    <!-- <div class="progress">
-        <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-      </div> -->
+    <div id="features" class="features section">
+      <div class="container">
+        <div class="row">
+          <!-- achievement -->
+          <div class="col-lg-12">
+            <div class="skills-content">
+              <div class="row">
+                <div class="col-lg-3">
+                  <div class="skill-item wow fadeIn" data-wow-duration="1s" data-wow-delay="0s">
+                    <div class="progress" data-percentage="80">
+                      <span class="progress-left">
+                        <span class="progress-bar"></span>
+                      </span>
+                      <span class="progress-right">
+                        <span class="progress-bar"></span>
+                      </span>
+                      <div class="progress-value">
+                        <div>
+                          10,000+<br />
+                          <span>Download</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="skill-item wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
+                    <div class="progress" data-percentage="60">
+                      <span class="progress-left">
+                        <span class="progress-bar"></span>
+                      </span>
+                      <span class="progress-right">
+                        <span class="progress-bar"></span>
+                      </span>
+                      <div class="progress-value">
+                        <div>
+                          2 Million<br />
+                          <span>Users</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="skill-item wow fadeIn" data-wow-duration="1s" data-wow-delay="0.4s">
+                    <div class="progress" data-percentage="90">
+                      <span class="progress-left">
+                        <span class="progress-bar"></span>
+                      </span>
+                      <span class="progress-right">
+                        <span class="progress-bar"></span>
+                      </span>
+                      <div class="progress-value">
+                        <div>
+                          500+<br />
+                          <span>Clients</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="skill-item last-skill-item wow fadeIn" data-wow-duration="1s" data-wow-delay="0.6s">
+                    <div class="progress" data-percentage="70">
+                      <span class="progress-left">
+                        <span class="progress-bar"></span>
+                      </span>
+                      <span class="progress-right">
+                        <span class="progress-bar"></span>
+                      </span>
+                      <div class="progress-value">
+                        <div>
+                          210<br />
+                          <span>Contries</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- achiev end -->
+        </div>
+      </div>
+    </div>
 
-    <!-- <div class="progress">
-        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
-            aria-valuemax="100">25%</div>
-    </div> -->
 
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  </body>
+
+    <div id="about" class="about-us section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 align-self-center">
+            <div class="section-heading">
+              <h4>About <em>What We Do</em> &amp; Who We Are</h4>
+              <img src="/images/heading-line-dec.png" alt="" />
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eismod tempor incididunt ut labore et dolore magna.
+              </p>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="box-item">
+                  <h4><a href="#">Maintance Problems</a></h4>
+                  <p>Lorem Ipsum Text</p>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="box-item">
+                  <h4><a href="#">24/7 Support &amp; Help</a></h4>
+                  <p>Lorem Ipsum Text</p>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="box-item">
+                  <h4><a href="#">Fixing Issues About</a></h4>
+                  <p>Lorem Ipsum Text</p>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="box-item">
+                  <h4><a href="#">Co. Development</a></h4>
+                  <p>Lorem Ipsum Text</p>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eismod tempor idunte ut labore et dolore adipiscing magna.
+                </p>
+                <div class="gradient-button">
+                  <a href="#">Start 14-Day Free Trial</a>
+                </div>
+                <span>*No Credit Card Required</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="right-image">
+              <img src="/images/about-right-dec.png" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div id="portfolio" class="our-portfolio section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-5 align-self-center">
+            <div class="section-heading wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.5s">
+              <h4>Our <em>Trusted &amp; Company</em> partners</h4>
+              <img src="/images/heading-line-dec.png" alt="" />
+              <p>
+                If you need the greatest collection of HTML templates for your
+                business, please visit
+                <a rel="nofollow" href="https://www.toocss.com/" target="_blank">TooCSS</a>
+                Blog. If you need to have a contact form PHP script, go to
+                <a href="https://templatemo.com/contact" target="_parent">our contact page</a>
+                for more information.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid wow fadeIn" data-wow-duration="1s" data-wow-delay="0.7s">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="loop owl-carousel">
+              <div class="item">
+                <div class="portfolio-item">
+                  <div class="thumb">
+                    <img src="/images/portfolio-01.jpg" alt="" />
+                    <div class="hover-content">
+                      <div class="inner-content">
+                        <a href="#">
+                          <h4>Awesome Project 101</h4>
+                        </a>
+                        <span>Marketing</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="portfolio-item">
+                  <div class="thumb">
+                    <img src="/images/portfolio-04.jpg" alt="" />
+                    <div class="hover-content">
+                      <div class="inner-content">
+                        <a href="#">
+                          <h4>Awesome Project 102</h4>
+                        </a>
+                        <span>Branding</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="portfolio-item">
+                  <div class="thumb">
+                    <img src="/images/portfolio-02.jpg" alt="" />
+                    <div class="hover-content">
+                      <div class="inner-content">
+                        <a href="#">
+                          <h4>Awesome Project 103</h4>
+                        </a>
+                        <span>Consulting</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="portfolio-item">
+                  <div class="thumb">
+                    <img src="/images/portfolio-05.jpg" alt="" />
+                    <div class="hover-content">
+                      <div class="inner-content">
+                        <a href="#">
+                          <h4>Awesome Project 104</h4>
+                        </a>
+                        <span>Artwork</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="portfolio-item">
+                  <div class="thumb">
+                    <img src="/images/portfolio-03.jpg" alt="" />
+                    <div class="hover-content">
+                      <div class="inner-content">
+                        <a href="#">
+                          <h4>Awesome Project 105</h4>
+                        </a>
+                        <span>Branding</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="portfolio-item">
+                  <div class="thumb">
+                    <img src="/images/portfolio-06.jpg" alt="" />
+                    <div class="hover-content">
+                      <div class="inner-content">
+                        <a href="#">
+                          <h4>Awesome Project 106</h4>
+                        </a>
+                        <span>Artwork</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="portfolio-item">
+                  <div class="thumb">
+                    <img src="/images/portfolio-04.jpg" alt="" />
+                    <div class="hover-content">
+                      <div class="inner-content">
+                        <a href="#">
+                          <h4>Awesome Project 107</h4>
+                        </a>
+                        <span>Creative</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="portfolio-item">
+                  <div class="thumb">
+                    <img src="/images/portfolio-01.jpg" alt="" />
+                    <div class="hover-content">
+                      <div class="inner-content">
+                        <a href="#">
+                          <h4>Awesome Project 108</h4>
+                        </a>
+                        <span>Consulting</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style type="text/css">
+    body {
+      color: #797979;
+      background-color: white;
+      font-family: "Open Sans", sans-serif;
+      padding: 0px !important;
+      margin: 0px !important;
+      font-size: 13px;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-font-smoothing: antialiased;
+    }
+
+    .profile-nav,
+    .profile-info {
+      margin-top: 30px;
+    }
+
+    .profile-nav .user-heading {
+      background: #ffa500;
+      color: #fff;
+      border-radius: 4px 4px 0 0;
+      -webkit-border-radius: 4px 4px 0 0;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .profile-nav .user-heading.round a {
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      border: 10px solid rgba(255, 255, 255, 0.3);
+      display: inline-block;
+    }
+
+    .profile-nav .user-heading a img {
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+    }
+
+    .profile-nav .user-heading h1 {
+      font-size: 22px;
+      font-weight: 300;
+      margin-bottom: 5px;
+    }
+
+    .profile-nav .user-heading p {
+      font-size: 12px;
+    }
+
+    .profile-nav ul {
+      margin-top: 1px;
+    }
+
+    .profile-nav ul>li {
+      border-bottom: 1px solid #ebeae6;
+      margin-top: 0;
+      line-height: 30px;
+    }
+
+    .profile-nav ul>li:last-child {
+      border-bottom: none;
+    }
+
+    .profile-nav ul>li>a {
+      border-radius: 0;
+      -webkit-border-radius: 0;
+      color: #89817f;
+      border-left: 5px solid #fff;
+    }
+
+    .profile-nav ul>li>a:hover,
+    .profile-nav ul>li>a:focus,
+    .profile-nav ul li.active a {
+      background: #f8f7f5 !important;
+      border-left: 5px solid #ffa500;
+      color: #89817f !important;
+    }
+
+    .profile-nav ul>li:last-child>a:last-child {
+      border-radius: 0 0 4px 4px;
+      -webkit-border-radius: 0 0 4px 4px;
+    }
+
+    .profile-nav ul>li>a>i {
+      font-size: 16px;
+      padding-right: 10px;
+      color: #bcb3aa;
+    }
+
+    .r-activity {
+      margin: 6px 0 0;
+      font-size: 12px;
+    }
+
+    .p-text-area,
+    .p-text-area:focus {
+      border: none;
+      font-weight: 300;
+      box-shadow: none;
+      color: #c3c3c3;
+      font-size: 16px;
+    }
+
+    .profile-info .panel-footer {
+      background-color: #f8f7f5;
+      border-top: 1px solid #e7ebee;
+    }
+
+    .profile-info .panel-footer ul li a {
+      color: #7a7a7a;
+    }
+
+    .bio-graph-heading {
+      background: #ffa500;
+      color: #fff;
+      text-align: center;
+      font-style: italic;
+      padding: 40px 110px;
+      border-radius: 4px 4px 0 0;
+      -webkit-border-radius: 4px 4px 0 0;
+      font-size: 16px;
+      font-weight: 300;
+    }
+
+    .bio-graph-info {
+      color: #89817e;
+    }
+
+    .bio-graph-info h1 {
+      font-size: 22px;
+      font-weight: 300;
+      margin: 0 0 20px;
+    }
+
+    .bio-row {
+      width: 50%;
+      float: left;
+      margin-bottom: 10px;
+      padding: 0 15px;
+    }
+
+    .bio-row p span {
+      width: 100px;
+      display: inline-block;
+    }
+
+    .bio-chart,
+    .bio-desk {
+      float: left;
+    }
+
+    .bio-chart {
+      width: 40%;
+    }
+
+    .bio-desk {
+      width: 60%;
+    }
+
+    .bio-desk h4 {
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    .bio-desk h4.terques {
+      color: #4cc5cd;
+    }
+
+    .bio-desk h4.red {
+      color: #e26b7f;
+    }
+
+    .bio-desk h4.green {
+      color: #97be4b;
+    }
+
+    .bio-desk h4.purple {
+      color: #caa3da;
+    }
+
+    .file-pos {
+      margin: 6px 0 10px 0;
+    }
+
+    .profile-activity h5 {
+      font-weight: 300;
+      margin-top: 0;
+      color: #c3c3c3;
+    }
+
+    .summary-head {
+      background: #ee7272;
+      color: #fff;
+      text-align: center;
+      border-bottom: 1px solid #ee7272;
+    }
+
+    .summary-head h4 {
+      font-weight: 300;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .summary-head p {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    ul.summary-list {
+      display: inline-block;
+      padding-left: 0;
+      width: 100%;
+      margin-bottom: 0;
+    }
+
+    ul.summary-list>li {
+      display: inline-block;
+      width: 19.5%;
+      text-align: center;
+    }
+
+    ul.summary-list>li>a>i {
+      display: block;
+      font-size: 18px;
+      padding-bottom: 5px;
+    }
+
+    ul.summary-list>li>a {
+      padding: 10px 0;
+      display: inline-block;
+      color: #818181;
+    }
+
+    ul.summary-list>li {
+      border-right: 1px solid #eaeaea;
+    }
+
+    ul.summary-list>li:last-child {
+      border-right: none;
+    }
+
+    .activity {
+      width: 100%;
+      float: left;
+      margin-bottom: 10px;
+    }
+
+    .activity.alt {
+      width: 100%;
+      float: right;
+      margin-bottom: 10px;
+    }
+
+    .activity span {
+      float: left;
+    }
+
+    .activity.alt span {
+      float: right;
+    }
+
+    .activity span,
+    .activity.alt span {
+      width: 45px;
+      height: 45px;
+      line-height: 45px;
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      background: #eee;
+      text-align: center;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .activity.terques span {
+      background: #8dd7d6;
+    }
+
+    .activity.terques h4 {
+      color: #8dd7d6;
+    }
+
+    .activity.purple span {
+      background: #b984dc;
+    }
+
+    .activity.purple h4 {
+      color: #b984dc;
+    }
+
+    .activity.blue span {
+      background: #90b4e6;
+    }
+
+    .activity.blue h4 {
+      color: #90b4e6;
+    }
+
+    .activity.green span {
+      background: #aec785;
+    }
+
+    .activity.green h4 {
+      color: #aec785;
+    }
+
+    .activity h4 {
+      margin-top: 0;
+      font-size: 16px;
+    }
+
+    .activity p {
+      margin-bottom: 0;
+      font-size: 13px;
+    }
+
+    .activity .activity-desk i,
+    .activity.alt .activity-desk i {
+      float: left;
+      font-size: 18px;
+      margin-right: 10px;
+      color: #bebebe;
+    }
+
+    .activity .activity-desk {
+      margin-left: 70px;
+      position: relative;
+    }
+
+    .activity.alt .activity-desk {
+      margin-right: 70px;
+      position: relative;
+    }
+
+    .activity.alt .activity-desk .panel {
+      float: right;
+      position: relative;
+    }
+
+    .activity-desk .panel {
+      background: #f4f4f4;
+      display: inline-block;
+    }
+
+    .activity .activity-desk .arrow {
+      border-right: 8px solid #f4f4f4 !important;
+    }
+
+    .activity .activity-desk .arrow {
+      border-bottom: 8px solid transparent;
+      border-top: 8px solid transparent;
+      display: block;
+      height: 0;
+      left: -7px;
+      position: absolute;
+      top: 13px;
+      width: 0;
+    }
+
+    .activity-desk .arrow-alt {
+      border-left: 8px solid #f4f4f4 !important;
+    }
+
+    .activity-desk .arrow-alt {
+      border-bottom: 8px solid transparent;
+      border-top: 8px solid transparent;
+      display: block;
+      height: 0;
+      right: -7px;
+      position: absolute;
+      top: 13px;
+      width: 0;
+    }
+
+    .activity-desk .album {
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .activity-desk .album a {
+      margin-right: 10px;
+    }
+
+    .activity-desk .album a:last-child {
+      margin-right: 0px;
+    }
+
+    .counter {
+      padding: 22px 20px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(31, 45, 61, 0.125);
+    }
+
+    .counter .count-data {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .counter .count {
+      font-weight: 700;
+      color: #20247b;
+      margin: 0 0 5px;
+    }
+
+    .counter p {
+      font-weight: 600;
+      margin: 0;
+    }
+  </style>
+
+  <div th:insert="fragments/footer :: footer"></div>
+  <script src="vendor/jquery.min.js"></script>
+  <script src="vendor/bootstrap.bundle.min.js"></script>
+  <script src="js/owl-carousel.js"></script>
+  <script src="js/animation.js"></script>
+  <script src="js/imagesloaded.js"></script>
+  <script src="js/popup.js"></script>
+  <script src="js/custom.js"></script>
+</body>
+
 </html>

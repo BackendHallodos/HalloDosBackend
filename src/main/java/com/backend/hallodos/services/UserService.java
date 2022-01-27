@@ -75,7 +75,7 @@ public class UserService {
         // create token
         final AuthToken authToken = new AuthToken(user);
         authService.saveConfirmationToken(authToken);
-
+        
         ResponseDto responseDto = new ResponseDto("success", "CREATED SUCCESS!");
         return responseDto;
     }

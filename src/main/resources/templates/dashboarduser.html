@@ -10,15 +10,11 @@
     <title>My Dashboard</title>
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap.min.css" rel="stylesheet" />
-
-    <!-- Additional CSS Files -->
-    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" /> -->
     <link rel="stylesheet" href="css/templatemo-chain-app-dev.css" />
     <link rel="stylesheet" href="css/animated.css" />
     <link rel="stylesheet" href="css/owl.css" />
-    <!-- card css -->
     <link rel="stylesheet" href="css/cardsearch.css" />
+
 </head>
 
 <body>
@@ -86,13 +82,13 @@
                       animation-delay: 0.2s;
                       animation-name: fadeInUp;
                     ">
-                                <h3>Suggestion <span> Advisors</span></h3>
-                                <p>
-                                    Appland is completely creative, lightweight, clean &amp;
-                                    super responsive app landing page.
-                                </p>
-                                <div class="line"></div>
-                            </div>
+            <h3>Suggestion <span> Advisors</span></h3>
+            <p>
+                Appland is completely creative, lightweight, clean &amp;
+                super responsive app landing page.
+            </p>
+            <div class="line"></div>
+        </div>
 
         <div class="container">
             <!-- Single Advisor-->
@@ -113,14 +109,20 @@
                                                 </h6>
                                                 <p th:text="${dataTop.major}" class="designation">Major</p>
                                                 <br>
-                                                <form th:action="@{/keDetailDsn}" method="post">
-                                                    <input type="hidden" name="email_mahasiswa" id="email_mahasiswa"
-                                                        class="form-control" required
-                                                        th:value="${loginData.email_mahasiswa}">
-                                                    <input type="hidden" name="email_dosen" id="email_dosen"
-                                                        class="form-control" required th:value="${dataTop.email_dosen}">
-                                                    <button type="submit" class="btn btn-light">See details</button>
-                                                </form>
+                                                <p class="card-text">
+                                                    <div class="btns">
+                                                        <form th:action="@{/keDetailDsn}" method="post">
+                                                            <input type="hidden" name="email_mahasiswa"
+                                                                id="email_mahasiswa" class="form-control" required
+                                                                th:value="${loginData.email_mahasiswa}">
+                                                            <input type="hidden" name="email_dosen" id="email_dosen"
+                                                                class="form-control" required
+                                                                th:value="${dataTop.email_dosen}">
+                                                            <button type="submit" class="btn btn-warning">See
+                                                                details</button>
+                                                        </form>
+                                                    </div>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -223,6 +225,9 @@
             </div>
         </div>
     </div>
+
+
+    <div th:insert="fragments/footer :: footer"></div>
 
     <!-- ending code mufqi -->
     <!-- Scripts -->

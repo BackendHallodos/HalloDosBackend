@@ -33,24 +33,25 @@
                         </a>
 
                         <ul class="nav">
-                            <li class="scroll-to-section" style="background-color: white; border-color: #30FFFFFF;">
-                                <form th:object="${loginData}" th:action="@{/dashboardmhs}" method="post">
+                            <li class="scroll-to-section"
+                                style="background-color: transparent; border-color: #30FFFFFF;">
+                                <form th:object="${loginData}" th:action="@{/keDashboardDosen}" method="post">
                                     <div class="form-group">
-                                        <input type="hidden" name="email_mahasiswa" id="email_mahasiswa"
-                                            class="form-control" required th:field="*{email_mahasiswa}">
+                                        <input type="hidden" name="email_dosen" id="email_dosen" class="form-control"
+                                            required th:field="*{email_dosen}" />
                                     </div>
-
                                     <div class="mt-2" style="background-color: white;">
                                         <button type="submit" class="btn btn-outline-warning bg-warning"
                                             style="margin-top: -10px;">Home</button>
                                     </div>
                                 </form>
                             </li>
-                            <li class="scroll-to-section" style="background-color: white; border-color: #30FFFFFF;">
-                                <form th:object="${loginData}" th:action="@{/afterDashboardMahasiswa}" method="post">
+                            <li class="scroll-to-section"
+                                style="background-color: transparent; border-color: #30FFFFFF;">
+                                <form th:object="${loginData}" th:action="@{/afterDashboardDosen}" method="post">
                                     <div class="form-group">
-                                        <input type="hidden" name="email_mahasiswa" id="email_mahasiswa"
-                                            class="form-control" required th:field="*{email_mahasiswa}">
+                                        <input type="hidden" name="email_dosen" id="email_dosen" class="form-control"
+                                            required th:field="*{email_dosen}" />
                                     </div>
 
                                     <div class="mt-2" style="background-color: white;">
@@ -59,24 +60,26 @@
                                     </div>
                                 </form>
                             </li>
-                            <li class="scroll-to-section" style="background-color: white; border-color: #30FFFFFF;">
-                                <form th:object="${loginData}" th:action="@{/searchpage}" method="post">
+                            <li class="scroll-to-section"
+                                style="background-color: transparent; border-color: #30FFFFFF;">
+                                <form th:object="${loginData}" th:action="@{/saldoDosen}" method="post">
                                     <div class="form-group">
-                                        <input type="hidden" name="email_mahasiswa" id="email_mahasiswa"
-                                            class="form-control" required th:field="*{email_mahasiswa}">
+                                        <input type="hidden" name="email_dosen" id="email_dosen" class="form-control"
+                                            required th:field="*{email_dosen}" />
                                     </div>
 
                                     <div class="mt-2" style="background-color: white;">
                                         <button type="submit" class="btn btn-outline-warning bg-warning"
-                                            style="margin-top: -10px;">Search</button>
+                                            style="margin-top: -10px;">Withdrawal</button>
                                     </div>
                                 </form>
                             </li>
-                            <li class="scroll-to-section" style="background-color: white; border-color: #30FFFFFF;">
-                                <form th:object="${loginData}" th:action="@{/consultpagemhs}" method="post">
+                            <li class="scroll-to-section"
+                                style="background-color: transparent; border-color: #30FFFFFF;">
+                                <form th:object="${loginData}" th:action="@{/consultpage}" method="post">
                                     <div class="form-group">
-                                        <input type="hidden" name="email_mahasiswa" id="email_mahasiswa"
-                                            class="form-control" required th:field="*{email_mahasiswa}">
+                                        <input type="hidden" name="email_dosen" id="email_dosen" class="form-control"
+                                            required th:field="*{email_dosen}" />
                                     </div>
 
                                     <div class="mt-2" style="background-color: white;">

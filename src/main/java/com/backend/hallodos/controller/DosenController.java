@@ -22,6 +22,7 @@ import com.backend.hallodos.services.UserService;
 import com.backend.hallodos.services.UserServiceDosen;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -144,6 +145,17 @@ public class DosenController {
 		// Dosen dosenBaru = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
 		model.addAttribute("loginData", dosenAll);
 		return "dashboarddosen";
+	}
+
+	@PostMapping("/keDashboardDosen")
+	public String keDashboardDosen(@ModelAttribute("loginData") Dosen dosen, Model model) {
+		Dosen dosenAll = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		if (Objects.isNull(dosenAll)) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("loginData", dosenAll);
+			return "dashboarddosen";
+		}
 	}
 
 	@GetMapping("/dashboarddosen")
@@ -365,14 +377,14 @@ public class DosenController {
 	}
 
 	@PostMapping("/editsaldoDosen")
-	public String saldoTerbaru(@ModelAttribute("loginData") Dosen dosen, Model model) {
+	public String saldoTerbaru(@ModelAttribute("loginData") Dosen dosen, @Param("keyword") int keyword, Model model) {
 		Dosen dataDosen = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
 
 		// ambil data balance
 		int balanceDosen = dataDosen.getBalance();
 
 		// ambil data dari input
-		int balanceInput = dosen.getBalance();
+		int balanceInput = keyword;
 
 		int newBalance = 0;
 		if (balanceInput > balanceDosen) {
@@ -380,9 +392,12 @@ public class DosenController {
 		} else {
 			newBalance = balanceDosen - balanceInput;
 			dataDosen.setBalance(newBalance);
+			balanceInput=0;
 			dosenRepo.save(dataDosen);
 		}
-
+		model.addAttribute("loginData", dataDosen);
+		model.addAttribute("keyword", keyword);
+		// return "saldoDosen";
 		return "redirect:/saldoDosen/" + dataDosen.getId();
 
 	}
