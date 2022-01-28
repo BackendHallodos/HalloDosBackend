@@ -176,20 +176,6 @@
                                         <p th:text="${daftar.day}">Hari</p>
                                         <p th:text="${daftar.timeSessionStart}">Jam</p>
                                         <p th:text="${daftar.status}">status</p>
-
-                                        <p class="card-text">
-                                            <div class="btns">
-                                                <form th:action="@{/otwchatmhs}" method="post">
-                                                    <input type="hidden" name="email_dosen" id="email_dosen"
-                                                        class="form-control" required
-                                                        th:value="${daftar.dosenId.email_dosen}">
-                                                    <input type="hidden" name="email_mahasiswa" id="email_mahasiswa"
-                                                        class="form-control" required
-                                                        th:value="${daftar.mhsId.email_mahasiswa}">
-                                                    <button type="submit" class="btn btn-warning">Chat now</button>
-                                                </form>
-                                            </div>
-                                        </p>
                                     </div>
                                 </div>
                             </div>

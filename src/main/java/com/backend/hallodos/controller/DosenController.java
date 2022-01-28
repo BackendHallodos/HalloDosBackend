@@ -187,11 +187,13 @@ public class DosenController {
 	public String consultPage(@ModelAttribute("loginData") Dosen dosen, Model model) {
 		Dosen dosenAll = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
 		List<Schedule> jadwalKu = scheduleRepo.findByDosenId(dosenAll.getId());
+		List<Schedule> acceptedMaha = scheduleRepo.findByDosenIdAccepted(dosenAll.getId());
 		if (Objects.isNull(dosenAll)) {
 			return "kenihilan";
 		} else {
 			model.addAttribute("loginData", dosenAll);
 			model.addAttribute("listConsult", jadwalKu);
+			model.addAttribute("acceptedMaha", acceptedMaha);
 			return "consultpagedsn";
 		}
 	}

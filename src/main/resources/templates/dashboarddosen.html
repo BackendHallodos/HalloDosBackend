@@ -39,7 +39,7 @@
                 <img th:src="@{${dataDosen.photos}}" alt="" />
               </a>
               <h1 th:text="${dataDosen.full_name}"></h1>
-              <p>Advisor</p>
+              <p style="color: white;">Advisor</p>
             </div>
 
           </div>
@@ -53,25 +53,24 @@
               <h2 style="margin-left: 10px;">Personal Information</h2><br>
               <div class="row" style="margin-left: 10px;">
                 <div class="bio-row">
-                  <p>Username 
-                    &nbsp;&nbsp;&nbsp;&nbsp;: 
-                    <span th:text="${dataDosen.username}"></span></p>
-                </div>
-                <div class="bio-row">
+                  <p>Username &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      : <span th:text="${dataDosen.username}"></span></p>
+              </div>
+              <div class="bio-row">
                   <p>Name
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    : <span th:text="${dataDosen.full_name}"></span></p>
-                </div>
-                <div class="bio-row">
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      : <span th:text="${dataDosen.full_name}"></span></p>
+              </div>
+              <div class="bio-row">
                   <p>Email
-                    &nbsp;&nbsp;&nbsp;&nbsp;:
-                    <span th:text="${dataDosen.email_dosen}"></span></p>
-                </div>
-                <div class="bio-row">
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                      <span th:text="${dataDosen.email_dosen}"></span></p>
+              </div>
+              <div class="bio-row">
                   <p>Affiliate
-                    &nbsp;&nbsp;&nbsp;&nbsp;:
-                    <span th:text="${dataDosen.affiliate}"></span></p>
-                </div>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                      <span th:text="${dataDosen.affiliate}"></span></p>
+              </div>
               </div>
             </div>
           </div>

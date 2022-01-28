@@ -15,6 +15,9 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     @Query(value = "Select * from schedule where dosen_id=?1 AND status='Waiting'", nativeQuery = true)
 	public List<Schedule> findByDosenId(long idDosennya);
 
+    @Query(value = "Select * from schedule where dosen_id=?1 AND status='Accepted'", nativeQuery = true)
+	public List<Schedule> findByDosenIdAccepted(long idMahanya);
+
     @Query(value = "Select * from schedule where mhs_id=?1 AND status='Waiting'", nativeQuery = true)
 	public List<Schedule> findByMahaIdWaiting(long idMahanya);
 
