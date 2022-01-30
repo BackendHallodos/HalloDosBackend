@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "dosen")
 @Entity
 public class Dosen {
-    @Id
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String username;
@@ -26,12 +26,13 @@ public class Dosen {
 	private String graduateFrom;
 	private String major;
 	private String affiliate;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private String birthdate;
 	private String phoneNumber;
 	private String gender;
 	private String address;
 	private int rating;
+	private int totalRating;
 	private int totalConsultation;
 	private int price;
 	private String photos;
@@ -40,8 +41,7 @@ public class Dosen {
 	private String accountNumber;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn (name="topicId", referencedColumnName="id")
+	@JoinColumn(name = "topicId", referencedColumnName = "id")
 	private Topik topicId;
-
 
 }

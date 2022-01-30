@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
+import java.sql.Date;
 // import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
@@ -15,10 +16,12 @@ import com.backend.hallodos.exceptions.AuthFailException;
 import com.backend.hallodos.exceptions.CustomExceptoon;
 import com.backend.hallodos.model.AuthToken;
 import com.backend.hallodos.model.Dosen;
+import com.backend.hallodos.model.History;
 import com.backend.hallodos.model.Mahasiswa;
 import com.backend.hallodos.model.Schedule;
 import com.backend.hallodos.model.Topik;
 import com.backend.hallodos.repository.DosenRepository;
+import com.backend.hallodos.repository.HistoryRepository;
 import com.backend.hallodos.repository.MahasiswaRepository;
 import com.backend.hallodos.repository.ScheduleRepository;
 import com.backend.hallodos.repository.TopikRepository;
@@ -35,8 +38,10 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
@@ -60,6 +65,9 @@ public class MahasiswaController {
 
 	@Autowired
 	ScheduleRepository scheduleRepo;
+
+	@Autowired
+	HistoryRepository historyRepo;
 
 	@PostMapping("/mahasiswa/save")
 	public RedirectView saveUser(Mahasiswa mahasiswa,
@@ -358,73 +366,103 @@ public class MahasiswaController {
 	}
 
 	@PostMapping("/consultpagemhs")
-	public String consultPagemhs(@ModelAttribute("loginData") Mahasiswa mahasiswa, Model model) {
+	public String consultPagemhs(@ModelAttribute("loginData") Mahasiswa mahasiswa, Dosen dosen, Model model) {
 		Mahasiswa dataMaha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+		Dosen dataDsn = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
 		List<Schedule> waitingList = scheduleRepo.findByMahaIdWaiting(dataMaha.getId());
 		List<Schedule> acceptedList = scheduleRepo.findByMahaIdAccepted(dataMaha.getId());
+		List<Schedule> finishedList = scheduleRepo.findByMahaIdFinished(dataMaha.getId());
 		if (Objects.isNull(dataMaha)) {
 			return "kenihilan";
 		} else {
 			model.addAttribute("loginData", dataMaha);
+			model.addAttribute("loginDosen", dataDsn);
 			model.addAttribute("listConsult", waitingList);
 			model.addAttribute("listAccepted", acceptedList);
+			model.addAttribute("listFinished", finishedList);
 			return "consultpagemhs";
 		}
 	}
 
 	@PostMapping("/otwchatmhs")
-	public String otwchatmhs(@ModelAttribute("loginData")Mahasiswa mahasiswa, Dosen dosen, Schedule schedule,
+	public ResponseEntity<Object> otwchatmhs(@ModelAttribute("loginData") Mahasiswa mahasiswa, Dosen dosen,
+			Schedule schedule,
 			Model model) {
 		Dosen dosenAll = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
 		Mahasiswa dataMaha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
 		long idDosenTsb = dosenAll.getId();
 		long idMhsTsb = dataMaha.getId();
 		Schedule skejul = scheduleRepo.findByForeignId(idDosenTsb, idMhsTsb);
-		if (Objects.isNull(dataMaha)) {
-			return "kenihilan";
+		System.out.println(skejul.toString());
+		// if (Objects.isNull(dataMaha)) {
+		// return "kenihilan";
+		// } else {
+		skejul.setStatus("Finished");
+		scheduleRepo.save(skejul);
+		model.addAttribute("loginData", dataMaha);
+		model.addAttribute("listConsult", skejul);
+		// return "redirect:/kechatmhs?username=" + dataMaha.getUsername();
+		return ResponseEntity.status(HttpStatus.FOUND)
+				.location(URI.create("https://dbea-149-110-56-201.ngrok.io/login?username=" + dataMaha.getUsername()))
+				.build();
+		// }
+	}
+
+	// @GetMapping("/kechatmhs")
+	// ResponseEntity<Void> redirect(@RequestParam(value = "username") String
+	// username) {
+	// return ResponseEntity.status(HttpStatus.FOUND)
+	// .location(URI.create("http://5781-149-110-56-201.ngrok.io/login?username=" +
+	// username))
+	// .build();
+	// }
+
+	@RequestMapping(path = "/backToLocal", method = RequestMethod.GET)
+	public String keConsultDariChat(@RequestParam(value = "username") String username, Model model) {
+		// String usernameDariSono = (String)
+		// request.getSession().getAttribute("username");
+		Mahasiswa dataLogin = mahasiswaRepo.findByUsername(username);
+		if (Objects.nonNull(dataLogin)) {
+			model.addAttribute("loginData", dataLogin);
+			return "profilmahasiswa";
 		} else {
-			model.addAttribute("loginData", dataMaha);
-			model.addAttribute("listConsult", skejul);
-			return "redirect:/kechat";
+			Dosen dataDosen = dosenRepo.findByUsername(username);
+			model.addAttribute("loginData", dataDosen);
+			return "profildosen";
 		}
 	}
 
-	@GetMapping ("/kechatmhs")
-	ResponseEntity<Void> redirect() {
-		return ResponseEntity.status(HttpStatus.FOUND)
-				.location(URI.create("https://8808-149-110-56-201.ngrok.io"))
-				.build();
-	}
-
 	// @PostMapping("/declineConsult")
-	// public String declineResult(@ModelAttribute("loginData") Dosen dosen, Mahasiswa mahasiswa, Schedule schedule,
-	// 		Model model) {
-	// 	Dosen dosenAll = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
-	// 	Mahasiswa dataMaha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
-	// 	List<Schedule> jadwalKu = scheduleRepo.findByDosenId(dosenAll.getId());
-	// 	long idDosenTsb = dosenAll.getId();
-	// 	long idMhsTsb = dataMaha.getId();
-	// 	Schedule skejul = scheduleRepo.findByForeignId(idDosenTsb, idMhsTsb);
-	// 	if (Objects.isNull(dosenAll)) {
-	// 		return "kenihilan";
-	// 	} else {
-	// 		skejul.setStatus("Declined");
-	// 		scheduleRepo.delete(skejul);
-	// 		model.addAttribute("loginData", dosenAll);
-	// 		model.addAttribute("listConsult", jadwalKu);
-	// 		return "redirect:/halamanconsult/" + dosenAll.getEmail_dosen();
-	// 	}
+	// public String declineResult(@ModelAttribute("loginData") Dosen dosen,
+	// Mahasiswa mahasiswa, Schedule schedule,
+	// Model model) {
+	// Dosen dosenAll = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+	// Mahasiswa dataMaha =
+	// mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+	// List<Schedule> jadwalKu = scheduleRepo.findByDosenId(dosenAll.getId());
+	// long idDosenTsb = dosenAll.getId();
+	// long idMhsTsb = dataMaha.getId();
+	// Schedule skejul = scheduleRepo.findByForeignId(idDosenTsb, idMhsTsb);
+	// if (Objects.isNull(dosenAll)) {
+	// return "kenihilan";
+	// } else {
+	// skejul.setStatus("Declined");
+	// scheduleRepo.delete(skejul);
+	// model.addAttribute("loginData", dosenAll);
+	// model.addAttribute("listConsult", jadwalKu);
+	// return "redirect:/halamanconsult/" + dosenAll.getEmail_dosen();
+	// }
 	// }
 
 	// @GetMapping("/halamanconsult/{Email_dosen}")
-	// public String halamanconsult(@PathVariable("Email_dosen") String dosen, Model model) {
-	// 	Dosen dosenProfile = dosenRepo.findByEmail_dosen(dosen);
-	// 	List<Schedule> jadwalKu = scheduleRepo.findByDosenId(dosenProfile.getId());
-	// 	model.addAttribute("loginData", dosenProfile);
-	// 	model.addAttribute("listConsult", jadwalKu);
-	// 	return "consultpagedsn";
+	// public String halamanconsult(@PathVariable("Email_dosen") String dosen, Model
+	// model) {
+	// Dosen dosenProfile = dosenRepo.findByEmail_dosen(dosen);
+	// List<Schedule> jadwalKu = scheduleRepo.findByDosenId(dosenProfile.getId());
+	// model.addAttribute("loginData", dosenProfile);
+	// model.addAttribute("listConsult", jadwalKu);
+	// return "consultpagedsn";
 	// }
-
 
 	@GetMapping("/data")
 	public String getData() {
@@ -528,27 +566,111 @@ public class MahasiswaController {
 				schedule.getTimeSessionStart(),
 				schedule.getTimeSessionEnd());
 
-		List<Schedule> cekdata = scheduleRepo.findByDsnIdAndMhsId(dataHasilInput.getDosenId().getId(),dataHasilInput.getMhsId().getId());
+		List<Schedule> cekdata = scheduleRepo.findByDsnIdAndMhsId(dataHasilInput.getDosenId().getId(),
+				dataHasilInput.getMhsId().getId());
 
-		if(cekdata.size() >0){
+		if (cekdata.size() > 0) {
 			throw new CustomExceptoon("Your book already exists");
 		}
 
-		// if (Objects.nonNull(scheduleRepo.findByForeignId(dataHasilInput.getDosenId().getId(), dataHasilInput.getMhsId().getId())) ) {
-		// 	throw new CustomExceptoon("Your book already exists");
-		// 	// return "kenihilan";
+		// if
+		// (Objects.nonNull(scheduleRepo.findByForeignId(dataHasilInput.getDosenId().getId(),
+		// dataHasilInput.getMhsId().getId())) ) {
+		// throw new CustomExceptoon("Your book already exists");
+		// // return "kenihilan";
 		// }
 
-			dataHasilInput.setStatus("waiting");
-			scheduleRepo.save(dataHasilInput);
-			model.addAttribute("loginData", maha);
-			model.addAttribute("DataDsn", dsnOnClicked);
-			model.addAttribute("dataBook", dataHasilInput);
-			return "paymentResult";
-
-		}
+		dataHasilInput.setStatus("Waiting");
+		scheduleRepo.save(dataHasilInput);
+		model.addAttribute("loginData", maha);
+		model.addAttribute("DataDsn", dsnOnClicked);
+		model.addAttribute("dataBook", dataHasilInput);
+		return "paymentResult";
 	}
 
+	@PostMapping("/ratingpage")
+	public String ratingPage(@ModelAttribute("loginData") Mahasiswa mahasiswa, Dosen dosen, Schedule schedule,
+			Model model) {
+		Mahasiswa maha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+		Dosen dataDosen = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		Schedule hasilSchedule = scheduleRepo.findByForeignId(dataDosen.getId(), maha.getId());
+		int income = 23750;
+		String date = historyRepo.getDate();
+		if (Objects.isNull(maha)) {
+			return "kenihilan";
+		} else {
+
+			History inputHistory = new History(
+					dataDosen,
+					maha,
+					income,
+					date);
+
+			dataDosen.setBalance(dataDosen.getBalance() + income);
+			dosenRepo.save(dataDosen);
+			inputHistory.setDate(date);
+			historyRepo.save(inputHistory);
+			model.addAttribute("dataDsn", dataDosen);
+			model.addAttribute("loginData", maha);
+			return "ratingDosen";
+		}
+
+	}
+
+	// @PostMapping("/rating")
+	// public String getSaldoDosen(@ModelAttribute("loginData") Dosen dosen, Model
+	// model, Mahasiswa mahasiswa) {
+	// Dosen dosenAll = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+	// Mahasiswa mahasiswaAll =
+	// mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+	// if (Objects.isNull(dosenAll)) {
+	// return "kenihilan";
+	// } else {
+	// model.addAttribute("loginData", dosenAll);
+	// model.addAttribute("loginData2", mahasiswaAll);
+	// return "ratingDosen";
+	// }
+	// }
+
+	@PostMapping("/editRating")
+	public String ratingTerbaru(@ModelAttribute("loginData") Dosen dosen, Mahasiswa mahasiswa, Model model,
+			Schedule schedule) {
+		Dosen dataDosen = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		Mahasiswa dataLogin = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
+		Schedule skejul = scheduleRepo.findByForeignId(dataDosen.getId(), dataLogin.getId());
+		// ambil data rating dari input
+		int inputRating = dosen.getRating();
+
+		// ambil data total consultation
+		int consul = dataDosen.getTotalConsultation() + 1;
+
+		// Nambah total rating
+		int totalRating = dataDosen.getTotalRating() + inputRating;
+
+		int newRating = totalRating / consul;
+
+		skejul.setStatus("Rated");
+		scheduleRepo.save(skejul);
+		dataDosen.setTotalConsultation(consul);
+		dataDosen.setTotalRating(totalRating);
+		dataDosen.setRating(newRating);
+		dosenRepo.save(dataDosen);
+
+		return "redirect:/profileMahasiswa/" + dataLogin.getId();
+
+	}
+
+	@GetMapping("/profileMahasiswa/{id}")
+	public String ratingDosen(@PathVariable("id") long mahasiswa, Model model) {
+		Mahasiswa profileMahasiswa = mahasiswaRepo.findById(mahasiswa).get();
+		if (profileMahasiswa == null) {
+			return "kenihilan";
+		} else {
+			model.addAttribute("loginData", profileMahasiswa);
+			return "profilmahasiswa";
+		}
+	}
+}
 
 // @GetMapping("/detaildosen")
 // public String detaildosen(@ModelAttribute("loginData") Mahasiswa mahasiswa,

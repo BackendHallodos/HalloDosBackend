@@ -64,7 +64,7 @@ public class UserServiceDosen {
             dosen.getGraduateFrom(),
             dosen.getMajor(),
             dosen.getAffiliate(),
-            null, null, null, null,0,0,0, null,0,null,null,dosen.getTopicId());
+            null, null, null, null,0,0,0,0, null,0,null,null,dosen.getTopicId());
         dosenRepo.save(dosenuser);
 
         // create token

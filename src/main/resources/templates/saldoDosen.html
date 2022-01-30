@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="css/animated.css" />
   <link rel="stylesheet" href="css/owl.css" />
   <!-- card css -->
-  <link rel="stylesheet" href="css/cardsearch.css" />
+  <!-- <link rel="stylesheet" href="css/cardsearch.css" /> -->
 
   <!-- th -->
   <link th:href="@{/vendor/bootstrap.min.css}" rel="stylesheet" />
@@ -22,7 +22,7 @@
   <link rel="stylesheet" th:href="@{/css/animated.css}" />
   <link rel="stylesheet" th:href="@{/css/owl.css}" />
   <!-- card css -->
-  <link rel="stylesheet" th:href="@{/css/cardsearch.css}" />
+  <!-- <link rel="stylesheet" th:href="@{/css/cardsearch.css}" /> -->
   <!--  -->
 </head>
 
@@ -66,24 +66,86 @@
             <input type="hidden" name="email_dosen" id="email_dosen" class="form-control" required
               th:field="*{email_dosen}" />
           </div>
-
-          <div class="mt-2">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Tarik
+            Saldo</button>
+          <!-- <div class="mt-2">
             <button type="submit" class="btn btn-primary">tarik</button>
-          </div>
+          </div> -->
         </form>
       </div>
 
       <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <style>
+          .rowbaru {
+            align-items: stretch;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden;
+          }
 
-        <h3>History page</h3>
+          .card {
+            max-width: 15.333%;
+            padding: .75rem;
+            margin-bottom: 2rem;
+            border: 0;
+            flex-basis: 33.333%;
+            flex-grow: 0;
+            flex-shrink: 0;
+          }
 
+          .card>img {
+            margin-bottom: .75rem;
+            width: 100%;
+          }
+
+          .card-text {
+            font-size: 85%;
+          }
+        </style>
+        <br><br><br>
+        <h3>
+          <center> Withdrawal History </center>
+        </h3> <br><br><br>
+
+        <div class="container">
+          <div class="rowbaru">
+            <div class="card" style="border: 1px solid gray; border-radius: 15px; margin: 10px;"
+              th:each="data:${withdrawal}">
+              <img src="/images/withdraw.png">
+              <p class="card-text">Withdraw : <span class="card-text"
+                  th:text="'- '+Rp.+ ' ' + ${data.withdrawal} + ',-'"></span></p>
+              <p class="card-text">Date : <span class="card-text" th:text="${data.date}"></span></p>
+            </div>
+          </div>
+        </div>
+        <br><br><br>
+        <h3>
+          <center> Income History </center>
+        </h3> <br><br><br>
+
+        <div class="container">
+          <div class="rowbaru">
+            <div class="card" style="border: 1px solid gray; border-radius: 15px; margin: 10px;"
+              th:each="data:${income}">
+              <img src="/images/income.png">
+              <p class="card-text">Payment from : <span class="card-text"
+                  th:text="${data.mahasiswaId.full_name}"></span></p>
+              <p class="card-text">Withdraw : <span class="card-text"
+                  th:text="'+ '+Rp.+ ' ' + ${data.income} + ',-'"></span></p>
+              <p class="card-text">Date : <span class="card-text" th:text="${data.date}"></span></p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
+
+
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Tarik
-    Saldo</button>
+
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -111,7 +173,10 @@
       </div>
     </div>
   </div>
-  <div th:insert="fragments/footer :: footer"></div>
+  <footer>
+    <div th:insert="fragments/footer :: footer"></div>
+  </footer>
+
   <!-- <link src="../static/js/bootstrap.bundle.min.js"></link> -->
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -126,13 +191,13 @@
   <script src="js/popup.js"></script>
   <script src="js/custom.js"></script>
 
-  <script th:src="@{vendor/jquery.min.js}"></script>
-  <script th:src="@{vendor/bootstrap.bundle.min.js}"></script>
-  <script th:src="@{js/owl-carousel.js}"></script>
-  <script th:src="@{js/animation.js}"></script>
-  <script th:src="@{js/imagesloaded.js}"></script>
-  <script th:src="@{js/popup.js}"></script>
-  <script th:src="@{js/custom.js}"></script>
+  <script th:src="@{/vendor/jquery.min.js}"></script>
+  <script th:src="@{/vendor/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/js/owl-carousel.js}"></script>
+  <script th:src="@{/js/animation.js}"></script>
+  <script th:src="@{/js/imagesloaded.js}"></script>
+  <script th:src="@{/js/popup.js}"></script>
+  <script th:src="@{/js/custom.js}"></script>
 
 </body>
 

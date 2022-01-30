@@ -32,4 +32,8 @@ public interface MahasiswaRepository extends JpaRepository<Mahasiswa, Long> {
 	@Query(value = "SELECT*FROM mahasiswa where email_mahasiswa=?1", nativeQuery = true)
 	public Mahasiswa findByEmail_mahasiswa2(String email_mahasiswa);
 
+	@Query(value = "Select*from mahasiswa where username=?1", nativeQuery = true)
+	public Mahasiswa findByUsername(String username);
+	
+
 }

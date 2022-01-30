@@ -34,13 +34,79 @@
         <h1>My Consultations</h1>
     </div><br><br>
 
+
+    <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s" style="
+    visibility: visible;
+    animation-delay: 0.2s;
+    animation-name: fadeInUp;">
+        <h3>Consultation Finished</h3>
+    </div>
+
+    <div class="container">
+        <!-- Single Advisor-->
+        <div class="row mb-12">
+            <div class="container col-md col-8 themed-grid-col">
+                <div class="row row-cols-3 row-cols-md-4 g-4 pt-3">
+                    <div th:each="daftar: ${listFinished}">
+                        <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.2s"
+                            style="visibility: visible;animation-delay: 0.2s;-name: fadeInUp;">
+                            <div class="col resultcard">
+                                <!-- Team Thumb-->
+                                <div class="card">
+                                    <img th:src="@{${daftar.dosenId.photos}}" style="width:100%; height: 100%;"
+                                        class="card-img-top" alt="..." />
+                                    <div class="card-body">
+                                        <h5 class="card-title" th:text="${daftar.DosenId.full_name}">Name</h5>
+                                        <div class="rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                        <p th:text="${daftar.DosenId.major}">Jurusan</p>
+                                        <p th:text="${daftar.day}">Hari</p>
+                                        <p th:text="${daftar.timeSessionStart}">Jam</p>
+                                        <p th:text="${daftar.status}">status</p>
+
+                                        <p class="card-text">
+                                            <div class="btns">
+
+                                                <form th:action="@{/ratingpage}" method="post">
+                                                    <input type="hidden" name="email_dosen" id="email_dosen"
+                                                        class="form-control" required
+                                                        th:value="${daftar.dosenId.email_dosen}">
+                                                    <input type="hidden" name="email_mahasiswa" id="email_mahasiswa"
+                                                        class="form-control" required
+                                                        th:value="${daftar.mhsId.email_mahasiswa}">
+                                                    <button type="submit" class="btn btn-warning">Rate now</button>
+                                                </form>
+
+                                                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        Edit Profile
+                                    </button> -->
+
+                                                <!-- Modal -->
+                                            </div>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+
     <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s" style="
                     visibility: visible;
                     animation-delay: 0.2s;
                     animation-name: fadeInUp;">
         <h3>Consultation Confirmed</h3>
     </div>
-
 
     <div class="container">
         <!-- Single Advisor-->
@@ -71,6 +137,7 @@
 
                                         <p class="card-text">
                                             <div class="btns">
+
                                                 <form th:action="@{/otwchatmhs}" method="post">
                                                     <input type="hidden" name="email_dosen" id="email_dosen"
                                                         class="form-control" required
@@ -78,68 +145,36 @@
                                                     <input type="hidden" name="email_mahasiswa" id="email_mahasiswa"
                                                         class="form-control" required
                                                         th:value="${daftar.mhsId.email_mahasiswa}">
-                                                    <button type="submit" class="btn btn-warning">Chat now</button>
+                                                    <!-- <button type="submit" class="btn btn-warning" target="_blank">Chat now</button> -->
+                                                    <a th:href="@{'/kechatmhs?username='+${daftar.mhsId.username}}"
+                                                        target="_blank">
+                                                        <button type="submit" class="btn btn-primary"
+                                                            data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                            style="color: black;">Chat now</button>
+
+                                                    </a>
+
                                                 </form>
+
+                                                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                        Edit Profile
+                                                    </button> -->
+
+                                                <!-- Modal -->
                                             </div>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 
-    <!-- <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s" style="
-    visibility: visible;
-    animation-delay: 0.2s;
-    animation-name: fadeInUp;">
-        <div class="container">
-            <div class="row mb-12">
-                <div class="container col-md col-8 themed-grid-col">
-                    <div class="row row-cols-3 row-cols-md-4 g-4 pt-3">
-                        <div class="col resultcard">
-                            <div class="card" th:each="daftar: ${listAccepted}">
-                                <img th:src="@{${daftar.dosenId.photos}}" style="width:100%; height: 100%;"
-                                    class="card-img-top" alt="..." />
-                                <div class="card-body">
-                                    <h5 class="card-title" th:text="${daftar.DosenId.major}">Name</h5>
-                                    <div class="rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </div>
-                                    <p th:text="${daftar.DosenId.major}">Jurusan</p>
-                                    <p th:text="${daftar.day}">Hari</p>
-                                    <p th:text="${daftar.timeSessionStart}">Jam</p>
-                                    <p th:text="${daftar.status}">status</p>
-
-                                    <p class="card-text">
-                                        <div class="btns">
-                                            <form th:action="@{/otwchatmhs}" method="post">
-                                                <input type="hidden" name="email_dosen" id="email_dosen"
-                                                    class="form-control" required
-                                                    th:value="${daftar.dosenId.email_dosen}">
-                                                <input type="hidden" name="email_mahasiswa" id="email_mahasiswa"
-                                                    class="form-control" required
-                                                    th:value="${daftar.mhsId.email_mahasiswa}">
-                                                <button type="submit" class="btn btn-warning">Chat
-                                                    now</button>
-                                            </form>
-                                        </div>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
     <br><br>
 
     <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s" style="
@@ -186,75 +221,12 @@
         </div>
     </div>
 
+
+
+
     <div th:insert="fragments/footer :: footer"></div>
 
-    <!-- <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s" style="
-    visibility: visible;
-    animation-delay: 0.2s;
-    animation-name: fadeInUp;">
 
-        <div class="container">
-            <div class="row mb-12">
-                <div class="container col-md col-8 themed-grid-col">
-                    <div class="row row-cols-3 row-cols-md-4 g-4 pt-3">
-                        <div class="col resultcard">
-                            <div class="card" th:each="daftar: ${listConsult}">
-                                <img th:src="@{${daftar.dosenId.photos}}" style="width:100%; height: 100%;"
-                                    class="card-img-top" alt="..." />
-                                <div class="card-body">
-                                    <h5 class="card-title" th:text="${daftar.DosenId.major}">Name</h5>
-                                    <div class="rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </div>
-                                    <p th:text="${daftar.DosenId.major}">Jurusan</p>
-                                    <p th:text="${daftar.day}">Hari</p>
-                                    <p th:text="${daftar.timeSessionStart}">Jam</p>
-                                    <p th:text="${daftar.status}">status</p>
-                                    <p class="card-text">
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- code mufqi search card -->
-
-    <!-- <div th:each=dataTop:${listDosen}>
-        <div class="card" style="background-color: orange;">
-            <div class="card-body">
-                <div>
-                    <img th:src="@{${dataTop.photos}}" style="width:100px;height:100px;" />
-                    <h5 th:text="${dataTop.full_name}" style="font-weight: bold;"></h5>
-                    <h6 th:text="${dataTop.major}"></h6>
-                    <h6 th:text="${dataTop.email_dosen}"></h6>
-                    <h6 th:text="${dataTop.topicId.name_topik}"></h6>
-                    <h6 th:text="${dataTop.price}"></h6>
-                    <h6 th:text="${dataTop.totalConsultation}"></h6>
-                    <h6 th:text="${dataTop.rating}"></h6>
-                </div>
-                <br>
-            </div>
-            <form th:action="@{/keDetailDsn}" method="post">
-                <input type="hidden" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
-                    th:value="${loginData.email_mahasiswa}">
-                <input type="hidden" name="email_dosen" id="email_dosen" class="form-control" required
-                    th:value="${dataTop.email_dosen}">
-                <button type="submit" class="btn btn-warning">See details</button>
-            </form>
-        </div>
-    </div> -->
-
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-    </script> -->
-    <!-- Scripts -->
     <script src="vendor/jquery.min.js"></script>
     <script src="vendor/bootstrap.bundle.min.js"></script>
     <script src="js/owl-carousel.js"></script>
@@ -268,70 +240,3 @@
 </html>
 
 <!-- end import dari mufqi -->
-
-
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultation List</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-</head>
-
-<body style="margin: 50px;">
-    <div th:insert="fragments/header :: header"></div> <br><br><br><br><br>
-    <h1>CONSULTATION LIST MAHASISWA</h1><BR>
-    <h3>ACCEPTED CONSULTATION</h3>
-    <div th:each="daftar: ${listAccepted}">
-        <div class="card" style="width: 18rem;">
-            <img th:src="@{${daftar.dosenId.photos}}" style="width:100px;height:100px;" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title" th:text="${daftar.dosenId.full_name}" style="font-weight: bold;">Card title
-                </h5>
-                <h6 th:text="${daftar.DosenId.major}">Jurusan</h6>
-                <h6 th:text="${daftar.day}">Hari</h6>
-                <h6 th:text="${daftar.timeSessionStart}">Jam</h6>
-                <h6 th:text="${daftar.status}">status</h6>
-            </div>
-            <form th:action="@{/otwchatmhs}" method="post">
-                <input type="hidden" name="email_dosen" id="email_dosen" class="form-control" required
-                    th:value="${daftar.dosenId.email_dosen}">
-                <input type="hidden" name="email_mahasiswa" id="email_mahasiswa" class="form-control" required
-                    th:value="${daftar.mhsId.email_mahasiswa}">
-                <button type="submit" class="btn btn-warning">Chat now</button>
-            </form>
-        </div><br>
-    </div><br>
-
-
-    <h3>WAITING LIST</h3>
-    <div th:each="daftar: ${listConsult}">
-        <div class="card" style="width: 18rem;">
-            <img th:src="@{${daftar.dosenId.photos}}" style="width:100px;height:100px;" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title" th:text="${daftar.dosenId.full_name}" style="font-weight: bold;">Card title
-                </h5>
-                <h6 th:text="${daftar.DosenId.major}">Jurusan</h6>
-                <h6 th:text="${daftar.day}">Hari</h6>
-                <h6 th:text="${daftar.timeSessionStart}">Jam</h6>
-                <h6 th:text="${daftar.status}">status</h6>
-            </div>
-        </div><br>
-    </div>
-
-
-
-
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-    </script>
-</body>
-
-</html> -->

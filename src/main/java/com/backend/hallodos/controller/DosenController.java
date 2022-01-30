@@ -11,9 +11,11 @@ import com.backend.hallodos.exceptions.AuthFailException;
 import com.backend.hallodos.exceptions.CustomExceptoon;
 import com.backend.hallodos.model.AuthTokenDos;
 import com.backend.hallodos.model.Dosen;
+import com.backend.hallodos.model.History;
 import com.backend.hallodos.model.Mahasiswa;
 import com.backend.hallodos.model.Schedule;
 import com.backend.hallodos.repository.DosenRepository;
+import com.backend.hallodos.repository.HistoryRepository;
 import com.backend.hallodos.repository.MahasiswaRepository;
 import com.backend.hallodos.repository.ScheduleRepository;
 import com.backend.hallodos.services.AuthService;
@@ -31,6 +33,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class DosenController {
@@ -49,6 +54,9 @@ public class DosenController {
 
 	@Autowired
 	ScheduleRepository scheduleRepo;
+
+	@Autowired
+	HistoryRepository historyRepo;
 
 	// untuk dasboard
 	// dan autentication
@@ -101,7 +109,7 @@ public class DosenController {
 				dosen.getGraduateFrom(),
 				dosen.getMajor(),
 				dosen.getAffiliate(),
-				null, null, null, null, 0, 0, 0, null, 0, null, null, dosen.getTopicId());
+				null, null, null, null, 0, 0, 0, 0, null, 0, null, null, dosen.getTopicId());
 
 		dosenRepo.save(dosenuser);
 		// create token
@@ -199,7 +207,8 @@ public class DosenController {
 	}
 
 	@PostMapping("/otwchat")
-	public String otwchat(@ModelAttribute("loginData") Dosen dosen, Mahasiswa mahasiswa, Schedule schedule,
+	public ResponseEntity<Object> otwchat(@ModelAttribute("loginData") Dosen dosen, Mahasiswa mahasiswa,
+			Schedule schedule,
 			Model model) {
 		Dosen dosenAll = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
 		Mahasiswa dataMaha = mahasiswaRepo.findByEmail_mahasiswa(mahasiswa.getEmail_mahasiswa());
@@ -207,22 +216,34 @@ public class DosenController {
 		long idDosenTsb = dosenAll.getId();
 		long idMhsTsb = dataMaha.getId();
 		Schedule skejul = scheduleRepo.findByForeignId(idDosenTsb, idMhsTsb);
-		if (Objects.isNull(dosenAll)) {
-			return "kenihilan";
-		} else {
-			skejul.setStatus("Accepted");
-			scheduleRepo.save(skejul);
-			model.addAttribute("loginData", dosenAll);
-			model.addAttribute("listConsult", skejul);
+		// if (Objects.isNull(dosenAll)) {
+		// return "kenihilan";
+		// } else {
+		skejul.setStatus("Accepted");
+		scheduleRepo.save(skejul);
+		model.addAttribute("loginData", dosenAll);
+		model.addAttribute("listConsult", skejul);
 
-			return "redirect:/kechat";
-		}
+		// return "redirect:/kechat?username=" + dosenAll.getUsername();
+		return ResponseEntity.status(HttpStatus.FOUND)
+				.location(URI.create("https://dbea-149-110-56-201.ngrok.io/login?username=" + dosenAll.getUsername()))
+				.build();
+		// }
 	}
 
-	@GetMapping ("/kechat")
-	ResponseEntity<Void> redirect() {
+	// @RequestMapping(path = "/backToLocal", method = RequestMethod.GET)
+	// public String keConsultDariChat(@RequestParam(value = "username") String username, Model model) {
+	// 	// String usernameDariSono = (String)
+	// 	// request.getSession().getAttribute("username");
+	// 	Dosen dataLogin = dosenRepo.findByUsername(username);
+	// 	model.addAttribute("loginData", dataLogin);
+	// 	return "dashboarddosen";
+	// }
+
+	@GetMapping("/kechat")
+	ResponseEntity<Void> redirect(@RequestParam(value = "username") String username) {
 		return ResponseEntity.status(HttpStatus.FOUND)
-				.location(URI.create("https://8808-149-110-56-201.ngrok.io"))
+				.location(URI.create("http://5781-149-110-56-201.ngrok.io/login?username=" + username))
 				.build();
 	}
 
@@ -319,6 +340,7 @@ public class DosenController {
 			return "qSecDosen";
 		}
 	}
+
 	// //ini menerima jawaban dari security question dari mahasiswa
 	// }
 	@PostMapping("/securityResultDosen")
@@ -357,11 +379,15 @@ public class DosenController {
 	}
 
 	@PostMapping("/saldoDosen")
-	public String getSaldoDosen(@ModelAttribute("loginData") Dosen dosen, Model model) {
+	public String getSaldoDosen(@ModelAttribute("loginData") Dosen dosen, History history, Model model) {
 		Dosen dosenAll = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		List<History> withdrawal = historyRepo.findWithdrawalById(dosenAll.getId());
+		List<History> income = historyRepo.findIncomeById(dosenAll.getId());
 		if (Objects.isNull(dosenAll)) {
 			return "kenihilan";
 		} else {
+			model.addAttribute("withdrawal", withdrawal);
+			model.addAttribute("income", income);
 			model.addAttribute("loginData", dosenAll);
 			return "saldoDosen";
 		}
@@ -379,8 +405,10 @@ public class DosenController {
 	}
 
 	@PostMapping("/editsaldoDosen")
-	public String saldoTerbaru(@ModelAttribute("loginData") Dosen dosen, @Param("keyword") int keyword, Model model) {
+	public String saldoTerbaru(@ModelAttribute("loginData") Dosen dosen, @Param("keyword") int keyword, Model model, History history) {
 		Dosen dataDosen = dosenRepo.findByEmail_dosen(dosen.getEmail_dosen());
+		// History historyWithdrawal = historyRepo.findByDosenId
+		String date = historyRepo.getDate();
 
 		// ambil data balance
 		int balanceDosen = dataDosen.getBalance();
@@ -392,9 +420,15 @@ public class DosenController {
 		if (balanceInput > balanceDosen) {
 			return "withdrawalerror";
 		} else {
+			History inputHistory = new History(
+				dataDosen,
+				balanceInput,
+				date);
+
+			historyRepo.save(inputHistory);
 			newBalance = balanceDosen - balanceInput;
 			dataDosen.setBalance(newBalance);
-			balanceInput=0;
+			balanceInput = 0;
 			dosenRepo.save(dataDosen);
 		}
 		model.addAttribute("loginData", dataDosen);

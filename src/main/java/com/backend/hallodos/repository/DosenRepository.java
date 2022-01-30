@@ -42,4 +42,9 @@ public interface DosenRepository extends JpaRepository<Dosen, Long> {
     public List<Dosen> findAllDosenByWord(String keyword);
 
     public Dosen findDosenById(long operDsnId);
+
+    @Query(value = "Select*from dosen where username=?1", nativeQuery = true)
+	public Dosen findByUsername(String username);
+
+    
 }

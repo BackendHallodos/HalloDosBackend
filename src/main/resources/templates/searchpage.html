@@ -80,7 +80,7 @@
                                     <img th:src="@{${dataTop.photos}}" style="width:100%; height: 100%;"
                                         class="card-img-top" alt="..." />
                                     <div class="card-body">
-                                        <h5 class="card-title" th:text="${dataTop.full_name}">Name</h5>
+                                        <h5 class="card-title"><span th:text="${dataTop.full_name}"></span></h5>
                                         <div class="rating">
                                             <i class="fas fa-star"></i>
                                             <i class="fas fa-star"></i>
@@ -88,15 +88,15 @@
                                             <i class="far fa-star"></i>
                                             <i class="far fa-star"></i>
                                         </div>
-                                        <p th:text="${dataTop.major}"></p>
-                                        <p th:text="${dataTop.email_dosen}"></p>
-                                        <p th:text="${dataTop.topicId.name_topik}"></p>
-                                        <p th:text="${dataTop.price}"></p>
-                                        <p th:text="${dataTop.totalConsultation}"></p>
-                                        <p th:text="${dataTop.rating}"></p>
+                                        <p>Major : <span th:text="${dataTop.major}"></span></p>
+                                        <!-- <p th:text="${dataTop.email_dosen}"></p> -->
+                                        <p>Topic : <span th:text="${dataTop.topicId.name_topik}"></span></p>
+                                        <p>Price : <span th:text="${dataTop.price}"></span></p>
+                                        <p>Total Consultation : <span th:text="${dataTop.totalConsultation}"></span></p>
+                                        <p>Rating : <span th:text="${dataTop.rating}"></span></p>
 
                                         <p class="card-text">
-                                            <small class="text-muted">Last updated 3 mins ago</small>
+                                            <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
                                             <div class="btns">
                                                 <form th:action="@{/keDetailDsn}" method="post">
                                                     <input type="hidden" name="email_mahasiswa" id="email_mahasiswa"
@@ -104,8 +104,9 @@
                                                         th:value="${loginData.email_mahasiswa}">
                                                     <input type="hidden" name="email_dosen" id="email_dosen"
                                                         class="form-control" required th:value="${dataTop.email_dosen}">
-                                                    <button type="submit" class="btn btn-warning" target="_blank">See details</button>
-                                                    
+                                                    <button type="submit" class="btn btn-warning" target="_blank">See
+                                                        details</button>
+
                                                 </form>
                                                 <!-- <button>Read More</button>
                             <button>Book now</button> -->
