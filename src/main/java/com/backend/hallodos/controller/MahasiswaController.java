@@ -403,7 +403,7 @@ public class MahasiswaController {
 		model.addAttribute("listConsult", skejul);
 		// return "redirect:/kechatmhs?username=" + dataMaha.getUsername();
 		return ResponseEntity.status(HttpStatus.FOUND)
-				.location(URI.create("https://dbea-149-110-56-201.ngrok.io/login?username=" + dataMaha.getUsername()))
+				.location(URI.create("https://8444-149-110-56-201.ngrok.io/login?username=" + dataMaha.getUsername()))
 				.build();
 		// }
 	}

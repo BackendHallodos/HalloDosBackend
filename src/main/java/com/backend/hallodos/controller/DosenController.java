@@ -226,7 +226,7 @@ public class DosenController {
 
 		// return "redirect:/kechat?username=" + dosenAll.getUsername();
 		return ResponseEntity.status(HttpStatus.FOUND)
-				.location(URI.create("https://dbea-149-110-56-201.ngrok.io/login?username=" + dosenAll.getUsername()))
+				.location(URI.create("https://8444-149-110-56-201.ngrok.io/login?username=" + dosenAll.getUsername()))
 				.build();
 		// }
 	}
@@ -243,7 +243,7 @@ public class DosenController {
 	@GetMapping("/kechat")
 	ResponseEntity<Void> redirect(@RequestParam(value = "username") String username) {
 		return ResponseEntity.status(HttpStatus.FOUND)
-				.location(URI.create("http://5781-149-110-56-201.ngrok.io/login?username=" + username))
+				.location(URI.create("https://8444-149-110-56-201.ngrok.io/login?username=" + username))
 				.build();
 	}
 
